@@ -26,6 +26,8 @@
 #include "X_sphere.h"
 #include "X_ply_revolution.h"
 
+#include "X_axis_wheels.h"
+
 
 namespace _gl_widget_ne {
 
@@ -40,7 +42,7 @@ namespace _gl_widget_ne {
 
   typedef enum {MODE_DRAW_POINT,MODE_DRAW_LINE,MODE_DRAW_FILL,MODE_DRAW_CHESS} _mode_draw;
   typedef enum {OBJECT_TETRAHEDRON, OBJECT_CUBE, OBJECT_PLY, OBJECT_CONE, OBJECT_CYLINDER,
-                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION} _object;
+                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_AW} _object;
 }
 
 class _window;
@@ -85,6 +87,8 @@ private:
   _X_cylinder Cylinder;
   _X_sphere Sphere;
   _X_ply_revolution Ply_revolution;
+
+  _X_axis_wheels Axis_wheels;
 
 
   _gl_widget_ne::_object Object;

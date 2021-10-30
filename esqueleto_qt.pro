@@ -1,4 +1,5 @@
 HEADERS += \
+  X_axis_wheels.h \
   X_cone.h \
   X_cube.h \
   X_cylinder.h \
@@ -6,6 +7,7 @@ HEADERS += \
   X_ply_revolution.h \
   X_revolution_object.h \
   X_sphere.h \
+  X_wheel.h \
   colors.h \
   basic_object3d.h \
   file_ply_stl.h \
@@ -17,6 +19,7 @@ HEADERS += \
   window.h
 
 SOURCES += \
+  X_axis_wheels.cpp \
   X_cone.cpp \
   X_cube.cpp \
   X_cylinder.cpp \
@@ -24,6 +27,7 @@ SOURCES += \
   X_ply_revolution.cpp \
   X_revolution_object.cpp \
   X_sphere.cpp \
+  X_wheel.cpp \
   basic_object3d.cc \
   file_ply_stl.cc \
   object3d.cc \
