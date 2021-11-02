@@ -1,4 +1,4 @@
-#include "X_wheel.h"
+#include "X_pedal.h"
 
 using namespace _colors_ne;
 
@@ -8,16 +8,15 @@ using namespace _colors_ne;
  *
  *****************************************************************************/
 
-void _X_wheel::draw_line()
+void _X_pedal::draw_line()
 {
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
 
-    glRotatef(90,0,0,1);
-    glScalef(1,0.3,1);
+    glScalef(3,1,2);
 
-    Cylinder.draw_line();
+    Cube.draw_line();
     glPopMatrix();
 }
 
@@ -27,18 +26,17 @@ void _X_wheel::draw_line()
  *
  *****************************************************************************/
 
-void _X_wheel::draw_fill()
+void _X_pedal::draw_fill()
 {
-    glColor3fv((GLfloat *) &BLACK);
+    glColor3fv((GLfloat *) &RED);
 
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
 
-    glRotatef(90,0,0,1);
-    glScalef(1,0.3,1);
+    glScalef(3,1,2);
 
-    Cylinder.draw_fill();
+    Cube.draw_fill();
     glPopMatrix();
 }
 

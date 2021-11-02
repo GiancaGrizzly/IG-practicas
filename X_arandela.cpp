@@ -1,4 +1,6 @@
-#include "X_wheel.h"
+
+#include "X_arandela.h"
+
 
 using namespace _colors_ne;
 
@@ -8,17 +10,18 @@ using namespace _colors_ne;
  *
  *****************************************************************************/
 
-void _X_wheel::draw_line()
+_X_arandela::_X_arandela(float Size)
 {
-    glMatrixMode(GL_MODELVIEW);
+    N = 50;
 
-    glPushMatrix();
+    Profile.resize(4);
+    Profile[0] = _vertex3f(Size/2,-Size/2,0);
+    Profile[1] = _vertex3f(Size*3/4,-Size/2,0);
+    Profile[2] = _vertex3f(Size*3/4,Size/2,0);
+    Profile[3] = _vertex3f(Size/2,Size/2,0);
 
-    glRotatef(90,0,0,1);
-    glScalef(1,0.3,1);
-
-    Cylinder.draw_line();
-    glPopMatrix();
+    generate_vertex();
+    generate_triangles();
 }
 
 /*****************************************************************************//**
@@ -27,19 +30,9 @@ void _X_wheel::draw_line()
  *
  *****************************************************************************/
 
-void _X_wheel::draw_fill()
+void _X_arandela::draw_fill()
 {
     glColor3fv((GLfloat *) &BLACK);
-
-    glMatrixMode(GL_MODELVIEW);
-
-    glPushMatrix();
-
-    glRotatef(90,0,0,1);
-    glScalef(1,0.3,1);
-
-    Cylinder.draw_fill();
-    glPopMatrix();
+    _object3D::draw_fill();
 }
-
 

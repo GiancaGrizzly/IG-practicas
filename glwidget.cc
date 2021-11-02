@@ -25,8 +25,23 @@ _gl_widget::_gl_widget(_window *Window1):Window(Window1)
 {
   setMinimumSize(300, 300);
   setFocusPolicy(Qt::StrongFocus);
+
+  //Inicializo el temporizador y le asigno la funcion idle en cada timeout
+  X_timer = new QTimer(this);
+  connect(X_timer,SIGNAL(timeout()),this,SLOT(X_idle_event()));
 }
 
+/*****************************************************************************//**
+ * Slot idle_event para la animacion
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::X_idle_event()
+{
+    Pedals.alfa += 1;
+    update();
+}
 
 /*****************************************************************************//**
  * Evento tecla pulsada
@@ -46,8 +61,19 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
   case Qt::Key_5:Object=OBJECT_SPHERE;break;
   case Qt::Key_6:Object=OBJECT_PLY;break;
   case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
+  case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
 
-  case Qt::Key_7:Object=OBJECT_AW;break;
+  case Qt::Key_Q:Pedals.alfa-=1;break;
+  case Qt::Key_W:Pedals.alfa+=1;break;
+
+  case Qt::Key_A:
+  {
+      if (X_timer->isActive())
+        X_timer->stop();
+      else
+        X_timer->start(0);
+      break;
+  }
 
   case Qt::Key_P:Draw_point=!Draw_point;break;
   case Qt::Key_L:Draw_line=!Draw_line;break;
@@ -158,7 +184,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_AW:Axis_wheels.draw_line();
+    case OBJECT_HIERARCHICAL:Pedals.draw_line();
 
     default:break;
     }
@@ -176,7 +202,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_fill();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
 
-    case OBJECT_AW:Axis_wheels.draw_fill();
+    case OBJECT_HIERARCHICAL:Pedals.draw_fill();
 
     default:break;
     }

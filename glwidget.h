@@ -27,6 +27,15 @@
 #include "X_ply_revolution.h"
 
 #include "X_axis_wheels.h"
+#include "X_arandela.h"
+#include "X_axis_misc.h"
+#include "X_axis_body.h"
+#include "X_cojin.h"
+#include "X_axis_join.h"
+#include "X_pedal.h"
+#include "X_pedals.h"
+
+#include <QTimer>
 
 
 namespace _gl_widget_ne {
@@ -42,7 +51,7 @@ namespace _gl_widget_ne {
 
   typedef enum {MODE_DRAW_POINT,MODE_DRAW_LINE,MODE_DRAW_FILL,MODE_DRAW_CHESS} _mode_draw;
   typedef enum {OBJECT_TETRAHEDRON, OBJECT_CUBE, OBJECT_PLY, OBJECT_CONE, OBJECT_CYLINDER,
-                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_AW} _object;
+                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_HIERARCHICAL} _object;
 }
 
 class _window;
@@ -74,6 +83,8 @@ protected:
   void initializeGL() Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *Keyevent) Q_DECL_OVERRIDE;
 
+private slots:
+  void X_idle_event();
 
 private:
   _window *Window;
@@ -89,7 +100,15 @@ private:
   _X_ply_revolution Ply_revolution;
 
   _X_axis_wheels Axis_wheels;
+  _X_arandela Arandela;
+  _X_axis_misc Axis_misc;
+  _X_axis_body Axis_body;
+  _X_cojin Cojin;
+  _X_axis_join Axis_join;
+  _X_pedal Pedal;
+  _X_pedals Pedals;
 
+  QTimer *X_timer;
 
   _gl_widget_ne::_object Object;
 
