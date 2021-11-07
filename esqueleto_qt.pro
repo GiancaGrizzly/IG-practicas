@@ -10,8 +10,10 @@ HEADERS += \
   X_cylinder.h \
   X_pedal.h \
   X_pedals.h \
+  X_pedals_axis.h \
   X_ply_file.h \
   X_ply_revolution.h \
+  X_prueba.h \
   X_revolution_object.h \
   X_sphere.h \
   X_wheel.h \
@@ -37,8 +39,10 @@ SOURCES += \
   X_cylinder.cpp \
   X_pedal.cpp \
   X_pedals.cpp \
+  X_pedals_axis.cpp \
   X_ply_file.cpp \
   X_ply_revolution.cpp \
+  X_prueba.cpp \
   X_revolution_object.cpp \
   X_sphere.cpp \
   X_wheel.cpp \

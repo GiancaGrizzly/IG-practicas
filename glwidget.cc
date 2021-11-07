@@ -39,7 +39,7 @@ _gl_widget::_gl_widget(_window *Window1):Window(Window1)
 
 void _gl_widget::X_idle_event()
 {
-    Pedals.alfa += 1;
+    Prueba.alfa -= 1;
     update();
 }
 
@@ -63,8 +63,8 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
   case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
   case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
 
-  case Qt::Key_Q:Pedals.alfa-=1;break;
-  case Qt::Key_W:Pedals.alfa+=1;break;
+  case Qt::Key_Q:Pedals_axis.alfa-=1;break;
+  case Qt::Key_W:Pedals_axis.alfa+=1;break;
 
   case Qt::Key_A:
   {
@@ -184,7 +184,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_HIERARCHICAL:Pedals.draw_line();
+    case OBJECT_HIERARCHICAL:Prueba.draw_line();
 
     default:break;
     }
@@ -202,7 +202,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_fill();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
 
-    case OBJECT_HIERARCHICAL:Pedals.draw_fill();
+    case OBJECT_HIERARCHICAL:Prueba.draw_fill();
 
     default:break;
     }

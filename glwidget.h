@@ -34,6 +34,8 @@
 #include "X_axis_join.h"
 #include "X_pedal.h"
 #include "X_pedals.h"
+#include "X_pedals_axis.h"
+#include "X_prueba.h"
 
 #include <QTimer>
 
@@ -107,6 +109,8 @@ private:
   _X_axis_join Axis_join;
   _X_pedal Pedal;
   _X_pedals Pedals;
+  _X_pedals_axis Pedals_axis;
+  _X_prueba Prueba;
 
   QTimer *X_timer;
 

@@ -1,8 +1,7 @@
-#ifndef X_PEDALS_H
-#define X_PEDALS_H
+#ifndef X_PEDALS_AXIS_H
+#define X_PEDALS_AXIS_H
 
-#include "X_pedal.h"
-#include "X_arandela.h"
+#include "X_pedals.h"
 #include "X_axis_misc.h"
 
 /*****************************************************************************//**
@@ -11,16 +10,16 @@
  *
  *****************************************************************************/
 
-class _X_pedals
+class _X_pedals_axis
 {
 public:
     void draw_line();
     void draw_fill();
 
+    float alfa = 0;
 private:
-    _X_pedal Pedal;
-    _X_arandela Arandela;
+    _X_pedals Pedals;
     _X_axis_misc Axis_misc;
 };
 
-#endif // X_PEDALS_H
+#endif // X_PEDALS_AXIS_H

@@ -63,8 +63,10 @@ SOURCES       = X_arandela.cpp \
 		X_cylinder.cpp \
 		X_pedal.cpp \
 		X_pedals.cpp \
+		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
+		X_prueba.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
 		X_wheel.cpp \
@@ -88,8 +90,10 @@ OBJECTS       = X_arandela.o \
 		X_cylinder.o \
 		X_pedal.o \
 		X_pedals.o \
+		X_pedals_axis.o \
 		X_ply_file.o \
 		X_ply_revolution.o \
+		X_prueba.o \
 		X_revolution_object.o \
 		X_sphere.o \
 		X_wheel.o \
@@ -308,8 +312,10 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		X_cylinder.h \
 		X_pedal.h \
 		X_pedals.h \
+		X_pedals_axis.h \
 		X_ply_file.h \
 		X_ply_revolution.h \
+		X_prueba.h \
 		X_revolution_object.h \
 		X_sphere.h \
 		X_wheel.h \
@@ -332,8 +338,10 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		X_cylinder.cpp \
 		X_pedal.cpp \
 		X_pedals.cpp \
+		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
+		X_prueba.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
 		X_wheel.cpp \
@@ -762,8 +770,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.12.11/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.h X_axis_body.h X_axis_join.h X_axis_misc.h X_axis_wheels.h X_cojin.h X_cone.h X_cube.h X_cylinder.h X_pedal.h X_pedals.h X_ply_file.h X_ply_revolution.h X_revolution_object.h X_sphere.h X_wheel.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.cpp X_axis_body.cpp X_axis_join.cpp X_axis_misc.cpp X_axis_wheels.cpp X_cojin.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_pedal.cpp X_pedals.cpp X_ply_file.cpp X_ply_revolution.cpp X_revolution_object.cpp X_sphere.cpp X_wheel.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
+	$(COPY_FILE) --parents X_arandela.h X_axis_body.h X_axis_join.h X_axis_misc.h X_axis_wheels.h X_cojin.h X_cone.h X_cube.h X_cylinder.h X_pedal.h X_pedals.h X_pedals_axis.h X_ply_file.h X_ply_revolution.h X_prueba.h X_revolution_object.h X_sphere.h X_wheel.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents X_arandela.cpp X_axis_body.cpp X_axis_join.cpp X_axis_misc.cpp X_axis_wheels.cpp X_cojin.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_pedal.cpp X_pedals.cpp X_pedals_axis.cpp X_ply_file.cpp X_ply_revolution.cpp X_prueba.cpp X_revolution_object.cpp X_sphere.cpp X_wheel.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -934,6 +942,11 @@ moc_glwidget.cpp: glwidget.h \
 		X_axis_join.h \
 		X_pedal.h \
 		X_pedals.h \
+		X_pedals_axis.h \
+		X_prueba.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		../../../Qt/5.12.11/gcc_64/bin/moc
 	/home/gianca/Qt/5.12.11/gcc_64/bin/moc $(DEFINES) --include /home/gianca/IG/practicas/skeleton/moc_predefs.h -I/home/gianca/Qt/5.12.11/gcc_64/mkspecs/linux-g++ -I/home/gianca/IG/practicas/skeleton -I/home/gianca/Qt/5.12.11/gcc_64/include -I/home/gianca/Qt/5.12.11/gcc_64/include/QtWidgets -I/home/gianca/Qt/5.12.11/gcc_64/include/QtGui -I/home/gianca/Qt/5.12.11/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include glwidget.h -o moc_glwidget.cpp
@@ -1182,6 +1195,20 @@ X_pedals.o: X_pedals.cpp X_pedals.h \
 		X_cylinder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_pedals.o X_pedals.cpp
 
+X_pedals_axis.o: X_pedals_axis.cpp X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_cube.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		X_axis_misc.h \
+		X_cylinder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_pedals_axis.o X_pedals_axis.cpp
+
 X_ply_file.o: X_ply_file.cpp X_ply_file.h \
 		file_ply_stl.h \
 		vertex.h \
@@ -1199,6 +1226,21 @@ X_ply_revolution.o: X_ply_revolution.cpp X_ply_revolution.h \
 		colors.h \
 		X_revolution_object.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_ply_revolution.o X_ply_revolution.cpp
+
+X_prueba.o: X_prueba.cpp X_prueba.h \
+		X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_cube.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		X_axis_misc.h \
+		X_cylinder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_prueba.o X_prueba.cpp
 
 X_revolution_object.o: X_revolution_object.cpp X_revolution_object.h \
 		object3d.h \
@@ -1525,6 +1567,11 @@ glwidget.o: glwidget.cc glwidget.h \
 		X_axis_join.h \
 		X_pedal.h \
 		X_pedals.h \
+		X_pedals_axis.h \
+		X_prueba.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
 		window.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1723,7 +1770,12 @@ window.o: window.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 		X_cojin.h \
 		X_axis_join.h \
 		X_pedal.h \
-		X_pedals.h
+		X_pedals.h \
+		X_pedals_axis.h \
+		X_prueba.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cc
 
 moc_glwidget.o: moc_glwidget.cpp 

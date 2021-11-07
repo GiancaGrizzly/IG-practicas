@@ -13,7 +13,6 @@ void _X_pedals::draw_line()
     //Arandela (1)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
     glRotatef(90,0,0,1);
 
     Arandela.draw_line();
@@ -22,7 +21,7 @@ void _X_pedals::draw_line()
     //Eje (2)
     glPushMatrix();
 
-    glTranslatef(0,2.5,0);
+    glTranslatef(0,-1.75,0);
 
     Axis_misc.draw_line();
     glPopMatrix();
@@ -30,7 +29,7 @@ void _X_pedals::draw_line()
     //Arandela (3)
     glPushMatrix();
 
-    glTranslatef(0,4.25,0);
+    glTranslatef(0,-3.5,0);
     glRotatef(90,0,0,1);
 
     Arandela.draw_line();
@@ -39,7 +38,7 @@ void _X_pedals::draw_line()
     //Eje (4)
     glPushMatrix();
 
-    glTranslatef(0.5,0.75,0);
+    glTranslatef(0.5,-3.5,0);
     glRotatef(90,0,0,1);
 
     Axis_misc.draw_line();
@@ -48,8 +47,7 @@ void _X_pedals::draw_line()
     //Pedal (5)
     glPushMatrix();
 
-    glTranslatef(3,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glTranslatef(3,-3.5,0);
 
     Pedal.draw_line();
     glPopMatrix();
@@ -65,10 +63,9 @@ void _X_pedals::draw_fill()
 {
     glMatrixMode(GL_MODELVIEW);
 
-    //Arandela parte inferior
+    //Arandela (1)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
     glRotatef(90,0,0,1);
 
     Arandela.draw_fill();
@@ -77,7 +74,7 @@ void _X_pedals::draw_fill()
     //Eje (2)
     glPushMatrix();
 
-    glTranslatef(0,2.5,0);
+    glTranslatef(0,-1.75,0);
 
     Axis_misc.draw_fill();
     glPopMatrix();
@@ -85,7 +82,7 @@ void _X_pedals::draw_fill()
     //Arandela (3)
     glPushMatrix();
 
-    glTranslatef(0,4.25,0);
+    glTranslatef(0,-3.5,0);
     glRotatef(90,0,0,1);
 
     Arandela.draw_fill();
@@ -94,7 +91,7 @@ void _X_pedals::draw_fill()
     //Eje (4)
     glPushMatrix();
 
-    glTranslatef(0.5,0.75,0);
+    glTranslatef(0.5,-3.5,0);
     glRotatef(90,0,0,1);
 
     Axis_misc.draw_fill();
@@ -103,8 +100,7 @@ void _X_pedals::draw_fill()
     //Pedal (5)
     glPushMatrix();
 
-    glTranslatef(3,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glTranslatef(3,-3.5,0);
 
     Pedal.draw_fill();
     glPopMatrix();
