@@ -20,31 +20,24 @@ using namespace _colors_ne;
 
 void _object3D::draw_line()
 {
-    int Vertex_1, Vertex_2, Vertex_3;
-
     glBegin(GL_LINES);
 
     // glLineWidth(3);  // Para cambiar el grosor de la linea
     // glColor3fv((GLfloat *) &MAGENTA);  // Para cambiar el color de la linea
 
     for (unsigned int i=0; i<Triangles.size(); i++) {
-        Vertex_1 = Triangles[i]._0;
-        Vertex_2 = Triangles[i]._1;
-        Vertex_3 = Triangles[i]._2;
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
 
-        glVertex3fv((GLfloat *) &Vertices[Vertex_1]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
 
-        glVertex3fv((GLfloat *) &Vertices[Vertex_1]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_3]);
-
-        glVertex3fv((GLfloat *) &Vertices[Vertex_2]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_3]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
 
     glEnd();
 }
-
 
 /*****************************************************************************//**
  *
@@ -54,25 +47,18 @@ void _object3D::draw_line()
 
 void _object3D::draw_fill()
 {
-    int Vertex_1, Vertex_2, Vertex_3;
-
     glBegin(GL_TRIANGLES);
 
     // glColor3fv((GLfloat *) &BLUE);  // Para cambiar el color del relleno
 
     for (unsigned int i=0; i<Triangles.size(); i++) {
-        Vertex_1 = Triangles[i]._0;
-        Vertex_2 = Triangles[i]._1;
-        Vertex_3 = Triangles[i]._2;
-
-        glVertex3fv((GLfloat *) &Vertices[Vertex_1]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_2]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_3]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
 
     glEnd();
 }
-
 
 /*****************************************************************************//**
  *
@@ -82,30 +68,20 @@ void _object3D::draw_fill()
 
 void _object3D::draw_chess()
 {
-    int Vertex_1, Vertex_2, Vertex_3;
-
     glBegin(GL_TRIANGLES);
 
     glColor3fv((GLfloat *) &BLACK);  // Para cambiar el color del relleno
     for (unsigned int i=0; i<Triangles.size(); i+=2) {
-        Vertex_1 = Triangles[i]._0;
-        Vertex_2 = Triangles[i]._1;
-        Vertex_3 = Triangles[i]._2;
-
-        glVertex3fv((GLfloat *) &Vertices[Vertex_1]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_2]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_3]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
 
     glColor3fv((GLfloat *) &YEllOW);  // Para cambiar el color del relleno
     for (unsigned int i=1; i<Triangles.size(); i+=2) {
-        Vertex_1 = Triangles[i]._0;
-        Vertex_2 = Triangles[i]._1;
-        Vertex_3 = Triangles[i]._2;
-
-        glVertex3fv((GLfloat *) &Vertices[Vertex_1]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_2]);
-        glVertex3fv((GLfloat *) &Vertices[Vertex_3]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
 
     glEnd();
@@ -162,6 +138,60 @@ void _object3D::scale(const _vertex3f &vector_s)
     }
 }
 
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
 
+void _object3D::draw_lighted_flat_shading()
+{
+    GLfloat Light_position[] = {1,1,1,0};
+    GLfloat Light_ambient[] = {1,1,1};
+    GLfloat Material_diffuse[] = {0.7,0,0};
+    GLfloat Material_ambient[] = {0.1,0,0};
+
+    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light_position);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light_ambient);
+
+    glPolygonMode(GL_FRONT, GL_FILL);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*) &Material_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, (GLfloat*) &Material_diffuse);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glShadeModel(GL_FLAT);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat*) &Triangles_normals[i]);
+
+    }
+    glEnd();
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::compute_triangles_normals()
+{
+    _vertex3f A, B;
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        // A = P1-P0  ******** B = P2-P0
+        A = Vertices[Triangles[i]._1] - Vertices[Triangles[i]._0];
+        B = Vertices[Triangles[i]._2] - Vertices[Triangles[i]._0];
+
+        // Guardo el producto vectorial entre A y B y lo normalizo
+        Triangles_normals[i] = (A.cross_product(B)).normalize();
+    }
+}
 
 

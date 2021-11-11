@@ -1,4 +1,5 @@
-#include "X_prueba.h"
+
+#include "X_body_2.h"
 
 /*****************************************************************************//**
  *
@@ -6,23 +7,28 @@
  *
  *****************************************************************************/
 
-void _X_prueba::draw_line()
+void _X_body_2::draw_line()
 {
     glMatrixMode(GL_MODELVIEW);
 
-    //Eje (1)
+    //Eje body (1)
+    Axis_body.draw_line();
+
+    //Body join (2)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glTranslatef(1.25,2,0);
 
-    Pedals_axis.draw_line();
+    Body_join.draw_line();
     glPopMatrix();
 
-    //Body (2)
+    //Arandela (3)
     glPushMatrix();
 
-    Body.draw_line();
+    glTranslatef(0,-3.25,0);
+    glRotatef(90,0,0,1);
+
+    Arandela.draw_line();
     glPopMatrix();
 }
 
@@ -32,23 +38,28 @@ void _X_prueba::draw_line()
  *
  *****************************************************************************/
 
-void _X_prueba::draw_fill()
+void _X_body_2::draw_fill()
 {
     glMatrixMode(GL_MODELVIEW);
 
-    //Eje (1)
+    //Eje body (1)
+    Axis_body.draw_fill();
+
+    //Body join (2)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glTranslatef(1.25,2,0);
 
-    Pedals_axis.draw_fill();
+    Body_join.draw_fill();
     glPopMatrix();
 
-    //Body (2)
+    //Arandela (3)
     glPushMatrix();
 
-    Body.draw_fill();
+    glTranslatef(0,-3.25,0);
+    glRotatef(90,0,0,1);
+
+    Arandela.draw_fill();
     glPopMatrix();
 }
 

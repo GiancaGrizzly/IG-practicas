@@ -1,9 +1,9 @@
-#ifndef X_PRUEBA_H
-#define X_PRUEBA_H
+#ifndef X_BODY_2_H
+#define X_BODY_2_H
 
-#include "X_pedals_axis.h"
-#include "X_body.h"
-
+#include "X_axis_body.h"
+#include "X_body_join.h"
+#include "X_arandela.h"
 
 /*****************************************************************************//**
  *
@@ -11,16 +11,15 @@
  *
  *****************************************************************************/
 
-class _X_prueba
+class _X_body_2
 {
 public:
     void draw_line();
     void draw_fill();
-
-    float alfa = 0;
 private:
-    _X_pedals_axis Pedals_axis;
-    _X_body Body;
+    _X_axis_body Axis_body;
+    _X_body_join Body_join;
+    _X_arandela Arandela;
 };
 
-#endif // X_PRUEBA_H
+#endif // X_BODY_2_H

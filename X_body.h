@@ -1,7 +1,9 @@
-#ifndef X_AXIS_JOIN_H
-#define X_AXIS_JOIN_H
+#ifndef X_BODY_H
+#define X_BODY_H
 
-#include "X_cube.h"
+#include "X_axis_body.h"
+#include "X_body_2.h"
+#include "X_arandela.h"
 
 /*****************************************************************************//**
  *
@@ -9,13 +11,15 @@
  *
  *****************************************************************************/
 
-class _X_axis_join
+class _X_body
 {
 public:
     void draw_line();
     void draw_fill();
 private:
-    _X_cube Cube;
+    _X_axis_body Axis_body;
+    _X_body_2 Body_2;
+    _X_arandela Arandela;
 };
 
-#endif // X_AXIS_JOIN_H
+#endif // X_BODY_H

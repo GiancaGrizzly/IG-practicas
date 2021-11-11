@@ -1,9 +1,10 @@
 HEADERS += \
   X_arandela.h \
   X_axis_body.h \
-  X_axis_join.h \
   X_axis_misc.h \
-  X_axis_wheels.h \
+  X_body.h \
+  X_body_2.h \
+  X_body_join.h \
   X_cojin.h \
   X_cone.h \
   X_cube.h \
@@ -30,9 +31,10 @@ HEADERS += \
 SOURCES += \
   X_arandela.cpp \
   X_axis_body.cpp \
-  X_axis_join.cpp \
   X_axis_misc.cpp \
-  X_axis_wheels.cpp \
+  X_body.cpp \
+  X_body_2.cpp \
+  X_body_join.cpp \
   X_cojin.cpp \
   X_cone.cpp \
   X_cube.cpp \

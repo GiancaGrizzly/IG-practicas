@@ -1,9 +1,7 @@
-#ifndef X_PRUEBA_H
-#define X_PRUEBA_H
+#ifndef X_BODY_JOIN_H
+#define X_BODY_JOIN_H
 
-#include "X_pedals_axis.h"
-#include "X_body.h"
-
+#include "X_cube.h"
 
 /*****************************************************************************//**
  *
@@ -11,16 +9,13 @@
  *
  *****************************************************************************/
 
-class _X_prueba
+class _X_body_join
 {
 public:
     void draw_line();
     void draw_fill();
-
-    float alfa = 0;
 private:
-    _X_pedals_axis Pedals_axis;
-    _X_body Body;
+    _X_cube Cube;
 };
 
-#endif // X_PRUEBA_H
+#endif // X_BODY_JOIN_H
