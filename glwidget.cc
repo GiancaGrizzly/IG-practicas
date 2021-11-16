@@ -39,7 +39,27 @@ _gl_widget::_gl_widget(_window *Window1):Window(Window1)
 
 void _gl_widget::X_idle_event()
 {
-    Prueba.alfa -= 1;
+    // Variable que controla el giro de los pedales
+    Monocycle.alfa -= step_alfa;
+
+//    cout << Monocycle.beta << endl;
+
+    // Se mantiene el eje en un determinado rango de tamaño
+    if (Monocycle.Get_asiento_alfa() < 0)
+        Monocycle.Set_asiento_grow(true);
+    else if (Monocycle.Get_asiento_alfa() > 300)
+        Monocycle.Set_asiento_grow(false);
+
+    // En funcion de grow, el eje crece o decrece, y además gira en un sentido u otro
+    if (Monocycle.Get_asiento_grow()) {
+        Monocycle.Set_asiento_alfa(step_eje_asiento);
+        Monocycle.beta += step_beta;
+    }
+    else {
+        Monocycle.Set_asiento_alfa(-step_eje_asiento);
+        Monocycle.beta -= step_beta;
+    }
+
     update();
 }
 
@@ -52,43 +72,101 @@ void _gl_widget::X_idle_event()
 
 void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 {
-  switch(Keyevent->key()){
-  case Qt::Key_1:Object=OBJECT_TETRAHEDRON;break;
+    switch(Keyevent->key()) {
 
-  case Qt::Key_2:Object=OBJECT_CUBE;break;
-  case Qt::Key_3:Object=OBJECT_CONE;break;
-  case Qt::Key_4:Object=OBJECT_CYLINDER;break;
-  case Qt::Key_5:Object=OBJECT_SPHERE;break;
-  case Qt::Key_6:Object=OBJECT_PLY;break;
-  case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
-  case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
+        case Qt::Key_1:Object=OBJECT_TETRAHEDRON;break;
+        case Qt::Key_2:Object=OBJECT_CUBE;break;
+        case Qt::Key_3:Object=OBJECT_CONE;break;
+        case Qt::Key_4:Object=OBJECT_CYLINDER;break;
+        case Qt::Key_5:Object=OBJECT_SPHERE;break;
+        case Qt::Key_6:Object=OBJECT_PLY;break;
+        case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
+        case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
 
-  case Qt::Key_Q:Pedals_axis.alfa-=1;break;
-  case Qt::Key_W:Pedals_axis.alfa+=1;break;
+        case Qt::Key_A:
+        {
+            if (X_timer->isActive())
+                X_timer->stop();
+            else X_timer->start(0);
+            break;
+        }
 
-  case Qt::Key_A:
-  {
-      if (X_timer->isActive())
-        X_timer->stop();
-      else
-        X_timer->start(0);
-      break;
-  }
+        // Controlador de la animación (rotación) de los pedales y la rueda
+        case Qt::Key_W:
+        {
+            if (Keyevent->modifiers() & Qt::ShiftModifier){
+                Monocycle.alfa += step_alfa; break;
+            }
+            else if (Keyevent->modifiers() & Qt::ControlModifier) {
+                if (step_alfa > 1) step_alfa -= 1;
+                break;
+            }
+            else if (Keyevent->modifiers() & Qt::AltModifier) {
+                if (step_alfa < 10) step_alfa += 1;
+                break;
+            }
+            else {
+                Monocycle.alfa -= step_alfa; break;
+            }
+        }
 
-  case Qt::Key_P:Draw_point=!Draw_point;break;
-  case Qt::Key_L:Draw_line=!Draw_line;break;
-  case Qt::Key_F:Draw_fill=!Draw_fill;break;
-  case Qt::Key_C:Draw_chess=!Draw_chess;break;
+        // Controlador de la animación (rotación) del eje y el sillín
+        case Qt::Key_E:
+        {
+            if (Keyevent->modifiers() & Qt::ShiftModifier){
+                Monocycle.beta += step_beta; break;
+            }
+            else if (Keyevent->modifiers() & Qt::ControlModifier) {
+                if (step_beta > 1) step_beta -= 1;
+                break;
+            }
+            else if (Keyevent->modifiers() & Qt::AltModifier) {
+                if (step_beta < 10) step_beta += 1;
+                break;
+            }
+            else {
+                Monocycle.beta -= step_beta; break;
+            }
+        }
 
-  case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
-  case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
-  case Qt::Key_Up:Observer_angle_x-=ANGLE_STEP;break;
-  case Qt::Key_Down:Observer_angle_x+=ANGLE_STEP;break;
-  case Qt::Key_PageUp:Observer_distance*=1.2;break;
-  case Qt::Key_PageDown:Observer_distance/=1.2;break;
-  }
+        // Controlador de la animación (escalado) del eje del sillín
+        case Qt::Key_R:
+        {
+            if (Keyevent->modifiers() & Qt::ShiftModifier){
+                if (Monocycle.Get_asiento_alfa() > 0)
+                    Monocycle.Set_asiento_alfa(-step_eje_asiento);
+                break;
+            }
+            else if (Keyevent->modifiers() & Qt::ControlModifier) {
+                if (step_eje_asiento > 1) step_eje_asiento -= 1;
+                break;
+            }
+            else if (Keyevent->modifiers() & Qt::AltModifier) {
+                if (step_eje_asiento < 5) step_eje_asiento += 1;
+                break;
+            }
+            else {
+                if (Monocycle.Get_asiento_alfa() < 300)
+                    Monocycle.Set_asiento_alfa(step_eje_asiento);
+                break;
+            }
+        }
 
-  update();
+        case Qt::Key_P:Draw_point=!Draw_point;break;
+        case Qt::Key_L:Draw_line=!Draw_line;break;
+        case Qt::Key_F:Draw_fill=!Draw_fill;break;
+        case Qt::Key_C:Draw_chess=!Draw_chess;break;
+        case Qt::Key_F3:Draw_lighted_flat_shading=!Draw_lighted_flat_shading;break;
+
+        case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
+        case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
+        case Qt::Key_Up:Observer_angle_x-=ANGLE_STEP;break;
+        case Qt::Key_Down:Observer_angle_x+=ANGLE_STEP;break;
+        case Qt::Key_PageUp:Observer_distance*=1.2;break;
+        case Qt::Key_PageDown:Observer_distance/=1.2;break;
+    }
+
+    update();
 }
 
 
@@ -184,7 +262,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_HIERARCHICAL:Prueba.draw_line();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_line();
 
     default:break;
     }
@@ -202,7 +280,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_fill();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
 
-    case OBJECT_HIERARCHICAL:Prueba.draw_fill();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();
 
     default:break;
     }
@@ -217,6 +295,21 @@ void _gl_widget::draw_objects()
     case OBJECT_CONE:Cone.draw_chess();break;
     case OBJECT_CYLINDER:Cylinder.draw_chess();break;
     case OBJECT_SPHERE:Sphere.draw_chess();break;
+    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_chess();break;
+
+    default:break;
+    }
+  }
+
+  if (Draw_lighted_flat_shading){
+    switch (Object){
+    case OBJECT_TETRAHEDRON:Tetrahedron.draw_lighted_flat_shading();break;
+
+    case OBJECT_CUBE:Cube.draw_lighted_flat_shading();break;
+    case OBJECT_PLY:Ply_file.draw_lighted_flat_shading();break;
+    case OBJECT_CONE:Cone.draw_lighted_flat_shading();break;
+    case OBJECT_CYLINDER:Cylinder.draw_lighted_flat_shading();break;
+    case OBJECT_SPHERE:Sphere.draw_lighted_flat_shading();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_chess();break;
 
     default:break;
@@ -296,4 +389,14 @@ void _gl_widget::initializeGL()
   Draw_line=true;
   Draw_fill=false;
   Draw_chess=false;
+
+  Draw_lighted_flat_shading = false;
+
+  Monocycle.alfa = 0;
+  Monocycle.beta = 0;
+  Monocycle.Initialize_asiento(0,false);
+
+  step_alfa = 1;
+  step_beta = 1;
+  step_eje_asiento = 1;
 }

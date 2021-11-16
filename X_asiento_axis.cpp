@@ -1,4 +1,4 @@
-#include "X_prueba.h"
+#include "X_asiento_axis.h"
 
 /*****************************************************************************//**
  *
@@ -6,23 +6,23 @@
  *
  *****************************************************************************/
 
-void _X_prueba::draw_line()
+void _X_asiento_axis::draw_line()
 {
     glMatrixMode(GL_MODELVIEW);
 
-    //Eje (1)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glScalef(1,1+alfa/100,1);
 
-    Pedals_axis.draw_line();
+    Eje.draw_line();
     glPopMatrix();
 
-    //Body (2)
     glPushMatrix();
 
-    Body.draw_line();
+    glTranslatef(0,alfa/100,0);
+    glTranslatef(0,1.5,0);
+
+    Asiento.draw_line();
     glPopMatrix();
 }
 
@@ -32,24 +32,22 @@ void _X_prueba::draw_line()
  *
  *****************************************************************************/
 
-void _X_prueba::draw_fill()
+void _X_asiento_axis::draw_fill()
 {
     glMatrixMode(GL_MODELVIEW);
 
-    //Eje (1)
     glPushMatrix();
 
-    glTranslatef(0,0.75,0);
-    glRotatef(alfa,1,0,0);
+    glScalef(1,1+alfa/100,1);
 
-    Pedals_axis.draw_fill();
+    Eje.draw_fill();
     glPopMatrix();
 
-    //Body (2)
     glPushMatrix();
 
-    Body.draw_fill();
+    glTranslatef(0,alfa/100,0);
+    glTranslatef(0,1.5,0);
+
+    Asiento.draw_fill();
     glPopMatrix();
 }
-
-

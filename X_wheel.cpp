@@ -10,6 +10,8 @@ using namespace _colors_ne;
 
 void _X_wheel::draw_line()
 {
+    glColor3fv((GLfloat *) &BLACK);
+
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
@@ -19,6 +21,8 @@ void _X_wheel::draw_line()
 
     Cylinder.draw_line();
     glPopMatrix();
+
+    glColor3fv((GLfloat *) &MAGENTA);
 }
 
 /*****************************************************************************//**

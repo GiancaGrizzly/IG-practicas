@@ -53,6 +53,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = X_arandela.cpp \
+		X_asiento.cpp \
+		X_asiento_axis.cpp \
 		X_axis_body.cpp \
 		X_axis_misc.cpp \
 		X_body.cpp \
@@ -62,12 +64,12 @@ SOURCES       = X_arandela.cpp \
 		X_cone.cpp \
 		X_cube.cpp \
 		X_cylinder.cpp \
+		X_monocycle.cpp \
 		X_pedal.cpp \
 		X_pedals.cpp \
 		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
-		X_prueba.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
 		X_wheel.cpp \
@@ -81,6 +83,8 @@ SOURCES       = X_arandela.cpp \
 		window.cc moc_glwidget.cpp \
 		moc_window.cpp
 OBJECTS       = X_arandela.o \
+		X_asiento.o \
+		X_asiento_axis.o \
 		X_axis_body.o \
 		X_axis_misc.o \
 		X_body.o \
@@ -90,12 +94,12 @@ OBJECTS       = X_arandela.o \
 		X_cone.o \
 		X_cube.o \
 		X_cylinder.o \
+		X_monocycle.o \
 		X_pedal.o \
 		X_pedals.o \
 		X_pedals_axis.o \
 		X_ply_file.o \
 		X_ply_revolution.o \
-		X_prueba.o \
 		X_revolution_object.o \
 		X_sphere.o \
 		X_wheel.o \
@@ -304,6 +308,8 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.11/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.12.11/gcc_64/mkspecs/features/lex.prf \
 		esqueleto_qt.pro X_arandela.h \
+		X_asiento.h \
+		X_asiento_axis.h \
 		X_axis_body.h \
 		X_axis_misc.h \
 		X_body.h \
@@ -313,12 +319,12 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		X_cone.h \
 		X_cube.h \
 		X_cylinder.h \
+		X_monocycle.h \
 		X_pedal.h \
 		X_pedals.h \
 		X_pedals_axis.h \
 		X_ply_file.h \
 		X_ply_revolution.h \
-		X_prueba.h \
 		X_revolution_object.h \
 		X_sphere.h \
 		X_wheel.h \
@@ -331,6 +337,8 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		glwidget.h \
 		vertex.h \
 		window.h X_arandela.cpp \
+		X_asiento.cpp \
+		X_asiento_axis.cpp \
 		X_axis_body.cpp \
 		X_axis_misc.cpp \
 		X_body.cpp \
@@ -340,12 +348,12 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		X_cone.cpp \
 		X_cube.cpp \
 		X_cylinder.cpp \
+		X_monocycle.cpp \
 		X_pedal.cpp \
 		X_pedals.cpp \
 		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
-		X_prueba.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
 		X_wheel.cpp \
@@ -774,8 +782,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.12.11/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.h X_axis_body.h X_axis_misc.h X_body.h X_body_2.h X_body_join.h X_cojin.h X_cone.h X_cube.h X_cylinder.h X_pedal.h X_pedals.h X_pedals_axis.h X_ply_file.h X_ply_revolution.h X_prueba.h X_revolution_object.h X_sphere.h X_wheel.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.cpp X_axis_body.cpp X_axis_misc.cpp X_body.cpp X_body_2.cpp X_body_join.cpp X_cojin.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_pedal.cpp X_pedals.cpp X_pedals_axis.cpp X_ply_file.cpp X_ply_revolution.cpp X_prueba.cpp X_revolution_object.cpp X_sphere.cpp X_wheel.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
+	$(COPY_FILE) --parents X_arandela.h X_asiento.h X_asiento_axis.h X_axis_body.h X_axis_misc.h X_body.h X_body_2.h X_body_join.h X_cojin.h X_cone.h X_cube.h X_cylinder.h X_monocycle.h X_pedal.h X_pedals.h X_pedals_axis.h X_ply_file.h X_ply_revolution.h X_revolution_object.h X_sphere.h X_wheel.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents X_arandela.cpp X_asiento.cpp X_asiento_axis.cpp X_axis_body.cpp X_axis_misc.cpp X_body.cpp X_body_2.cpp X_body_join.cpp X_cojin.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_monocycle.cpp X_pedal.cpp X_pedals.cpp X_pedals_axis.cpp X_ply_file.cpp X_ply_revolution.cpp X_revolution_object.cpp X_sphere.cpp X_wheel.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -937,17 +945,20 @@ moc_glwidget.cpp: glwidget.h \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_arandela.h \
-		X_axis_misc.h \
-		X_axis_body.h \
+		X_monocycle.h \
+		X_asiento.h \
 		X_cojin.h \
-		X_body_join.h \
-		X_pedal.h \
-		X_pedals.h \
-		X_pedals_axis.h \
-		X_body_2.h \
+		X_axis_misc.h \
 		X_body.h \
-		X_prueba.h \
+		X_axis_body.h \
+		X_body_2.h \
+		X_body_join.h \
+		X_arandela.h \
+		X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_wheel.h \
+		X_asiento_axis.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
@@ -1110,6 +1121,28 @@ X_arandela.o: X_arandela.cpp X_arandela.h \
 		vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_arandela.o X_arandela.cpp
 
+X_asiento.o: X_asiento.cpp X_asiento.h \
+		X_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_asiento.o X_asiento.cpp
+
+X_asiento_axis.o: X_asiento_axis.cpp X_asiento_axis.h \
+		X_axis_misc.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X_asiento.h \
+		X_cojin.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_asiento_axis.o X_asiento_axis.cpp
+
 X_axis_body.o: X_axis_body.cpp X_axis_body.h \
 		X_cylinder.h \
 		X_revolution_object.h \
@@ -1195,6 +1228,28 @@ X_cylinder.o: X_cylinder.cpp X_cylinder.h \
 		vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_cylinder.o X_cylinder.cpp
 
+X_monocycle.o: X_monocycle.cpp X_monocycle.h \
+		X_asiento.h \
+		X_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X_axis_misc.h \
+		X_body.h \
+		X_axis_body.h \
+		X_body_2.h \
+		X_body_join.h \
+		X_cube.h \
+		X_arandela.h \
+		X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_wheel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_monocycle.o X_monocycle.cpp
+
 X_pedal.o: X_pedal.cpp X_pedal.h \
 		X_cube.h \
 		object3d.h \
@@ -1247,21 +1302,6 @@ X_ply_revolution.o: X_ply_revolution.cpp X_ply_revolution.h \
 		colors.h \
 		X_revolution_object.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_ply_revolution.o X_ply_revolution.cpp
-
-X_prueba.o: X_prueba.cpp X_prueba.h \
-		X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_cube.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_arandela.h \
-		X_revolution_object.h \
-		X_axis_misc.h \
-		X_cylinder.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_prueba.o X_prueba.cpp
 
 X_revolution_object.o: X_revolution_object.cpp X_revolution_object.h \
 		object3d.h \
@@ -1579,17 +1619,20 @@ glwidget.o: glwidget.cc glwidget.h \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_arandela.h \
-		X_axis_misc.h \
-		X_axis_body.h \
+		X_monocycle.h \
+		X_asiento.h \
 		X_cojin.h \
-		X_body_join.h \
-		X_pedal.h \
-		X_pedals.h \
-		X_pedals_axis.h \
-		X_body_2.h \
+		X_axis_misc.h \
 		X_body.h \
-		X_prueba.h \
+		X_axis_body.h \
+		X_body_2.h \
+		X_body_join.h \
+		X_arandela.h \
+		X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_wheel.h \
+		X_asiento_axis.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
@@ -1783,17 +1826,20 @@ window.o: window.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_arandela.h \
-		X_axis_misc.h \
-		X_axis_body.h \
+		X_monocycle.h \
+		X_asiento.h \
 		X_cojin.h \
-		X_body_join.h \
-		X_pedal.h \
-		X_pedals.h \
-		X_pedals_axis.h \
-		X_body_2.h \
+		X_axis_misc.h \
 		X_body.h \
-		X_prueba.h \
+		X_axis_body.h \
+		X_body_2.h \
+		X_body_join.h \
+		X_arandela.h \
+		X_pedals_axis.h \
+		X_pedals.h \
+		X_pedal.h \
+		X_wheel.h \
+		X_asiento_axis.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h

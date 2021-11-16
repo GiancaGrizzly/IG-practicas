@@ -40,3 +40,21 @@ void _X_axis_misc::draw_fill()
     glPopMatrix();
 }
 
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _X_axis_misc::draw_chess()
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    glPushMatrix();
+
+    glScalef(1,2,1);
+
+    Cylinder.draw_chess();
+    glPopMatrix();
+}
+

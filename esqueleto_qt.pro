@@ -1,5 +1,7 @@
 HEADERS += \
   X_arandela.h \
+  X_asiento.h \
+  X_asiento_axis.h \
   X_axis_body.h \
   X_axis_misc.h \
   X_body.h \
@@ -9,12 +11,12 @@ HEADERS += \
   X_cone.h \
   X_cube.h \
   X_cylinder.h \
+  X_monocycle.h \
   X_pedal.h \
   X_pedals.h \
   X_pedals_axis.h \
   X_ply_file.h \
   X_ply_revolution.h \
-  X_prueba.h \
   X_revolution_object.h \
   X_sphere.h \
   X_wheel.h \
@@ -30,6 +32,8 @@ HEADERS += \
 
 SOURCES += \
   X_arandela.cpp \
+  X_asiento.cpp \
+  X_asiento_axis.cpp \
   X_axis_body.cpp \
   X_axis_misc.cpp \
   X_body.cpp \
@@ -39,12 +43,12 @@ SOURCES += \
   X_cone.cpp \
   X_cube.cpp \
   X_cylinder.cpp \
+  X_monocycle.cpp \
   X_pedal.cpp \
   X_pedals.cpp \
   X_pedals_axis.cpp \
   X_ply_file.cpp \
   X_ply_revolution.cpp \
-  X_prueba.cpp \
   X_revolution_object.cpp \
   X_sphere.cpp \
   X_wheel.cpp \

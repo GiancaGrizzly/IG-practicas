@@ -14,6 +14,7 @@ class _X_axis_misc
 public:
     void draw_line();
     void draw_fill();
+    void draw_chess();
 private:
     _X_cylinder Cylinder;
 };

@@ -25,18 +25,20 @@
 #include "X_cylinder.h"
 #include "X_sphere.h"
 #include "X_ply_revolution.h"
+#include "X_monocycle.h"
 
-#include "X_arandela.h"
-#include "X_axis_misc.h"
-#include "X_axis_body.h"
-#include "X_cojin.h"
-#include "X_body_join.h"
-#include "X_pedal.h"
-#include "X_pedals.h"
-#include "X_pedals_axis.h"
-#include "X_body_2.h"
-#include "X_body.h"
-#include "X_prueba.h"
+//#include "X_arandela.h"
+//#include "X_axis_misc.h"
+//#include "X_axis_body.h"
+//#include "X_cojin.h"
+//#include "X_body_join.h"
+//#include "X_pedal.h"
+//#include "X_pedals.h"
+//#include "X_pedals_axis.h"
+//#include "X_body_2.h"
+//#include "X_body.h"
+//#include "X_asiento.h"
+//#include "X_asiento_axis.h"
 
 #include <QTimer>
 
@@ -101,18 +103,20 @@ private:
   _X_cylinder Cylinder;
   _X_sphere Sphere;
   _X_ply_revolution Ply_revolution;
+  _X_monocycle Monocycle;
 
-  _X_arandela Arandela;
-  _X_axis_misc Axis_misc;
-  _X_axis_body Axis_body;
-  _X_cojin Cojin;
-  _X_axis_body Axis_join;
-  _X_pedal Pedal;
-  _X_pedals Pedals;
-  _X_pedals_axis Pedals_axis;
-  _X_body_2 Body_2;
-  _X_body Body;
-  _X_prueba Prueba;
+//  _X_arandela Arandela;
+//  _X_axis_misc Axis_misc;
+//  _X_axis_body Axis_body;
+//  _X_cojin Cojin;
+//  _X_axis_body Axis_join;
+//  _X_pedal Pedal;
+//  _X_pedals Pedals;
+//  _X_pedals_axis Pedals_axis;
+//  _X_body_2 Body_2;
+//  _X_body Body;
+//  _X_asiento Asiento;
+//  _X_asiento_axis Asiento_axis;
 
   QTimer *X_timer;
 
@@ -123,9 +127,13 @@ private:
   bool Draw_fill;
   bool Draw_chess;
 
+  bool Draw_lighted_flat_shading;
+
   float Observer_angle_x;
   float Observer_angle_y;
   float Observer_distance;
+
+  int step_alfa, step_beta, step_eje_asiento;
 };
 
 #endif

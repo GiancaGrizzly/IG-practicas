@@ -166,8 +166,10 @@ void _object3D::draw_lighted_flat_shading()
 
     glBegin(GL_TRIANGLES);
     for (unsigned int i=0; i < Triangles.size(); i++) {
-        glNormal3fv((GLfloat*) &Triangles_normals[i]);
-
+        glNormal3fv((GLfloat *) &Triangles_normals[i]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
     glEnd();
 
@@ -184,12 +186,13 @@ void _object3D::draw_lighted_flat_shading()
 void _object3D::compute_triangles_normals()
 {
     _vertex3f A, B;
+    Triangles_normals.resize(Triangles.size());
     for (unsigned int i=0; i < Triangles.size(); i++) {
         // A = P1-P0  ******** B = P2-P0
         A = Vertices[Triangles[i]._1] - Vertices[Triangles[i]._0];
         B = Vertices[Triangles[i]._2] - Vertices[Triangles[i]._0];
 
-        // Guardo el producto vectorial entre A y B y lo normalizo
+        // Guardo el producto vectorial entre A y B normalizado
         Triangles_normals[i] = (A.cross_product(B)).normalize();
     }
 }

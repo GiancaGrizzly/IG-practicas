@@ -26,12 +26,14 @@ class _object3D:public _basic_object3D
   public:
   vector<_vertex3ui> Triangles;
   vector<_vertex3f> Triangles_normals;
-
+  vector<_vertex2f> Vertices_TexCoord;
 
   void draw_line();
   void draw_fill();
   void draw_chess();
+
   void draw_lighted_flat_shading();
+  void draw_texture();
 
   void traslate(const _vertex3f &vector_t);
   void rotate_Z(const float angle);
