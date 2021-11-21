@@ -262,7 +262,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_line();
+    case OBJECT_HIERARCHICAL:Body_2.draw_line();
 
     default:break;
     }
@@ -280,7 +280,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_fill();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();
+    case OBJECT_HIERARCHICAL:Body_2.draw_fill();
 
     default:break;
     }

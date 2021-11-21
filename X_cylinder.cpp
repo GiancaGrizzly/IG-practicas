@@ -26,4 +26,5 @@ _X_cylinder::_X_cylinder(float Size)
 
     generate_vertex();
     generate_triangles();
+    compute_triangles_normals();
 }

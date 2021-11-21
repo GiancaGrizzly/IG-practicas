@@ -45,12 +45,12 @@ void _X_pedals::draw_line()
     glPopMatrix();
 
     //Pedal (5)
-    glPushMatrix();
+//    glPushMatrix();
 
-    glTranslatef(3,-3.5,0);
+//    glTranslatef(3,-3.5,0);
 
-    Pedal.draw_line();
-    glPopMatrix();
+//    Pedal.draw_line();
+//    glPopMatrix();
 }
 
 /*****************************************************************************//**
@@ -98,12 +98,12 @@ void _X_pedals::draw_fill()
     glPopMatrix();
 
     //Pedal (5)
-    glPushMatrix();
+//    glPushMatrix();
 
-    glTranslatef(3,-3.5,0);
+//    glTranslatef(3,-3.5,0);
 
-    Pedal.draw_fill();
-    glPopMatrix();
+//    Pedal.draw_fill();
+//    glPopMatrix();
 }
 
 

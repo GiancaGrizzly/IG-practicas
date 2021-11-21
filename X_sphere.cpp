@@ -36,4 +36,5 @@ _X_sphere::_X_sphere(float Size)
     generate_vertex();
     generate_triangles();
     compute_triangles_normals();
+    compute_vertex_normals();
 }

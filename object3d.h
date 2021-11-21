@@ -26,6 +26,7 @@ class _object3D:public _basic_object3D
   public:
   vector<_vertex3ui> Triangles;
   vector<_vertex3f> Triangles_normals;
+  vector<_vertex3f> Vertices_normals;
   vector<_vertex2f> Vertices_TexCoord;
 
   void draw_line();
@@ -33,6 +34,7 @@ class _object3D:public _basic_object3D
   void draw_chess();
 
   void draw_lighted_flat_shading();
+  void draw_lighted_smooth_shading();
   void draw_texture();
 
   void traslate(const _vertex3f &vector_t);
@@ -40,6 +42,7 @@ class _object3D:public _basic_object3D
   void scale(const _vertex3f &vector_s);
 
   void compute_triangles_normals();
+  void compute_vertex_normals();
 
 };
 

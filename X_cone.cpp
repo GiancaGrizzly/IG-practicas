@@ -19,4 +19,5 @@ _X_cone::_X_cone(float Size)
 
     generate_vertex();
     generate_triangles();
+    compute_triangles_normals();
 }
