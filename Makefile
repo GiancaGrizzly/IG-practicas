@@ -52,27 +52,33 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = X_arandela.cpp \
-		X_asiento.cpp \
-		X_asiento_axis.cpp \
-		X_axis_body.cpp \
-		X_axis_misc.cpp \
-		X_body.cpp \
-		X_body_2.cpp \
-		X_body_join.cpp \
-		X_cojin.cpp \
+SOURCES       = X1_axis_body.cpp \
+		X1_axis_misc.cpp \
+		X1_body_join.cpp \
+		X1_cojin.cpp \
+		X1_pedal.cpp \
+		X1_wheel.cpp \
+		X2_asiento_base.cpp \
+		X2_asiento_respaldo.cpp \
+		X2_body_structure_1.cpp \
+		X2_body_structure_2.cpp \
+		X2_pedal_structure.cpp \
+		X3_asiento.cpp \
+		X3_body.cpp \
+		X3_pedals_axis.cpp \
+		X4_asiento_axis.cpp \
+		X4_pedals_axis_wheel.cpp \
+		X5_monocycle_asiento_body.cpp \
+		X5_monocycle_pedals.cpp \
+		X6_monocycle.cpp \
+		X_arandela.cpp \
 		X_cone.cpp \
 		X_cube.cpp \
 		X_cylinder.cpp \
-		X_monocycle.cpp \
-		X_pedal.cpp \
-		X_pedals.cpp \
-		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
-		X_wheel.cpp \
 		basic_object3d.cc \
 		file_ply_stl.cc \
 		object3d.cc \
@@ -82,27 +88,33 @@ SOURCES       = X_arandela.cpp \
 		glwidget.cc \
 		window.cc moc_glwidget.cpp \
 		moc_window.cpp
-OBJECTS       = X_arandela.o \
-		X_asiento.o \
-		X_asiento_axis.o \
-		X_axis_body.o \
-		X_axis_misc.o \
-		X_body.o \
-		X_body_2.o \
-		X_body_join.o \
-		X_cojin.o \
+OBJECTS       = X1_axis_body.o \
+		X1_axis_misc.o \
+		X1_body_join.o \
+		X1_cojin.o \
+		X1_pedal.o \
+		X1_wheel.o \
+		X2_asiento_base.o \
+		X2_asiento_respaldo.o \
+		X2_body_structure_1.o \
+		X2_body_structure_2.o \
+		X2_pedal_structure.o \
+		X3_asiento.o \
+		X3_body.o \
+		X3_pedals_axis.o \
+		X4_asiento_axis.o \
+		X4_pedals_axis_wheel.o \
+		X5_monocycle_asiento_body.o \
+		X5_monocycle_pedals.o \
+		X6_monocycle.o \
+		X_arandela.o \
 		X_cone.o \
 		X_cube.o \
 		X_cylinder.o \
-		X_monocycle.o \
-		X_pedal.o \
-		X_pedals.o \
-		X_pedals_axis.o \
 		X_ply_file.o \
 		X_ply_revolution.o \
 		X_revolution_object.o \
 		X_sphere.o \
-		X_wheel.o \
 		basic_object3d.o \
 		file_ply_stl.o \
 		object3d.o \
@@ -307,27 +319,33 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.12.11/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Qt/5.12.11/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.12.11/gcc_64/mkspecs/features/lex.prf \
-		esqueleto_qt.pro X_arandela.h \
-		X_asiento.h \
-		X_asiento_axis.h \
-		X_axis_body.h \
-		X_axis_misc.h \
-		X_body.h \
-		X_body_2.h \
-		X_body_join.h \
-		X_cojin.h \
+		esqueleto_qt.pro X1_axis_body.h \
+		X1_axis_misc.h \
+		X1_body_join.h \
+		X1_cojin.h \
+		X1_pedal.h \
+		X1_wheel.h \
+		X2_asiento_base.h \
+		X2_asiento_respaldo.h \
+		X2_body_structure_1.h \
+		X2_body_structure_2.h \
+		X2_pedal_structure.h \
+		X3_asiento.h \
+		X3_body.h \
+		X3_pedals_axis.h \
+		X4_asiento_axis.h \
+		X4_pedals_axis_wheel.h \
+		X5_monocycle_asiento_body.h \
+		X5_monocycle_pedals.h \
+		X6_monocycle.h \
+		X_arandela.h \
 		X_cone.h \
 		X_cube.h \
 		X_cylinder.h \
-		X_monocycle.h \
-		X_pedal.h \
-		X_pedals.h \
-		X_pedals_axis.h \
 		X_ply_file.h \
 		X_ply_revolution.h \
 		X_revolution_object.h \
 		X_sphere.h \
-		X_wheel.h \
 		colors.h \
 		basic_object3d.h \
 		file_ply_stl.h \
@@ -336,27 +354,33 @@ DIST          = ../../../Qt/5.12.11/gcc_64/mkspecs/features/spec_pre.prf \
 		tetrahedron.h \
 		glwidget.h \
 		vertex.h \
-		window.h X_arandela.cpp \
-		X_asiento.cpp \
-		X_asiento_axis.cpp \
-		X_axis_body.cpp \
-		X_axis_misc.cpp \
-		X_body.cpp \
-		X_body_2.cpp \
-		X_body_join.cpp \
-		X_cojin.cpp \
+		window.h X1_axis_body.cpp \
+		X1_axis_misc.cpp \
+		X1_body_join.cpp \
+		X1_cojin.cpp \
+		X1_pedal.cpp \
+		X1_wheel.cpp \
+		X2_asiento_base.cpp \
+		X2_asiento_respaldo.cpp \
+		X2_body_structure_1.cpp \
+		X2_body_structure_2.cpp \
+		X2_pedal_structure.cpp \
+		X3_asiento.cpp \
+		X3_body.cpp \
+		X3_pedals_axis.cpp \
+		X4_asiento_axis.cpp \
+		X4_pedals_axis_wheel.cpp \
+		X5_monocycle_asiento_body.cpp \
+		X5_monocycle_pedals.cpp \
+		X6_monocycle.cpp \
+		X_arandela.cpp \
 		X_cone.cpp \
 		X_cube.cpp \
 		X_cylinder.cpp \
-		X_monocycle.cpp \
-		X_pedal.cpp \
-		X_pedals.cpp \
-		X_pedals_axis.cpp \
 		X_ply_file.cpp \
 		X_ply_revolution.cpp \
 		X_revolution_object.cpp \
 		X_sphere.cpp \
-		X_wheel.cpp \
 		basic_object3d.cc \
 		file_ply_stl.cc \
 		object3d.cc \
@@ -782,8 +806,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.12.11/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.h X_asiento.h X_asiento_axis.h X_axis_body.h X_axis_misc.h X_body.h X_body_2.h X_body_join.h X_cojin.h X_cone.h X_cube.h X_cylinder.h X_monocycle.h X_pedal.h X_pedals.h X_pedals_axis.h X_ply_file.h X_ply_revolution.h X_revolution_object.h X_sphere.h X_wheel.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
-	$(COPY_FILE) --parents X_arandela.cpp X_asiento.cpp X_asiento_axis.cpp X_axis_body.cpp X_axis_misc.cpp X_body.cpp X_body_2.cpp X_body_join.cpp X_cojin.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_monocycle.cpp X_pedal.cpp X_pedals.cpp X_pedals_axis.cpp X_ply_file.cpp X_ply_revolution.cpp X_revolution_object.cpp X_sphere.cpp X_wheel.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
+	$(COPY_FILE) --parents X1_axis_body.h X1_axis_misc.h X1_body_join.h X1_cojin.h X1_pedal.h X1_wheel.h X2_asiento_base.h X2_asiento_respaldo.h X2_body_structure_1.h X2_body_structure_2.h X2_pedal_structure.h X3_asiento.h X3_body.h X3_pedals_axis.h X4_asiento_axis.h X4_pedals_axis_wheel.h X5_monocycle_asiento_body.h X5_monocycle_pedals.h X6_monocycle.h X_arandela.h X_cone.h X_cube.h X_cylinder.h X_ply_file.h X_ply_revolution.h X_revolution_object.h X_sphere.h colors.h basic_object3d.h file_ply_stl.h object3d.h axis.h tetrahedron.h glwidget.h vertex.h window.h $(DISTDIR)/
+	$(COPY_FILE) --parents X1_axis_body.cpp X1_axis_misc.cpp X1_body_join.cpp X1_cojin.cpp X1_pedal.cpp X1_wheel.cpp X2_asiento_base.cpp X2_asiento_respaldo.cpp X2_body_structure_1.cpp X2_body_structure_2.cpp X2_pedal_structure.cpp X3_asiento.cpp X3_body.cpp X3_pedals_axis.cpp X4_asiento_axis.cpp X4_pedals_axis_wheel.cpp X5_monocycle_asiento_body.cpp X5_monocycle_pedals.cpp X6_monocycle.cpp X_arandela.cpp X_cone.cpp X_cube.cpp X_cylinder.cpp X_ply_file.cpp X_ply_revolution.cpp X_revolution_object.cpp X_sphere.cpp basic_object3d.cc file_ply_stl.cc object3d.cc axis.cc tetrahedron.cc main.cc glwidget.cc window.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -945,20 +969,26 @@ moc_glwidget.cpp: glwidget.h \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_monocycle.h \
-		X_asiento.h \
-		X_cojin.h \
-		X_axis_misc.h \
-		X_body.h \
-		X_axis_body.h \
-		X_body_2.h \
-		X_body_join.h \
+		X6_monocycle.h \
+		X5_monocycle_pedals.h \
+		X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
 		X_arandela.h \
-		X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_wheel.h \
-		X_asiento_axis.h \
+		X1_axis_misc.h \
+		X1_wheel.h \
+		X1_pedal.h \
+		X5_monocycle_asiento_body.h \
+		X4_asiento_axis.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h \
+		X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X1_body_join.h \
+		X2_body_structure_2.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
@@ -1113,6 +1143,248 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
+X1_axis_body.o: X1_axis_body.cpp X1_axis_body.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_axis_body.o X1_axis_body.cpp
+
+X1_axis_misc.o: X1_axis_misc.cpp X1_axis_misc.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_axis_misc.o X1_axis_misc.cpp
+
+X1_body_join.o: X1_body_join.cpp X1_body_join.h \
+		X_cube.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_body_join.o X1_body_join.cpp
+
+X1_cojin.o: X1_cojin.cpp X1_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_cojin.o X1_cojin.cpp
+
+X1_pedal.o: X1_pedal.cpp X1_pedal.h \
+		X_cube.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_pedal.o X1_pedal.cpp
+
+X1_wheel.o: X1_wheel.cpp X1_wheel.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X1_wheel.o X1_wheel.cpp
+
+X2_asiento_base.o: X2_asiento_base.cpp X2_asiento_base.h \
+		X1_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X2_asiento_base.o X2_asiento_base.cpp
+
+X2_asiento_respaldo.o: X2_asiento_respaldo.cpp X2_asiento_respaldo.h \
+		X1_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X2_asiento_respaldo.o X2_asiento_respaldo.cpp
+
+X2_body_structure_1.o: X2_body_structure_1.cpp X2_body_structure_1.h \
+		X1_axis_body.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_body_join.h \
+		X_cube.h \
+		X_arandela.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X2_body_structure_1.o X2_body_structure_1.cpp
+
+X2_body_structure_2.o: X2_body_structure_2.cpp X2_body_structure_2.h \
+		X1_axis_body.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X_arandela.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X2_body_structure_2.o X2_body_structure_2.cpp
+
+X2_pedal_structure.o: X2_pedal_structure.cpp X2_pedal_structure.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_axis_misc.h \
+		X_cylinder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X2_pedal_structure.o X2_pedal_structure.cpp
+
+X3_asiento.o: X3_asiento.cpp X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X2_asiento_respaldo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X3_asiento.o X3_asiento.cpp
+
+X3_body.o: X3_body.cpp X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_body_join.h \
+		X_cube.h \
+		X_arandela.h \
+		X2_body_structure_2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X3_body.o X3_body.cpp
+
+X3_pedals_axis.o: X3_pedals_axis.cpp X3_pedals_axis.h \
+		X2_pedal_structure.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_axis_misc.h \
+		X_cylinder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X3_pedals_axis.o X3_pedals_axis.cpp
+
+X4_asiento_axis.o: X4_asiento_axis.cpp X4_asiento_axis.h \
+		X1_axis_misc.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X4_asiento_axis.o X4_asiento_axis.cpp
+
+X4_pedals_axis_wheel.o: X4_pedals_axis_wheel.cpp X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_axis_misc.h \
+		X_cylinder.h \
+		X1_wheel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X4_pedals_axis_wheel.o X4_pedals_axis_wheel.cpp
+
+X5_monocycle_asiento_body.o: X5_monocycle_asiento_body.cpp X5_monocycle_asiento_body.h \
+		X4_asiento_axis.h \
+		X1_axis_misc.h \
+		X_cylinder.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h \
+		X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X1_body_join.h \
+		X_cube.h \
+		X_arandela.h \
+		X2_body_structure_2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X5_monocycle_asiento_body.o X5_monocycle_asiento_body.cpp
+
+X5_monocycle_pedals.o: X5_monocycle_pedals.cpp X5_monocycle_pedals.h \
+		X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_axis_misc.h \
+		X_cylinder.h \
+		X1_wheel.h \
+		X1_pedal.h \
+		X_cube.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X5_monocycle_pedals.o X5_monocycle_pedals.cpp
+
+X6_monocycle.o: X6_monocycle.cpp X6_monocycle.h \
+		X5_monocycle_pedals.h \
+		X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
+		X_arandela.h \
+		X_revolution_object.h \
+		object3d.h \
+		basic_object3d.h \
+		colors.h \
+		vertex.h \
+		X1_axis_misc.h \
+		X_cylinder.h \
+		X1_wheel.h \
+		X1_pedal.h \
+		X_cube.h \
+		X5_monocycle_asiento_body.h \
+		X4_asiento_axis.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h \
+		X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X1_body_join.h \
+		X2_body_structure_2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X6_monocycle.o X6_monocycle.cpp
+
 X_arandela.o: X_arandela.cpp X_arandela.h \
 		X_revolution_object.h \
 		object3d.h \
@@ -1120,90 +1392,6 @@ X_arandela.o: X_arandela.cpp X_arandela.h \
 		colors.h \
 		vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_arandela.o X_arandela.cpp
-
-X_asiento.o: X_asiento.cpp X_asiento.h \
-		X_cojin.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_asiento.o X_asiento.cpp
-
-X_asiento_axis.o: X_asiento_axis.cpp X_asiento_axis.h \
-		X_axis_misc.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_asiento.h \
-		X_cojin.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_asiento_axis.o X_asiento_axis.cpp
-
-X_axis_body.o: X_axis_body.cpp X_axis_body.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_axis_body.o X_axis_body.cpp
-
-X_axis_misc.o: X_axis_misc.cpp X_axis_misc.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_axis_misc.o X_axis_misc.cpp
-
-X_body.o: X_body.cpp X_body.h \
-		X_axis_body.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_body_2.h \
-		X_body_join.h \
-		X_cube.h \
-		X_arandela.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_body.o X_body.cpp
-
-X_body_2.o: X_body_2.cpp X_body_2.h \
-		X_axis_body.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_body_join.h \
-		X_cube.h \
-		X_arandela.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_body_2.o X_body_2.cpp
-
-X_body_join.o: X_body_join.cpp X_body_join.h \
-		X_cube.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_body_join.o X_body_join.cpp
-
-X_cojin.o: X_cojin.cpp X_cojin.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_cojin.o X_cojin.cpp
 
 X_cone.o: X_cone.cpp X_cone.h \
 		X_revolution_object.h \
@@ -1227,63 +1415,6 @@ X_cylinder.o: X_cylinder.cpp X_cylinder.h \
 		colors.h \
 		vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_cylinder.o X_cylinder.cpp
-
-X_monocycle.o: X_monocycle.cpp X_monocycle.h \
-		X_asiento.h \
-		X_cojin.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_axis_misc.h \
-		X_body.h \
-		X_axis_body.h \
-		X_body_2.h \
-		X_body_join.h \
-		X_cube.h \
-		X_arandela.h \
-		X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_wheel.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_monocycle.o X_monocycle.cpp
-
-X_pedal.o: X_pedal.cpp X_pedal.h \
-		X_cube.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_pedal.o X_pedal.cpp
-
-X_pedals.o: X_pedals.cpp X_pedals.h \
-		X_pedal.h \
-		X_cube.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_arandela.h \
-		X_revolution_object.h \
-		X_axis_misc.h \
-		X_cylinder.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_pedals.o X_pedals.cpp
-
-X_pedals_axis.o: X_pedals_axis.cpp X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_cube.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h \
-		X_arandela.h \
-		X_revolution_object.h \
-		X_axis_misc.h \
-		X_cylinder.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_pedals_axis.o X_pedals_axis.cpp
 
 X_ply_file.o: X_ply_file.cpp X_ply_file.h \
 		file_ply_stl.h \
@@ -1317,15 +1448,6 @@ X_sphere.o: X_sphere.cpp X_sphere.h \
 		colors.h \
 		vertex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_sphere.o X_sphere.cpp
-
-X_wheel.o: X_wheel.cpp X_wheel.h \
-		X_cylinder.h \
-		X_revolution_object.h \
-		object3d.h \
-		basic_object3d.h \
-		colors.h \
-		vertex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o X_wheel.o X_wheel.cpp
 
 basic_object3d.o: basic_object3d.cc basic_object3d.h \
 		colors.h \
@@ -1619,20 +1741,26 @@ glwidget.o: glwidget.cc glwidget.h \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_monocycle.h \
-		X_asiento.h \
-		X_cojin.h \
-		X_axis_misc.h \
-		X_body.h \
-		X_axis_body.h \
-		X_body_2.h \
-		X_body_join.h \
+		X6_monocycle.h \
+		X5_monocycle_pedals.h \
+		X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
 		X_arandela.h \
-		X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_wheel.h \
-		X_asiento_axis.h \
+		X1_axis_misc.h \
+		X1_wheel.h \
+		X1_pedal.h \
+		X5_monocycle_asiento_body.h \
+		X4_asiento_axis.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h \
+		X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X1_body_join.h \
+		X2_body_structure_2.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
@@ -1826,20 +1954,26 @@ window.o: window.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 		X_cylinder.h \
 		X_sphere.h \
 		X_ply_revolution.h \
-		X_monocycle.h \
-		X_asiento.h \
-		X_cojin.h \
-		X_axis_misc.h \
-		X_body.h \
-		X_axis_body.h \
-		X_body_2.h \
-		X_body_join.h \
+		X6_monocycle.h \
+		X5_monocycle_pedals.h \
+		X4_pedals_axis_wheel.h \
+		X3_pedals_axis.h \
+		X2_pedal_structure.h \
 		X_arandela.h \
-		X_pedals_axis.h \
-		X_pedals.h \
-		X_pedal.h \
-		X_wheel.h \
-		X_asiento_axis.h \
+		X1_axis_misc.h \
+		X1_wheel.h \
+		X1_pedal.h \
+		X5_monocycle_asiento_body.h \
+		X4_asiento_axis.h \
+		X3_asiento.h \
+		X2_asiento_base.h \
+		X1_cojin.h \
+		X2_asiento_respaldo.h \
+		X3_body.h \
+		X2_body_structure_1.h \
+		X1_axis_body.h \
+		X1_body_join.h \
+		X2_body_structure_2.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h

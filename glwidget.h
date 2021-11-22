@@ -25,20 +25,21 @@
 #include "X_cylinder.h"
 #include "X_sphere.h"
 #include "X_ply_revolution.h"
-#include "X_monocycle.h"
+#include "X6_monocycle.h"
 
-#include "X_arandela.h"
-#include "X_axis_misc.h"
-#include "X_axis_body.h"
-#include "X_cojin.h"
-#include "X_body_join.h"
-#include "X_pedal.h"
-#include "X_pedals.h"
-#include "X_pedals_axis.h"
-#include "X_body_2.h"
-#include "X_body.h"
-#include "X_asiento.h"
-#include "X_asiento_axis.h"
+//#include "X_arandela.h"
+//#include "X2_pedal_structure.h"
+//#include "X2_asiento_respaldo.h"
+//#include "X2_asiento_base.h"
+//#include "X2_body_structure_1.h"
+//#include "X2_body_structure_2.h"
+//#include "X3_pedals_axis.h"
+//#include "X3_body.h"
+//#include "X3_asiento.h"
+//#include "X4_pedals_axis_wheel.h"
+//#include "X4_asiento_axis.h"
+//#include "X5_monocycle_pedals.h"
+//#include "X5_monocycle_asiento_body.h"
 
 #include <QTimer>
 
@@ -103,20 +104,21 @@ private:
   _X_cylinder Cylinder;
   _X_sphere Sphere;
   _X_ply_revolution Ply_revolution;
-  _X_monocycle Monocycle;
+  _X6_monocycle Monocycle;
 
-  _X_arandela Arandela;
-  _X_axis_misc Axis_misc;
-  _X_axis_body Axis_body;
-  _X_cojin Cojin;
-  _X_axis_body Axis_join;
-  _X_pedal Pedal;
-  _X_pedals Pedals;
-  _X_pedals_axis Pedals_axis;
-  _X_body_2 Body_2;
-  _X_body Body;
-  _X_asiento Asiento;
-  _X_asiento_axis Asiento_axis;
+//  _X_arandela Arandela;
+//  _X2_pedal_structure Pedal_structure;
+//  _X2_asiento_respaldo Asiento_respaldo;
+//  _X2_asiento_base Asiento_base;
+//  _X2_body_structure_1 Body_structure_1;
+//  _X2_body_structure_2 Body_structure_2;
+//  _X3_pedals_axis Pedals_axis;
+//  _X3_body Body;
+//  _X3_asiento Asiento;
+//  _X4_pedals_axis_wheel Pedals_axis_wheel;
+//  _X4_asiento_axis Asiento_axis;
+//  _X5_monocycle_pedals Monocycle_pedals;
+//  _X5_monocycle_asiento_body Monocycle_asiento_body;
 
   QTimer *X_timer;
 
@@ -133,7 +135,8 @@ private:
   float Observer_angle_y;
   float Observer_distance;
 
-  int step_alfa, step_beta, step_eje_asiento;
+  int step_pedals_wheel, step_asiento_axis, step_scale_axis;
+  bool grow_scale_asiento_axis;
 };
 
 #endif

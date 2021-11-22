@@ -37,13 +37,12 @@ class _object3D:public _basic_object3D
   void draw_lighted_smooth_shading();
   void draw_texture();
 
-  void traslate(const _vertex3f &vector_t);
-  void rotate_Z(const float angle);
-  void scale(const _vertex3f &vector_s);
-
   void compute_triangles_normals();
   void compute_vertex_normals();
 
+  void traslate(const _vertex3f &vector_t);
+  void rotate_Z(const float angle);
+  void scale(const _vertex3f &vector_s);
 };
 
 #endif // OBJECT3D_H

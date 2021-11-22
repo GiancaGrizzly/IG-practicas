@@ -40,24 +40,22 @@ _gl_widget::_gl_widget(_window *Window1):Window(Window1)
 void _gl_widget::X_idle_event()
 {
     // Variable que controla el giro de los pedales
-    Monocycle.alfa -= step_alfa;
-
-//    cout << Monocycle.beta << endl;
+    Monocycle.angle_pedals_wheel -= step_pedals_wheel;
 
     // Se mantiene el eje en un determinado rango de tamaño
-    if (Monocycle.Get_asiento_alfa() < 0)
-        Monocycle.Set_asiento_grow(true);
-    else if (Monocycle.Get_asiento_alfa() > 300)
-        Monocycle.Set_asiento_grow(false);
+    if (Monocycle.get_scale_asiento_axis() < 0)
+        grow_scale_asiento_axis = true;
+    else if (Monocycle.get_scale_asiento_axis() > 300)
+        grow_scale_asiento_axis = false;
 
     // En funcion de grow, el eje crece o decrece, y además gira en un sentido u otro
-    if (Monocycle.Get_asiento_grow()) {
-        Monocycle.Set_asiento_alfa(step_eje_asiento);
-        Monocycle.beta += step_beta;
+    if (grow_scale_asiento_axis) {
+        Monocycle.set_scale_asiento_axis(step_scale_axis);
+        Monocycle.set_angle_asiento_axis(step_asiento_axis);
     }
     else {
-        Monocycle.Set_asiento_alfa(-step_eje_asiento);
-        Monocycle.beta -= step_beta;
+        Monocycle.set_scale_asiento_axis(-step_scale_axis);
+        Monocycle.set_angle_asiento_axis(-step_asiento_axis);
     }
 
     update();
@@ -91,63 +89,63 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
             break;
         }
 
-        // Controlador de la animación (rotación) de los pedales y la rueda
+        // Controlador de la rotación de los pedales y la rueda
         case Qt::Key_W:
         {
             if (Keyevent->modifiers() & Qt::ShiftModifier){
-                Monocycle.alfa += step_alfa; break;
+                Monocycle.angle_pedals_wheel += step_pedals_wheel; break;
             }
             else if (Keyevent->modifiers() & Qt::ControlModifier) {
-                if (step_alfa > 1) step_alfa -= 1;
+                if (step_pedals_wheel > 1) step_pedals_wheel -= 1;
                 break;
             }
             else if (Keyevent->modifiers() & Qt::AltModifier) {
-                if (step_alfa < 10) step_alfa += 1;
+                if (step_pedals_wheel < 10) step_pedals_wheel += 1;
                 break;
             }
             else {
-                Monocycle.alfa -= step_alfa; break;
+                Monocycle.angle_pedals_wheel -= step_pedals_wheel; break;
             }
         }
 
-        // Controlador de la animación (rotación) del eje y el sillín
+        // Controlador de la rotación del eje y el sillín
         case Qt::Key_E:
         {
             if (Keyevent->modifiers() & Qt::ShiftModifier){
-                Monocycle.beta += step_beta; break;
+                Monocycle.set_angle_asiento_axis(step_asiento_axis); break;
             }
             else if (Keyevent->modifiers() & Qt::ControlModifier) {
-                if (step_beta > 1) step_beta -= 1;
+                if (step_asiento_axis > 1) step_asiento_axis -= 1;
                 break;
             }
             else if (Keyevent->modifiers() & Qt::AltModifier) {
-                if (step_beta < 10) step_beta += 1;
+                if (step_asiento_axis < 10) step_asiento_axis += 1;
                 break;
             }
             else {
-                Monocycle.beta -= step_beta; break;
+                Monocycle.set_angle_asiento_axis(-step_asiento_axis); break;
             }
         }
 
-        // Controlador de la animación (escalado) del eje del sillín
+        // Controlador del escalado del eje del sillín
         case Qt::Key_R:
         {
             if (Keyevent->modifiers() & Qt::ShiftModifier){
-                if (Monocycle.Get_asiento_alfa() > 0)
-                    Monocycle.Set_asiento_alfa(-step_eje_asiento);
+                if (Monocycle.get_scale_asiento_axis() > 0)
+                    Monocycle.set_scale_asiento_axis(-step_scale_axis);
                 break;
             }
             else if (Keyevent->modifiers() & Qt::ControlModifier) {
-                if (step_eje_asiento > 1) step_eje_asiento -= 1;
+                if (step_scale_axis > 1) step_scale_axis -= 1;
                 break;
             }
             else if (Keyevent->modifiers() & Qt::AltModifier) {
-                if (step_eje_asiento < 5) step_eje_asiento += 1;
+                if (step_scale_axis < 5) step_scale_axis += 1;
                 break;
             }
             else {
-                if (Monocycle.Get_asiento_alfa() < 300)
-                    Monocycle.Set_asiento_alfa(step_eje_asiento);
+                if (Monocycle.get_scale_asiento_axis() < 300)
+                    Monocycle.set_scale_asiento_axis(step_scale_axis);
                 break;
             }
         }
@@ -245,6 +243,8 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_point();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_point();break;
 
+    case OBJECT_HIERARCHICAL:Monocycle.draw_point();
+
     default:break;
     }
   }
@@ -262,7 +262,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_HIERARCHICAL:Body_2.draw_line();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_line();
 
     default:break;
     }
@@ -280,7 +280,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_fill();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
 
-    case OBJECT_HIERARCHICAL:Body_2.draw_fill();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();
 
     default:break;
     }
@@ -296,6 +296,8 @@ void _gl_widget::draw_objects()
     case OBJECT_CYLINDER:Cylinder.draw_chess();break;
     case OBJECT_SPHERE:Sphere.draw_chess();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_chess();break;
+
+    case OBJECT_HIERARCHICAL:Monocycle.draw_chess();
 
     default:break;
     }
@@ -392,11 +394,12 @@ void _gl_widget::initializeGL()
 
   Draw_lighted_flat_shading = false;
 
-  Monocycle.alfa = 0;
-  Monocycle.beta = 0;
-  Monocycle.Initialize_asiento(0,false);
+  Monocycle.angle_pedals_wheel = 0;
+  Monocycle.Initialize_asiento_axis();
 
-  step_alfa = 1;
-  step_beta = 1;
-  step_eje_asiento = 1;
+  step_pedals_wheel = 1;
+  step_asiento_axis = 1;
+  step_scale_axis = 1;
+
+  grow_scale_asiento_axis = true;
 }
