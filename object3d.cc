@@ -106,21 +106,32 @@ void _object3D::draw_lighted_flat_shading()
 {
     GLfloat Light_position[] = {1,1,1,0};
     GLfloat Light_ambient[] = {1,1,1};
-    GLfloat Material_diffuse[] = {0.7,0,0};
-    GLfloat Material_ambient[] = {0.1,0,0};
+    GLfloat Light_diffuse[] = {1,1,1};
+    GLfloat Light_specular[] = {1,1,1};
+
+    // Esmeralda
+    GLfloat Material_ambient[] = {0.0215,0.1745,0.0215};
+    GLfloat Material_diffuse[] = {0.07568,0.61424,0.07568};
+    GLfloat Material_specular[] = {0.633,0.727811,0.633};
+    GLfloat Material_shininess = 0.6;
+
 
     glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light_position);
     glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light_ambient);
-
-    glPolygonMode(GL_FRONT, GL_FILL);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (GLfloat*) &Light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light_specular);
 
     glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*) &Material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, (GLfloat*) &Material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, Material_shininess*128);
+
+    glShadeModel(GL_FLAT);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 
-    glShadeModel(GL_FLAT);
+    glPolygonMode(GL_FRONT, GL_FILL);
 
     glBegin(GL_TRIANGLES);
     for (unsigned int i=0; i < Triangles.size(); i++) {
@@ -143,7 +154,48 @@ void _object3D::draw_lighted_flat_shading()
 
 void _object3D::draw_lighted_smooth_shading()
 {
+    GLfloat Light_position[] = {1,1,1,0};
+    GLfloat Light_ambient[] = {1,1,1};
+    GLfloat Light_diffuse[] = {1,1,1};
+    GLfloat Light_specular[] = {1,1,1};
 
+    // Esmeralda
+    GLfloat Material_ambient[] = {0.0215,0.1745,0.0215};
+    GLfloat Material_diffuse[] = {0.07568,0.61424,0.07568};
+    GLfloat Material_specular[] = {0.633,0.727811,0.633};
+    GLfloat Material_shininess = 0.6;
+
+
+    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light_position);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (GLfloat*) &Light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light_specular);
+
+    glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*) &Material_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, (GLfloat*) &Material_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, Material_shininess*128);
+
+    glShadeModel(GL_SMOOTH);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    glPolygonMode(GL_FRONT, GL_FILL);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
 }
 
 /*****************************************************************************//**

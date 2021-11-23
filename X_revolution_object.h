@@ -15,7 +15,7 @@
 class _X_revolution_object : public _object3D
 {
     public:
-        unsigned int N;
+        unsigned int N,M;
         vector<_vertex3f> Profile, Central;
         bool lower, upper;
 

@@ -155,6 +155,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_F:Draw_fill=!Draw_fill;break;
         case Qt::Key_C:Draw_chess=!Draw_chess;break;
         case Qt::Key_F3:Draw_lighted_flat_shading=!Draw_lighted_flat_shading;break;
+        case Qt::Key_F4:Draw_lighted_smooth_shading=!Draw_lighted_smooth_shading;break;
 
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
         case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
@@ -312,7 +313,20 @@ void _gl_widget::draw_objects()
     case OBJECT_CONE:Cone.draw_lighted_flat_shading();break;
     case OBJECT_CYLINDER:Cylinder.draw_lighted_flat_shading();break;
     case OBJECT_SPHERE:Sphere.draw_lighted_flat_shading();break;
-    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_chess();break;
+
+    default:break;
+    }
+  }
+
+  if (Draw_lighted_smooth_shading){
+    switch (Object){
+    case OBJECT_TETRAHEDRON:Tetrahedron.draw_lighted_smooth_shading();break;
+
+    case OBJECT_CUBE:Cube.draw_lighted_smooth_shading();break;
+    case OBJECT_PLY:Ply_file.draw_lighted_smooth_shading();break;
+    case OBJECT_CONE:Cone.draw_lighted_smooth_shading();break;
+    case OBJECT_CYLINDER:Cylinder.draw_lighted_smooth_shading();break;
+    case OBJECT_SPHERE:Sphere.draw_lighted_smooth_shading();break;
 
     default:break;
     }
@@ -393,6 +407,7 @@ void _gl_widget::initializeGL()
   Draw_chess=false;
 
   Draw_lighted_flat_shading = false;
+  Draw_lighted_smooth_shading = false;
 
   Monocycle.angle_pedals_wheel = 0;
   Monocycle.Initialize_asiento_axis();

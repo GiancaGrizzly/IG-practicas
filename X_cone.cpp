@@ -10,7 +10,7 @@
 
 _X_cone::_X_cone(float Size)
 {
-    N = 50;
+    N = 60;
 
     Profile.resize(3);
     Profile[0] = _vertex3f(0,-Size/2,0);
@@ -20,4 +20,5 @@ _X_cone::_X_cone(float Size)
     generate_vertex();
     generate_triangles();
     compute_triangles_normals();
+    compute_vertex_normals();
 }

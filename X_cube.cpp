@@ -1,5 +1,4 @@
 
-
 #include "X_cube.h"
 
 
@@ -36,5 +35,8 @@ _X_cube::_X_cube(float Size)
   Triangles[9]=_vertex3ui(0,4,5);
   Triangles[10]=_vertex3ui(2,3,7);
   Triangles[11]=_vertex3ui(2,6,7);
+
+  compute_triangles_normals();
+  compute_vertex_normals();
 }
 

@@ -14,6 +14,8 @@ class _X_sphere : public _X_revolution_object
 {
 public:
   _X_sphere(float Size=1.0);
+private:
+  void generate_profile(float r);
 };
 
 #endif // X_SPHERE_H

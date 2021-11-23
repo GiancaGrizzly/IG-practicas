@@ -27,20 +27,6 @@
 #include "X_ply_revolution.h"
 #include "X6_monocycle.h"
 
-//#include "X_arandela.h"
-//#include "X2_pedal_structure.h"
-//#include "X2_asiento_respaldo.h"
-//#include "X2_asiento_base.h"
-//#include "X2_body_structure_1.h"
-//#include "X2_body_structure_2.h"
-//#include "X3_pedals_axis.h"
-//#include "X3_body.h"
-//#include "X3_asiento.h"
-//#include "X4_pedals_axis_wheel.h"
-//#include "X4_asiento_axis.h"
-//#include "X5_monocycle_pedals.h"
-//#include "X5_monocycle_asiento_body.h"
-
 #include <QTimer>
 
 
@@ -106,20 +92,6 @@ private:
   _X_ply_revolution Ply_revolution;
   _X6_monocycle Monocycle;
 
-//  _X_arandela Arandela;
-//  _X2_pedal_structure Pedal_structure;
-//  _X2_asiento_respaldo Asiento_respaldo;
-//  _X2_asiento_base Asiento_base;
-//  _X2_body_structure_1 Body_structure_1;
-//  _X2_body_structure_2 Body_structure_2;
-//  _X3_pedals_axis Pedals_axis;
-//  _X3_body Body;
-//  _X3_asiento Asiento;
-//  _X4_pedals_axis_wheel Pedals_axis_wheel;
-//  _X4_asiento_axis Asiento_axis;
-//  _X5_monocycle_pedals Monocycle_pedals;
-//  _X5_monocycle_asiento_body Monocycle_asiento_body;
-
   QTimer *X_timer;
 
   _gl_widget_ne::_object Object;
@@ -130,6 +102,7 @@ private:
   bool Draw_chess;
 
   bool Draw_lighted_flat_shading;
+  bool Draw_lighted_smooth_shading;
 
   float Observer_angle_x;
   float Observer_angle_y;
