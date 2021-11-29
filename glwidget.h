@@ -41,7 +41,7 @@ namespace _gl_widget_ne {
   const float DEFAULT_DISTANCE=2;
   const float ANGLE_STEP=1;
 
-  typedef enum {MODE_DRAW_POINT,MODE_DRAW_LINE,MODE_DRAW_FILL,MODE_DRAW_CHESS} _mode_draw;
+//  typedef enum {MODE_DRAW_POINT,MODE_DRAW_LINE,MODE_DRAW_FILL,MODE_DRAW_CHESS} _mode_draw;
   typedef enum {OBJECT_TETRAHEDRON, OBJECT_CUBE, OBJECT_PLY, OBJECT_CONE, OBJECT_CYLINDER,
                 OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_HIERARCHICAL} _object;
 }
@@ -95,14 +95,11 @@ private:
   QTimer *X_timer;
 
   _gl_widget_ne::_object Object;
+  _object3D_ne::_mode_fill Mode_fill;
 
   bool Draw_point;
   bool Draw_line;
   bool Draw_fill;
-  bool Draw_chess;
-
-  bool Draw_lighted_flat_shading;
-  bool Draw_lighted_smooth_shading;
 
   float Observer_angle_x;
   float Observer_angle_y;

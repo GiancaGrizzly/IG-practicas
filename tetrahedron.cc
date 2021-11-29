@@ -31,5 +31,8 @@ _tetrahedron::_tetrahedron(float Size)
   Triangles[1]=_vertex3ui(1,2,3);
   Triangles[2]=_vertex3ui(2,0,3);
   Triangles[3]=_vertex3ui(0,2,1);
+
+  compute_triangles_normals();
+  compute_vertex_normals();
 }
 

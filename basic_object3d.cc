@@ -20,11 +20,9 @@ void _basic_object3D::draw_point()
 {
   glBegin(GL_POINTS);
 
-  // glPointSize(5);  // Para cambiar el tamano del punto
-  // glColor3fv((GLfloat *) &BLACK);  // Para cambiar el color del punto
-
-  for (unsigned int i=0;i<Vertices.size();i++){
+  for (unsigned int i=0;i<Vertices.size();i++) {
     glVertex3fv((GLfloat *) &Vertices[i]);
   }
+
   glEnd();
 }

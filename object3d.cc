@@ -10,7 +10,25 @@
 #include "object3d.h"
 
 using namespace _colors_ne;
+using namespace _object3D_ne;
 
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    switch (mode) {
+    case MODE_SOLID: draw_fill(); break;
+    case MODE_CHESS: draw_chess(); break;
+    case MODE_FLAT: draw_lighted_flat_shading(); break;
+    case MODE_SMOOTH: draw_lighted_smooth_shading(); break;
+//    case MODE_TEXTURE: draw_texture(); break;
+    }
+}
 
 /*****************************************************************************//**
  *
@@ -21,9 +39,6 @@ using namespace _colors_ne;
 void _object3D::draw_line()
 {
     glBegin(GL_LINES);
-
-    // glLineWidth(3);  // Para cambiar el grosor de la linea
-    // glColor3fv((GLfloat *) &MAGENTA);  // Para cambiar el color de la linea
 
     for (unsigned int i=0; i<Triangles.size(); i++) {
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
@@ -49,8 +64,6 @@ void _object3D::draw_fill()
 {
     glBegin(GL_TRIANGLES);
 
-    // glColor3fv((GLfloat *) &BLUE);  // Para cambiar el color del relleno
-
     for (unsigned int i=0; i<Triangles.size(); i++) {
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
@@ -69,20 +82,6 @@ void _object3D::draw_fill()
 void _object3D::draw_chess()
 {
     glBegin(GL_TRIANGLES);
-
-//    glColor3fv((GLfloat *) &BLACK);  // Para cambiar el color del relleno
-//    for (unsigned int i=0; i<Triangles.size(); i+=2) {
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-//    }
-
-//    glColor3fv((GLfloat *) &YEllOW);  // Para cambiar el color del relleno
-//    for (unsigned int i=1; i<Triangles.size(); i+=2) {
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-//        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-//    }
 
     for (unsigned int i=0; i<Triangles.size(); i++) {
         if (i%2 == 0) glColor3fv((GLfloat *) &BLACK);
@@ -248,53 +247,3 @@ void _object3D::compute_vertex_normals()
     }
 }
 
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::traslate(const _vertex3f &vector_t)
-{
-    for (unsigned int i=0; i < Vertices.size(); i++) {
-        //Vertices[i].x = Vertices[i].x + vector_t.x;
-        //Vertices[i].y = Vertices[i].y + vector_t.y;
-        //Vertices[i].z = Vertices[i].z + vector_t.z;
-        Vertices[i] = Vertices[i] + vector_t;
-    }
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::rotate_Z(const float angle)
-{
-    float SIN = sin(angle);
-    float COS = cos(angle);
-
-    float aux_X;
-
-    for (unsigned int i=0; i < Vertices.size(); i++) {
-        aux_X = Vertices[i].x;
-        Vertices[i].x = aux_X*COS - Vertices[i].y*SIN;
-        Vertices[i].y = aux_X*SIN + Vertices[i].y*COS;
-    }
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::scale(const _vertex3f &vector_s)
-{
-    for (unsigned int i=0; i < Vertices.size(); i++) {
-        Vertices[i].x = Vertices[i].x * vector_s.x;
-        Vertices[i].y = Vertices[i].y * vector_s.y;
-        Vertices[i].z = Vertices[i].z * vector_s.z;
-    }
-}

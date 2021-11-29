@@ -13,6 +13,7 @@
 using namespace std;
 using namespace _gl_widget_ne;
 using namespace _colors_ne;
+using namespace _object3D_ne;
 
 
 /*****************************************************************************//**
@@ -78,8 +79,8 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_4:Object=OBJECT_CYLINDER;break;
         case Qt::Key_5:Object=OBJECT_SPHERE;break;
         case Qt::Key_6:Object=OBJECT_PLY;break;
-        case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
         case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
+        case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
 
         case Qt::Key_A:
         {
@@ -100,8 +101,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
                 break;
             }
             else if (Keyevent->modifiers() & Qt::AltModifier) {
-                if (step_pedals_wheel < 10) step_pedals_wheel += 1;
-                break;
+                step_pedals_wheel += 1; break;
             }
             else {
                 Monocycle.angle_pedals_wheel -= step_pedals_wheel; break;
@@ -119,8 +119,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
                 break;
             }
             else if (Keyevent->modifiers() & Qt::AltModifier) {
-                if (step_asiento_axis < 10) step_asiento_axis += 1;
-                break;
+                step_asiento_axis += 1; break;
             }
             else {
                 Monocycle.set_angle_asiento_axis(-step_asiento_axis); break;
@@ -153,9 +152,11 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_P:Draw_point=!Draw_point;break;
         case Qt::Key_L:Draw_line=!Draw_line;break;
         case Qt::Key_F:Draw_fill=!Draw_fill;break;
-        case Qt::Key_C:Draw_chess=!Draw_chess;break;
-        case Qt::Key_F3:Draw_lighted_flat_shading=!Draw_lighted_flat_shading;break;
-        case Qt::Key_F4:Draw_lighted_smooth_shading=!Draw_lighted_smooth_shading;break;
+        case Qt::Key_F1:Mode_fill=MODE_SOLID;break;
+        case Qt::Key_F2:Mode_fill=MODE_CHESS;break;
+        case Qt::Key_F3:Mode_fill=MODE_FLAT;break;
+        case Qt::Key_F4:Mode_fill=MODE_SMOOTH;break;
+        case Qt::Key_F5:Mode_fill=MODE_TEXTURE;break;
 
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
         case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
@@ -244,7 +245,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_point();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_point();break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_point();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_point();break;
 
     default:break;
     }
@@ -263,7 +264,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_line();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_line();break;
 
     default:break;
     }
@@ -272,65 +273,21 @@ void _gl_widget::draw_objects()
   if (Draw_fill){
     glColor3fv((GLfloat *) &BLUE);
     switch (Object){
-    case OBJECT_TETRAHEDRON:Tetrahedron.draw_fill();break;
+    case OBJECT_TETRAHEDRON:Tetrahedron.draw_mode(Mode_fill);break;
 
-    case OBJECT_CUBE:Cube.draw_fill();break;
-    case OBJECT_PLY:Ply_file.draw_fill();break;
-    case OBJECT_CONE:Cone.draw_fill();break;
-    case OBJECT_CYLINDER:Cylinder.draw_fill();break;
-    case OBJECT_SPHERE:Sphere.draw_fill();break;
-    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_fill();break;
+    case OBJECT_CUBE:Cube.draw_mode(Mode_fill);break;
+    case OBJECT_PLY:Ply_file.draw_mode(Mode_fill);break;
+    case OBJECT_CONE:Cone.draw_mode(Mode_fill);break;
+    case OBJECT_CYLINDER:Cylinder.draw_mode(Mode_fill);break;
+    case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill);break;
+    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();
-
-    default:break;
-    }
-  }
-
-  if (Draw_chess){
-    switch (Object){
-    case OBJECT_TETRAHEDRON:Tetrahedron.draw_chess();break;
-
-    case OBJECT_CUBE:Cube.draw_chess();break;
-    case OBJECT_PLY:Ply_file.draw_chess();break;
-    case OBJECT_CONE:Cone.draw_chess();break;
-    case OBJECT_CYLINDER:Cylinder.draw_chess();break;
-    case OBJECT_SPHERE:Sphere.draw_chess();break;
-    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_chess();break;
-
-    case OBJECT_HIERARCHICAL:Monocycle.draw_chess();
+    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();break;
 
     default:break;
     }
   }
 
-  if (Draw_lighted_flat_shading){
-    switch (Object){
-    case OBJECT_TETRAHEDRON:Tetrahedron.draw_lighted_flat_shading();break;
-
-    case OBJECT_CUBE:Cube.draw_lighted_flat_shading();break;
-    case OBJECT_PLY:Ply_file.draw_lighted_flat_shading();break;
-    case OBJECT_CONE:Cone.draw_lighted_flat_shading();break;
-    case OBJECT_CYLINDER:Cylinder.draw_lighted_flat_shading();break;
-    case OBJECT_SPHERE:Sphere.draw_lighted_flat_shading();break;
-
-    default:break;
-    }
-  }
-
-  if (Draw_lighted_smooth_shading){
-    switch (Object){
-    case OBJECT_TETRAHEDRON:Tetrahedron.draw_lighted_smooth_shading();break;
-
-    case OBJECT_CUBE:Cube.draw_lighted_smooth_shading();break;
-    case OBJECT_PLY:Ply_file.draw_lighted_smooth_shading();break;
-    case OBJECT_CONE:Cone.draw_lighted_smooth_shading();break;
-    case OBJECT_CYLINDER:Cylinder.draw_lighted_smooth_shading();break;
-    case OBJECT_SPHERE:Sphere.draw_lighted_smooth_shading();break;
-
-    default:break;
-    }
-  }
 }
 
 
@@ -404,10 +361,8 @@ void _gl_widget::initializeGL()
   Draw_point=false;
   Draw_line=true;
   Draw_fill=false;
-  Draw_chess=false;
 
-  Draw_lighted_flat_shading = false;
-  Draw_lighted_smooth_shading = false;
+  Mode_fill = MODE_SOLID;
 
   Monocycle.angle_pedals_wheel = 0;
   Monocycle.Initialize_asiento_axis();

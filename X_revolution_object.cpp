@@ -1,6 +1,8 @@
 
 #include "X_revolution_object.h"
 
+using namespace _object3D_ne;
+
 
 /*****************************************************************************//**
  *

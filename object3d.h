@@ -13,7 +13,12 @@
 #include "basic_object3d.h"
 
 
-#define PI 3.14159265
+namespace _object3D_ne {
+
+  const float PI=3.14159265;
+
+  typedef enum {MODE_SOLID,MODE_CHESS,MODE_FLAT,MODE_SMOOTH,MODE_TEXTURE} _mode_fill;
+}
 
 /*****************************************************************************//**
  *
@@ -28,6 +33,8 @@ class _object3D:public _basic_object3D
   vector<_vertex3f> Triangles_normals;
   vector<_vertex3f> Vertices_normals;
   vector<_vertex2f> Vertices_TexCoord;
+
+  void draw_mode(_object3D_ne::_mode_fill mode);
 
   void draw_line();
   void draw_fill();
