@@ -50,4 +50,7 @@ void _file_ply::create()
         Triangles[i]._1 = Positions[pos++];
         Triangles[i]._2 = Positions[pos++];
     }
+
+    compute_triangles_normals();
+    compute_vertex_normals();
 }

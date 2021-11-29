@@ -282,7 +282,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill);break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
 
-    case OBJECT_HIERARCHICAL:Monocycle.draw_fill();break;
+    case OBJECT_HIERARCHICAL:Monocycle.draw_mode(Mode_fill);break;
 
     default:break;
     }

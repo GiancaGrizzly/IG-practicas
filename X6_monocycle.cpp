@@ -1,5 +1,7 @@
 #include "X6_monocycle.h"
 
+using namespace _object3D_ne;
+
 /*****************************************************************************//**
  *
  *
@@ -54,6 +56,20 @@ void _X6_monocycle::draw_line()
 
     Monocycle_asiento_body.draw_line();
     glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _X6_monocycle::draw_mode(_mode_fill mode)
+{
+    switch (mode) {
+    case MODE_SOLID:draw_fill();break;
+    case MODE_CHESS:draw_chess();break;
+    }
 }
 
 /*****************************************************************************//**

@@ -19,6 +19,8 @@ public:
     void draw_fill();
     void draw_chess();
 
+    void draw_mode(_object3D_ne::_mode_fill mode);
+
     void Initialize_asiento_axis();
     void set_angle_asiento_axis(float step);
     void set_scale_asiento_axis(float step);

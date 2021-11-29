@@ -19,6 +19,10 @@ _X_ply_revolution::_X_ply_revolution()
         generate_vertex();
         generate_triangles();
 
+        //Genero los vertices y triangulos normales
+        _X_revolution_object::compute_triangles_normals();
+        _X_revolution_object::compute_vertex_normals();
+
         //Cierro el archivo
         close();
     }

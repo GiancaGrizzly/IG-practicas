@@ -10,7 +10,6 @@ class _X_ply_revolution : public _file_ply, public _X_revolution_object
 public:
     _X_ply_revolution();
     void create();
-
 };
 
 #endif // X_PLY_REVOLUTION_H
