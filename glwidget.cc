@@ -196,9 +196,10 @@ void _gl_widget::change_projection()
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  // formato(x_minimo,x_maximo, y_minimo, y_maximo,Front_plane, plano_traser)
-  // Front_plane>0  Back_plane>PlanoDelantero)
+//   formato(x_minimo,x_maximo, y_minimo, y_maximo,Front_plane, plano_traser)
+//   Front_plane>0  Back_plane>PlanoDelantero)
   glFrustum(X_MIN,X_MAX,Y_MIN,Y_MAX,FRONT_PLANE_PERSPECTIVE,BACK_PLANE_PERSPECTIVE);
+//  glOrtho(-1,1,-1,1,-1000,1000);
 }
 
 
@@ -206,6 +207,8 @@ void _gl_widget::change_projection()
 /*****************************************************************************//**
  * Funcion para definir la transformación de vista (posicionar la camara)
  *
+ * Transformacion de vista --> no necesito calcular los angulos pq se donde esta la camara siempre
+ * Para una camara general, habria que añadir las funciones que calculen dichas transformaciones
  *
  *
  *****************************************************************************/

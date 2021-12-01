@@ -101,12 +101,25 @@ void _object3D::draw_chess()
  *
  *****************************************************************************/
 
-void _object3D::draw_lighted_flat_shading()
+void _object3D::configure_lighting()
 {
-    GLfloat Light_position[] = {1,1,1,0};
-    GLfloat Light_ambient[] = {1,1,1};
-    GLfloat Light_diffuse[] = {1,1,1};
-    GLfloat Light_specular[] = {1,1,1};
+    // Luz blanca en el infinito
+    GLfloat Light0_position[] = {1,1,1,0};
+    GLfloat Light0_ambient[] = {1,1,1};
+    GLfloat Light0_diffuse[] = {1,1,1};
+    GLfloat Light0_specular[] = {1,1,1};
+
+    // Luz magenta no en el infinito
+    GLfloat Light1_position[] = {-1,-1,-1,1};
+    GLfloat Light1_ambient[] = {1,0,1};
+    GLfloat Light1_diffuse[] = {1,0,1};
+    GLfloat Light1_specular[] = {1,0,1};
+
+    // Objeto blanco basico para probar luces
+//    GLfloat Material_ambient[] = {0.5,0.5,0.5};
+//    GLfloat Material_diffuse[] = {0.5,0.5,0.5};
+//    GLfloat Material_specular[] = {0.5,0.5,0.5};
+//    GLfloat Material_shininess = 0.6;
 
     // Esmeralda
     GLfloat Material_ambient[] = {0.0215,0.1745,0.0215};
@@ -114,21 +127,43 @@ void _object3D::draw_lighted_flat_shading()
     GLfloat Material_specular[] = {0.633,0.727811,0.633};
     GLfloat Material_shininess = 0.6;
 
+    // Obsidiana
+//    GLfloat Material_ambient[] = {0.05375,0.05,0.06625};
+//    GLfloat Material_diffuse[] = {0.18275,0.17,0.22525};
+//    GLfloat Material_specular[] = {0.332741,0.328634,0.346435};
+//    GLfloat Material_shininess = 0.3;
 
-    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light_position);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, (GLfloat*) &Light_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light0_position);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light0_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (GLfloat*) &Light0_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light0_specular);
+
+    glLightfv(GL_LIGHT1, GL_POSITION, (GLfloat*) &Light1_position);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, (GLfloat*) &Light1_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, (GLfloat*) &Light1_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, (GLfloat*) &Light1_specular);
 
     glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*) &Material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, (GLfloat*) &Material_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
     glMaterialf(GL_FRONT, GL_SHININESS, Material_shininess*128);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_lighted_flat_shading()
+{
+    configure_lighting();
 
     glShadeModel(GL_FLAT);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
 
     glPolygonMode(GL_FRONT, GL_FILL);
 
@@ -143,6 +178,7 @@ void _object3D::draw_lighted_flat_shading()
 
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
@@ -153,32 +189,13 @@ void _object3D::draw_lighted_flat_shading()
 
 void _object3D::draw_lighted_smooth_shading()
 {
-    GLfloat Light_position[] = {1,1,1,0};
-    GLfloat Light_ambient[] = {1,1,1};
-    GLfloat Light_diffuse[] = {1,1,1};
-    GLfloat Light_specular[] = {1,1,1};
-
-    // Esmeralda
-    GLfloat Material_ambient[] = {0.0215,0.1745,0.0215};
-    GLfloat Material_diffuse[] = {0.07568,0.61424,0.07568};
-    GLfloat Material_specular[] = {0.633,0.727811,0.633};
-    GLfloat Material_shininess = 0.6;
-
-
-    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light_position);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, (GLfloat*) &Light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, (GLfloat*) &Light_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light_specular);
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT, (GLfloat*) &Material_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, (GLfloat*) &Material_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, Material_shininess*128);
+    configure_lighting();
 
     glShadeModel(GL_SMOOTH);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
 
     glPolygonMode(GL_FRONT, GL_FILL);
 
@@ -195,6 +212,7 @@ void _object3D::draw_lighted_smooth_shading()
 
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
