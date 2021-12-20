@@ -22,7 +22,7 @@ using namespace _object3D_ne;
  *
  *****************************************************************************/
 
-void _object3D::draw_mode(_object3D_ne::_mode_fill mode)
+void _object3D::draw_mode(_mode_fill mode)
 {
     switch (mode) {
     case MODE_SOLID: draw_fill(); break;
@@ -202,6 +202,8 @@ void _object3D::draw_lighted_smooth_shading()
     glPolygonMode(GL_FRONT,GL_FILL);
 
     glBegin(GL_TRIANGLES);
+
+    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
         glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
@@ -210,6 +212,8 @@ void _object3D::draw_lighted_smooth_shading()
         glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._2]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
+    glDisable(GL_RESCALE_NORMAL);
+
     glEnd();
 
     glDisable(GL_LIGHTING);

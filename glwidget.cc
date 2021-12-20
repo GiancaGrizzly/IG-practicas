@@ -84,8 +84,15 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 
         case Qt::Key_A:
         {
-            // Activa/desactiva la rotación de la luz magenta para la esfera
+            // Activa/desactiva la rotación de la luz magenta
+            Tetrahedron.rotate_light = !Tetrahedron.rotate_light;
+            Cube.rotate_light = !Cube.rotate_light;
+            Cone.rotate_light = !Cone.rotate_light;
+            Cylinder.rotate_light = !Cylinder.rotate_light;
             Sphere.rotate_light = !Sphere.rotate_light;
+            Ply_file.rotate_light = !Ply_file.rotate_light;
+
+            Ply_revolution._X_revolution_object::rotate_light = !Ply_revolution._X_revolution_object::rotate_light;
 
             if (X_timer->isActive())
                 X_timer->stop();

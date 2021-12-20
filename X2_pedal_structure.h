@@ -15,8 +15,7 @@ class _X2_pedal_structure
 public:
     void draw_point();
     void draw_line();
-    void draw_fill();
-    void draw_chess();
+    void draw_mode(_object3D_ne::_mode_fill mode);
 private:
     _X_arandela Arandela;
     _X1_axis_misc Axis_misc;

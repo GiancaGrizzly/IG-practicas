@@ -15,8 +15,7 @@ class _X5_monocycle_asiento_body
 public:
     void draw_point();
     void draw_line();
-    void draw_fill();
-    void draw_chess();
+    void draw_mode(_object3D_ne::_mode_fill mode);
 
     void Initialize_asiento_axis();
     void set_scale_asiento_axis(float step);

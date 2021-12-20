@@ -15,8 +15,7 @@ class _X4_asiento_axis
 public:
     void draw_point();
     void draw_line();
-    void draw_fill();
-    void draw_chess();
+    void draw_mode(_object3D_ne::_mode_fill mode);
 
     float alfa_scale_axis;
 private:

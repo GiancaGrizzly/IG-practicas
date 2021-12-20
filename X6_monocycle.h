@@ -16,9 +16,6 @@ class _X6_monocycle
 public:
     void draw_point();
     void draw_line();
-    void draw_fill();
-    void draw_chess();
-
     void draw_mode(_object3D_ne::_mode_fill mode);
 
     void Initialize_asiento_axis();
@@ -27,6 +24,7 @@ public:
     float get_scale_asiento_axis();
 
     float angle_pedals_wheel;
+
 private:
     _X5_monocycle_pedals Monocycle_pedals;
     _X5_monocycle_asiento_body Monocycle_asiento_body;

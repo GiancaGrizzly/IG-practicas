@@ -8,6 +8,26 @@ using namespace _colors_ne;
  *
  *****************************************************************************/
 
+void _X1_pedal::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glColor3fv((GLfloat *) &RED);
+
+    glMatrixMode(GL_MODELVIEW);
+
+    glPushMatrix();
+
+    glScalef(3,1,2);
+
+    Cube.draw_mode(mode);
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X1_pedal::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -37,42 +57,3 @@ void _X1_pedal::draw_line()
     Cube.draw_line();
     glPopMatrix();
 }
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X1_pedal::draw_fill()
-{
-    glColor3fv((GLfloat *) &RED);
-
-    glMatrixMode(GL_MODELVIEW);
-
-    glPushMatrix();
-
-    glScalef(3,1,2);
-
-    Cube.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X1_pedal::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    glPushMatrix();
-
-    glScalef(3,1,2);
-
-    Cube.draw_chess();
-    glPopMatrix();
-}
-

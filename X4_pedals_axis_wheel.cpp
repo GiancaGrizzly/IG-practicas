@@ -6,6 +6,28 @@
  *
  *****************************************************************************/
 
+void _X4_pedals_axis_wheel::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Pedals_axis (1)
+    Pedals_axis.draw_mode(mode);
+
+    //Wheel (2)
+    glPushMatrix();
+
+    glScalef(2,9,9);
+
+    Wheel.draw_line();
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X4_pedals_axis_wheel::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -43,48 +65,3 @@ void _X4_pedals_axis_wheel::draw_line()
     Wheel.draw_line();
     glPopMatrix();
 }
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X4_pedals_axis_wheel::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Pedals_axis (1)
-    Pedals_axis.draw_fill();
-
-    //Wheel (2)
-    glPushMatrix();
-
-    glScalef(2,9,9);
-
-    Wheel.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X4_pedals_axis_wheel::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Pedals_axis (1)
-    Pedals_axis.draw_chess();
-
-    //Wheel (2)
-    glPushMatrix();
-
-    glScalef(2,9,9);
-
-    Wheel.draw_chess();
-    glPopMatrix();
-}
-

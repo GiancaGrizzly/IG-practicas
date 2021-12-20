@@ -7,6 +7,28 @@
  *
  *****************************************************************************/
 
+void _X2_body_structure_2::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Axis_body (1)
+    Axis_body.draw_mode(mode);
+
+    //Arandela (2)
+    glPushMatrix();
+
+    glTranslatef(0,2.5,0);
+
+    Arandela.draw_mode(mode);
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X2_body_structure_2::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -44,48 +66,3 @@ void _X2_body_structure_2::draw_line()
     Arandela.draw_line();
     glPopMatrix();
 }
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X2_body_structure_2::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Axis_body (1)
-    Axis_body.draw_fill();
-
-    //Arandela (2)
-    glPushMatrix();
-
-    glTranslatef(0,2.5,0);
-
-    Arandela.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X2_body_structure_2::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Axis_body (1)
-    Axis_body.draw_chess();
-
-    //Arandela (2)
-    glPushMatrix();
-
-    glTranslatef(0,2.5,0);
-
-    Arandela.draw_chess();
-    glPopMatrix();
-}
-

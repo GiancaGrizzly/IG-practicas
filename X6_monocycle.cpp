@@ -1,6 +1,33 @@
 #include "X6_monocycle.h"
 
-using namespace _object3D_ne;
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _X6_monocycle::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Monocycle_pedals (1)
+    glPushMatrix();
+
+    glTranslatef(0,4.5,0);
+    glRotatef(angle_pedals_wheel,1,0,0);
+
+    Monocycle_pedals.draw_mode(mode);
+    glPopMatrix();
+
+    //Monocycle_asiento_body (2)
+    glPushMatrix();
+
+    glTranslatef(0,7.75,0);
+
+    Monocycle_asiento_body.draw_mode(mode);
+    glPopMatrix();
+}
 
 /*****************************************************************************//**
  *
@@ -55,76 +82,6 @@ void _X6_monocycle::draw_line()
     glTranslatef(0,7.75,0);
 
     Monocycle_asiento_body.draw_line();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X6_monocycle::draw_mode(_mode_fill mode)
-{
-    switch (mode) {
-    case MODE_SOLID:draw_fill();break;
-    case MODE_CHESS:draw_chess();break;
-    }
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X6_monocycle::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Monocycle_pedals (1)
-    glPushMatrix();
-
-    glTranslatef(0,4.5,0);
-    glRotatef(angle_pedals_wheel,1,0,0);
-
-    Monocycle_pedals.draw_fill();
-    glPopMatrix();
-
-    //Monocycle_asiento_body (2)
-    glPushMatrix();
-
-    glTranslatef(0,7.75,0);
-
-    Monocycle_asiento_body.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X6_monocycle::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Monocycle_pedals (1)
-    glPushMatrix();
-
-    glTranslatef(0,4.5,0);
-    glRotatef(angle_pedals_wheel,1,0,0);
-
-    Monocycle_pedals.draw_chess();
-    glPopMatrix();
-
-    //Monocycle_asiento_body (2)
-    glPushMatrix();
-
-    glTranslatef(0,7.75,0);
-
-    Monocycle_asiento_body.draw_chess();
     glPopMatrix();
 }
 

@@ -22,6 +22,8 @@ _X_arandela::_X_arandela(float Size)
 
     generate_vertex();
     generate_triangles();
+    compute_triangles_normals();
+    compute_vertex_normals();
 }
 
 /*****************************************************************************//**

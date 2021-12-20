@@ -6,6 +6,36 @@
  *
  *****************************************************************************/
 
+void _X5_monocycle_pedals::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Pedals_axis_wheel (1)
+    Pedals_axis_wheel.draw_mode(mode);
+
+    //Pedal (2)
+    glPushMatrix();
+
+    glTranslatef(7,-3.5,0);
+
+    Pedal.draw_mode(mode);
+    glPopMatrix();
+
+    //Pedal (3)
+    glPushMatrix();
+
+    glTranslatef(-7,3.5,0);
+
+    Pedal.draw_mode(mode);
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X5_monocycle_pedals::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -57,65 +87,5 @@ void _X5_monocycle_pedals::draw_line()
     glTranslatef(-7,3.5,0);
 
     Pedal.draw_line();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X5_monocycle_pedals::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Pedals_axis_wheel (1)
-    Pedals_axis_wheel.draw_fill();
-
-    //Pedal (2)
-    glPushMatrix();
-
-    glTranslatef(7,-3.5,0);
-
-    Pedal.draw_fill();
-    glPopMatrix();
-
-    //Pedal (3)
-    glPushMatrix();
-
-    glTranslatef(-7,3.5,0);
-
-    Pedal.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X5_monocycle_pedals::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Pedals_axis_wheel (1)
-    Pedals_axis_wheel.draw_chess();
-
-    //Pedal (2)
-    glPushMatrix();
-
-    glTranslatef(7,-3.5,0);
-
-    Pedal.draw_chess();
-    glPopMatrix();
-
-    //Pedal (3)
-    glPushMatrix();
-
-    glTranslatef(-7,3.5,0);
-
-    Pedal.draw_chess();
     glPopMatrix();
 }

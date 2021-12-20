@@ -6,6 +6,28 @@
  *
  *****************************************************************************/
 
+void _X3_asiento::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Asiento_base (1)
+    Asiento_base.draw_mode(mode);
+
+    //Asiento_respaldo (2)
+    glPushMatrix();
+
+    glTranslatef(0,1,-2);
+
+    Asiento_respaldo.draw_mode(mode);
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X3_asiento::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -43,48 +65,3 @@ void _X3_asiento::draw_line()
     Asiento_respaldo.draw_line();
     glPopMatrix();
 }
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X3_asiento::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Asiento_base (1)
-    Asiento_base.draw_fill();
-
-    //Asiento_respaldo (2)
-    glPushMatrix();
-
-    glTranslatef(0,1,-2);
-
-    Asiento_respaldo.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X3_asiento::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Asiento_base (1)
-    Asiento_base.draw_chess();
-
-    //Asiento_respaldo (2)
-    glPushMatrix();
-
-    glTranslatef(0,1,-2);
-
-    Asiento_respaldo.draw_chess();
-    glPopMatrix();
-}
-

@@ -6,6 +6,30 @@
  *
  *****************************************************************************/
 
+void _X5_monocycle_asiento_body::draw_mode(_object3D_ne::_mode_fill mode)
+{
+    glMatrixMode(GL_MODELVIEW);
+
+    //Body (1)
+    Body.draw_mode(mode);
+
+    //Asiento_axis (2)
+    glPushMatrix();
+
+    glTranslatef(0,7.5,0);
+    glTranslatef(0,Asiento_axis.alfa_scale_axis/100,0);
+    glRotatef(angle_asiento_axis,0,1,0);
+
+    Asiento_axis.draw_mode(mode);
+    glPopMatrix();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _X5_monocycle_asiento_body::draw_point()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -45,54 +69,6 @@ void _X5_monocycle_asiento_body::draw_line()
     glRotatef(angle_asiento_axis,0,1,0);
 
     Asiento_axis.draw_line();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X5_monocycle_asiento_body::draw_fill()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Body (1)
-    Body.draw_fill();
-
-    //Asiento_axis (2)
-    glPushMatrix();
-
-    glTranslatef(0,7.5,0);
-    glTranslatef(0,Asiento_axis.alfa_scale_axis/100,0);
-    glRotatef(angle_asiento_axis,0,1,0);
-
-    Asiento_axis.draw_fill();
-    glPopMatrix();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _X5_monocycle_asiento_body::draw_chess()
-{
-    glMatrixMode(GL_MODELVIEW);
-
-    //Body (1)
-    Body.draw_chess();
-
-    //Asiento_axis (2)
-    glPushMatrix();
-
-    glTranslatef(0,7.5,0);
-    glTranslatef(0,Asiento_axis.alfa_scale_axis/100,0);
-    glRotatef(angle_asiento_axis,0,1,0);
-
-    Asiento_axis.draw_chess();
     glPopMatrix();
 }
 
