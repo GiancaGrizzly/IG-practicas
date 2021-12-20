@@ -245,25 +245,26 @@ void _object3D::compute_triangles_normals()
 
 void _object3D::compute_vertex_normals()
 {
-    int n;  // Contador del número de triángulos adyancentes al vértice i
-    Vertices_normals.resize(Vertices.size());
+    // Reservo espacio para las normales e inicializo a 0
+    Vertices_normals.resize(Vertices.size(),_vertex3f(0,0,0));
+    // Contador del número de triángulos adyancentes al vértice i
+    vector<int> n;
+    n.resize(Vertices.size(),0);
 
-    for (unsigned int i=0; i < Vertices.size(); i++) {
-        // Inicializo a 0 la normal y el contador de triángulos adyacentes
-        Vertices_normals[i] = _vertex3f(0,0,0);
-        n = 0;
-        // Acumulo en vertices_normal[i] la suma de las normales de los triángulos adyacentes
-        for (unsigned int j=0; j < Triangles.size(); j++) {
-            if ( Vertices[i] == Vertices[Triangles[j]._0] or
-                 Vertices[i] == Vertices[Triangles[j]._1] or
-                 Vertices[i] == Vertices[Triangles[j]._2] )
-            {
-                Vertices_normals[i] += Triangles_normals[j];
-                n++;
-            }
-        }
-        // Calculo la media de la suma anterior y normalizo
-        Vertices_normals[i] = (Vertices_normals[i] / n).normalize();
+    // Para cada vértice de cada triángulo, voy acumulando la correspondiente normal del triángulo
+    // y incremento el contador que corresponde a ese vértice
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        Vertices_normals[Triangles[i]._0] += Triangles_normals[i];
+        n[Triangles[i]._0]++;
+        Vertices_normals[Triangles[i]._1] += Triangles_normals[i];
+        n[Triangles[i]._1]++;
+        Vertices_normals[Triangles[i]._2] += Triangles_normals[i];
+        n[Triangles[i]._2]++;
+    }
+
+    // Divido el valor acumulado en cada vértice por su contador asociado y normalizo el resultado
+    for (unsigned int i=0; i < Vertices_normals.size(); i++) {
+        Vertices_normals[i] = ( Vertices_normals[i] / n[i] ).normalize();
     }
 }
 
