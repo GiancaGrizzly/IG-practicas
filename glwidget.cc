@@ -84,6 +84,9 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 
         case Qt::Key_A:
         {
+            // Activa/desactiva la rotación de la luz magenta para la esfera
+            Sphere.rotate_light = !Sphere.rotate_light;
+
             if (X_timer->isActive())
                 X_timer->stop();
             else X_timer->start(0);
@@ -149,6 +152,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
             }
         }
 
+        // Modo de dibujado
         case Qt::Key_P:Draw_point=!Draw_point;break;
         case Qt::Key_L:Draw_line=!Draw_line;break;
         case Qt::Key_F:Draw_fill=!Draw_fill;break;
@@ -158,6 +162,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_F4:Mode_fill=MODE_SMOOTH;break;
         case Qt::Key_F5:Mode_fill=MODE_TEXTURE;break;
 
+        //Movimiento de la cámara
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
         case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
         case Qt::Key_Up:Observer_angle_x-=ANGLE_STEP;break;
@@ -240,16 +245,13 @@ void _gl_widget::draw_objects()
     glColor3fv((GLfloat *) &BLACK);
     switch (Object){
     case OBJECT_TETRAHEDRON:Tetrahedron.draw_point();break;
-
     case OBJECT_CUBE:Cube.draw_point();break;
     case OBJECT_PLY:Ply_file.draw_point();break;
     case OBJECT_CONE:Cone.draw_point();break;
     case OBJECT_CYLINDER:Cylinder.draw_point();break;
     case OBJECT_SPHERE:Sphere.draw_point();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_point();break;
-
     case OBJECT_HIERARCHICAL:Monocycle.draw_point();break;
-
     default:break;
     }
   }
@@ -259,16 +261,13 @@ void _gl_widget::draw_objects()
     glColor3fv((GLfloat *) &MAGENTA);
     switch (Object){
     case OBJECT_TETRAHEDRON:Tetrahedron.draw_line();break;
-
     case OBJECT_CUBE:Cube.draw_line();break;
     case OBJECT_PLY:Ply_file.draw_line();break;
     case OBJECT_CONE:Cone.draw_line();break;
     case OBJECT_CYLINDER:Cylinder.draw_line();break;
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
-
     case OBJECT_HIERARCHICAL:Monocycle.draw_line();break;
-
     default:break;
     }
   }
@@ -277,16 +276,13 @@ void _gl_widget::draw_objects()
     glColor3fv((GLfloat *) &BLUE);
     switch (Object){
     case OBJECT_TETRAHEDRON:Tetrahedron.draw_mode(Mode_fill);break;
-
     case OBJECT_CUBE:Cube.draw_mode(Mode_fill);break;
     case OBJECT_PLY:Ply_file.draw_mode(Mode_fill);break;
     case OBJECT_CONE:Cone.draw_mode(Mode_fill);break;
     case OBJECT_CYLINDER:Cylinder.draw_mode(Mode_fill);break;
     case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill);break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
-
     case OBJECT_HIERARCHICAL:Monocycle.draw_mode(Mode_fill);break;
-
     default:break;
     }
   }
@@ -366,6 +362,8 @@ void _gl_widget::initializeGL()
   Draw_fill=false;
 
   Mode_fill = MODE_SOLID;
+
+//  Object = OBJECT_SPHERE;
 
   Monocycle.angle_pedals_wheel = 0;
   Monocycle.Initialize_asiento_axis();

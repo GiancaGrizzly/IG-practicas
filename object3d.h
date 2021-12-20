@@ -32,7 +32,10 @@ class _object3D:public _basic_object3D
   vector<_vertex3ui> Triangles;
   vector<_vertex3f> Triangles_normals;
   vector<_vertex3f> Vertices_normals;
-  vector<_vertex2f> Vertices_TexCoord;
+  //vector<_vertex2f> Vertices_TexCoord;
+
+  bool rotate_light=false;
+  float x_light1=1, z_light1=0;
 
   void draw_mode(_object3D_ne::_mode_fill mode);
 

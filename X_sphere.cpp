@@ -26,7 +26,15 @@ _X_sphere::_X_sphere(float Size)
 
 /*****************************************************************************//**
  *
+ * Función para generar el perfil de la esfera (una semicircunferencia)
+ * La semicircunferencia tiene 180º, así que los divido entre M vértices que tiene el
+ * perfil, de forma que todos los vértices del perfil quedan a la misma distancia
+ * Cada vértice se obtiene al rotar sobre el eje z el vértice anterior
  *
+ * Esta versión para obtener el perfil de la esfera la añadí después de ver el tema
+ * de las transformaciones, ya que me parecía una buena forma de generar la esfera sin
+ * distintos tamaños de triángulos, ya que la versión que había creado antes tenía
+ * este inconveniente y me daba problemas con la iluminación
  *
  *****************************************************************************/
 
