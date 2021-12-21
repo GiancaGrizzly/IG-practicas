@@ -13,9 +13,10 @@
 class _X_sphere : public _X_revolution_object
 {
 public:
-  _X_sphere(float Size=1.0);
+  _X_sphere();
 private:
-  void generate_profile(float r);
+  void generate_profile();
+  void compute_vertex_normals();
 };
 
 #endif // X_SPHERE_H
