@@ -32,14 +32,14 @@ _X_sphere::_X_sphere()
 
 void _X_sphere::generate_profile()
 {
-    float angle = 3*PI / 2; // 270º en radianes
     float step;
 
     for (unsigned int i=0; i < M; i++) {
-        step = angle + PI*i/(M-1);
-        Profile[i].x = cos(step);
-        Profile[i].y = sin(step);
-        Profile[i].z = 0;
+        step = _270 + _180*i/(M-1);
+        Profile[i] = _vertex3f(cos(step),sin(step),0);
+//      Profile[i].x = cos(step);
+//      Profile[i].y = sin(step);
+//      Profile[i].z = 0;
     }
 }
 

@@ -16,6 +16,10 @@
 namespace _object3D_ne {
 
   const float PI=3.14159265;
+  const float _90=PI/2;
+  const float _180=PI;
+  const float _270=3*PI/2;
+  const float _360=2*PI;
 
   typedef enum {MODE_SOLID,MODE_CHESS,MODE_FLAT,MODE_SMOOTH,MODE_TEXTURE} _mode_fill;
 }

@@ -10,7 +10,7 @@
 
 _X_ply_revolution::_X_ply_revolution()
 {
-    if (open("/home/gianca/IG/practicas/ply_models/X_copa.ply") == 1) {  // Se abre sin error --> crear el objeto
+    if (open("/home/gianca/IG/practicas/skeleton/ply_models/X_copa.ply") == 1) {  // Se abre sin error --> crear el objeto
         //Creo el perfil
         create();
 
