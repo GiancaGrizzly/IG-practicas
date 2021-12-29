@@ -19,6 +19,7 @@ HEADERS += \
   X5_monocycle_pedals.h \
   X6_monocycle.h \
   X_arandela.h \
+  X_chess_board.h \
   X_cone.h \
   X_cube.h \
   X_cylinder.h \
@@ -26,7 +27,6 @@ HEADERS += \
   X_ply_revolution.h \
   X_revolution_object.h \
   X_sphere.h \
-  colors.h \
   basic_object3d.h \
   file_ply_stl.h \
   object3d.h \
@@ -57,6 +57,7 @@ SOURCES += \
   X5_monocycle_pedals.cpp \
   X6_monocycle.cpp \
   X_arandela.cpp \
+  X_chess_board.cpp \
   X_cone.cpp \
   X_cube.cpp \
   X_cylinder.cpp \

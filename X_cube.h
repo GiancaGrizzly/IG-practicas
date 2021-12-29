@@ -1,4 +1,3 @@
-
 #ifndef X_CUBE_H
 #define X_CUBE_H
 

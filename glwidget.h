@@ -6,7 +6,6 @@
  * GPL 3
  */
 
-
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
@@ -26,6 +25,7 @@
 #include "X_sphere.h"
 #include "X_ply_revolution.h"
 #include "X6_monocycle.h"
+#include "X_chess_board.h"
 
 #include <QTimer>
 
@@ -41,13 +41,12 @@ namespace _gl_widget_ne {
   const float DEFAULT_DISTANCE=2;
   const float ANGLE_STEP=1;
 
-//  typedef enum {MODE_DRAW_POINT,MODE_DRAW_LINE,MODE_DRAW_FILL,MODE_DRAW_CHESS} _mode_draw;
   typedef enum {OBJECT_TETRAHEDRON, OBJECT_CUBE, OBJECT_PLY, OBJECT_CONE, OBJECT_CYLINDER,
-                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_HIERARCHICAL} _object;
+                OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_HIERARCHICAL, OBJECT_BOARD} _object;
 }
 
-class _window;
 
+class _window;
 
 /*****************************************************************************//**
  *
@@ -68,7 +67,6 @@ public:
   void draw_axis();
   void draw_objects();
 
-
 protected:
   void resizeGL(int Width1, int Height1) Q_DECL_OVERRIDE;
   void paintGL() Q_DECL_OVERRIDE;
@@ -76,6 +74,7 @@ protected:
   void keyPressEvent(QKeyEvent *Keyevent) Q_DECL_OVERRIDE;
 
 private slots:
+  // Evento que tiene lugar cuando la animación está activada
   void X_idle_event();
 
 private:
@@ -91,10 +90,14 @@ private:
   _X_sphere Sphere;
   _X_ply_revolution Ply_revolution;
   _X6_monocycle Monocycle;
+  _X_chess_board Chess_board;
 
+  // Temporizador para disparar el evento de la animación
   QTimer *X_timer;
 
   _gl_widget_ne::_object Object;
+
+  // { SOLID, CHESS, LIGHTED_FLAT, LIGHTED_SMOOTH, TEXTURE }
   _object3D_ne::_mode_fill Mode_fill;
 
   bool Draw_point;
@@ -105,8 +108,17 @@ private:
   float Observer_angle_y;
   float Observer_distance;
 
+  // Variables para controlar los distintos grados de libertad del modelo jerárquico
   int step_pedals_wheel, step_asiento_axis, step_scale_axis;
   bool grow_scale_asiento_axis;
+
+
+  // Activa/desativa la rotación de la luz secundaria magenta
+  void switch_rotation_light1();
+
+  // Activa/desativa la luz primaria blanca y secundaria magenta
+  void switch_state_light0();
+  void switch_state_light1();
 };
 
 #endif

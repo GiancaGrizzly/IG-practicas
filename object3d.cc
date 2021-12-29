@@ -6,14 +6,13 @@
  * GPL 3
  */
 
-
 #include "object3d.h"
 
 using namespace _colors_ne;
 using namespace _object3D_ne;
 
-#define SIN_ROTATE_LIGHT sin(PI/360)
-#define COS_ROTATE_LIGHT cos(PI/360)
+#define SIN_ROTATE_LIGHT sin(_360/720)
+#define COS_ROTATE_LIGHT cos(_360/720)
 
 
 /*****************************************************************************//**
@@ -29,7 +28,7 @@ void _object3D::draw_mode(_mode_fill mode)
     case MODE_CHESS: draw_chess(); break;
     case MODE_FLAT: draw_lighted_flat_shading(); break;
     case MODE_SMOOTH: draw_lighted_smooth_shading(); break;
-//    case MODE_TEXTURE: draw_texture(); break;
+    case MODE_TEXTURE: draw_texture(); break;
     }
 }
 
@@ -106,28 +105,27 @@ void _object3D::draw_chess()
 
 void _object3D::configure_lighting()
 {
-    // Luz blanca en el infinito
+    // Luz blanca en el infinito (global)
     GLfloat Light0_position[] = {1,1,1,0};
     GLfloat Light0_ambient[]  = {1,1,1};
     GLfloat Light0_diffuse[]  = {1,1,1};
     GLfloat Light0_specular[] = {1,1,1};
 
-    // Luz magenta no en el infinito
+    // Luz magenta no en el infinito (local)
     if (rotate_light) {
         GLfloat aux = x_light1;
         x_light1 = x_light1*COS_ROTATE_LIGHT + z_light1*SIN_ROTATE_LIGHT;
         z_light1 =     -aux*SIN_ROTATE_LIGHT + z_light1*COS_ROTATE_LIGHT;
     }
-
     GLfloat Light1_position[] = {x_light1,1,z_light1,1};
     GLfloat Light1_ambient[]  = {1,0,1};
     GLfloat Light1_diffuse[]  = {1,0,1};
     GLfloat Light1_specular[] = {1,0,1};
 
-    GLfloat Material_ambient[]  = {0.2,0.2,0.2};
-    GLfloat Material_diffuse[]  = {0.2,0.2,0.2};
-    GLfloat Material_specular[] = {0.2,0.2,0.2};
-    GLfloat Material_shininess  = 0.5;
+    GLfloat Material_ambient[]  = {0.3,0.3,0.3};
+    GLfloat Material_diffuse[]  = {0.3,0.3,0.3};
+    GLfloat Material_specular[] = {0.3,0.3,0.3};
+    GLfloat Material_shininess  = 0.2;
 
     // Esmeralda
 //    GLfloat Material_ambient[]  = {0.0215,0.1745,0.0215};
@@ -164,8 +162,8 @@ void _object3D::draw_lighted_flat_shading()
     glShadeModel(GL_FLAT);
 
     glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+    if (state_light0) glEnable(GL_LIGHT0);
+    if (state_light1) glEnable(GL_LIGHT1);
 
     glPolygonMode(GL_FRONT,GL_FILL);
 
@@ -179,8 +177,8 @@ void _object3D::draw_lighted_flat_shading()
     glEnd();
 
     glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-    glDisable(GL_LIGHT1);
+    if (state_light0) glDisable(GL_LIGHT0);
+    if (state_light1) glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
@@ -196,8 +194,8 @@ void _object3D::draw_lighted_smooth_shading()
     glShadeModel(GL_SMOOTH);
 
     glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+    if (state_light0) glEnable(GL_LIGHT0);
+    if (state_light1) glEnable(GL_LIGHT1);
 
     glPolygonMode(GL_FRONT,GL_FILL);
 
@@ -217,8 +215,59 @@ void _object3D::draw_lighted_smooth_shading()
     glEnd();
 
     glDisable(GL_LIGHTING);
-    glDisable(GL_LIGHT0);
-    glDisable(GL_LIGHT1);
+    if (state_light0) glDisable(GL_LIGHT0);
+    if (state_light1) glDisable(GL_LIGHT1);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_texture()
+{
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+
+    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
+
+    glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::read_texture()
+{
+    QImageReader Reader(Textura_file_name);
+    Reader.setAutoTransform(true);
+
+    Textura = Reader.read();
+    if (Textura.isNull()) exit(-1);
+
+    Textura = Textura.mirrored();
+    Textura = Textura.convertToFormat(QImage::Format_RGB888);
 }
 
 /*****************************************************************************//**

@@ -10,6 +10,8 @@
 #ifndef OBJECT3D_H
 #define OBJECT3D_H
 
+#include "QImage"
+#include "QImageReader"
 #include "basic_object3d.h"
 
 
@@ -30,16 +32,19 @@ namespace _object3D_ne {
  *
  *****************************************************************************/
 
-class _object3D:public _basic_object3D
+class _object3D: public _basic_object3D
 {
   public:
   vector<_vertex3ui> Triangles;
   vector<_vertex3f> Triangles_normals;
   vector<_vertex3f> Vertices_normals;
-  //vector<_vertex2f> Vertices_TexCoord;
+  vector<_vertex2f> Vertices_texture_coordinates;
 
+  bool state_light0=true;
+  bool state_light1=true;
   bool rotate_light=false;
-  float x_light1=1, z_light1=0;
+
+  QString Textura_file_name;
 
   void draw_mode(_object3D_ne::_mode_fill mode);
 
@@ -51,10 +56,15 @@ class _object3D:public _basic_object3D
   void draw_lighted_smooth_shading();
   void draw_texture();
 
+  void read_texture();
+
   void compute_triangles_normals();
   void compute_vertex_normals();
 
   private:
+  float x_light1=1, z_light1=0;
+  QImage Textura;
+
   void configure_lighting();
 };
 

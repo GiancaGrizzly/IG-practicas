@@ -6,7 +6,6 @@
  * GPL 3
  */
 
-
 #ifndef BASIC_OBJECT3D_H
 #define BASIC_OBJECT3D_H
 
@@ -14,7 +13,6 @@
 #include <GL/gl.h>
 #include "colors.h"
 #include "vertex.h"
-
 
 /*****************************************************************************//**
  *

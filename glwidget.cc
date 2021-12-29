@@ -6,7 +6,6 @@
  * GPL 3
  */
 
-
 #include "glwidget.h"
 #include "window.h"
 
@@ -26,40 +25,6 @@ _gl_widget::_gl_widget(_window *Window1):Window(Window1)
 {
   setMinimumSize(300, 300);
   setFocusPolicy(Qt::StrongFocus);
-
-  //Inicializo el temporizador y le asigno la funcion idle en cada timeout
-  X_timer = new QTimer(this);
-  connect(X_timer,SIGNAL(timeout()),this,SLOT(X_idle_event()));
-}
-
-/*****************************************************************************//**
- * Slot idle_event para la animacion
- *
- *
- *****************************************************************************/
-
-void _gl_widget::X_idle_event()
-{
-    // Variable que controla el giro de los pedales
-    Monocycle.angle_pedals_wheel -= step_pedals_wheel;
-
-    // Se mantiene el eje en un determinado rango de tamaño
-    if (Monocycle.get_scale_asiento_axis() < 0)
-        grow_scale_asiento_axis = true;
-    else if (Monocycle.get_scale_asiento_axis() > 300)
-        grow_scale_asiento_axis = false;
-
-    // En funcion de grow, el eje crece o decrece, y además gira en un sentido u otro
-    if (grow_scale_asiento_axis) {
-        Monocycle.set_scale_asiento_axis(step_scale_axis);
-        Monocycle.set_angle_asiento_axis(step_asiento_axis);
-    }
-    else {
-        Monocycle.set_scale_asiento_axis(-step_scale_axis);
-        Monocycle.set_angle_asiento_axis(-step_asiento_axis);
-    }
-
-    update();
 }
 
 /*****************************************************************************//**
@@ -80,19 +45,12 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_5:Object=OBJECT_SPHERE;break;
         case Qt::Key_6:Object=OBJECT_PLY;break;
         case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
+        case Qt::Key_8:Object=OBJECT_BOARD;break;
         case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
 
         case Qt::Key_A:
         {
-            // Activa/desactiva la rotación de la luz magenta
-            Tetrahedron.rotate_light = !Tetrahedron.rotate_light;
-            Cube.rotate_light = !Cube.rotate_light;
-            Cone.rotate_light = !Cone.rotate_light;
-            Cylinder.rotate_light = !Cylinder.rotate_light;
-            Sphere.rotate_light = !Sphere.rotate_light;
-            Ply_file.rotate_light = !Ply_file.rotate_light;
-
-            Ply_revolution._X_revolution_object::rotate_light = !Ply_revolution._X_revolution_object::rotate_light;
+            switch_rotation_light1();
 
             if (X_timer->isActive())
                 X_timer->stop();
@@ -169,6 +127,9 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_F4:Mode_fill=MODE_SMOOTH;break;
         case Qt::Key_F5:Mode_fill=MODE_TEXTURE;break;
 
+        case Qt::Key_J:switch_state_light0();break; //activar luz primaria blanca
+        case Qt::Key_K:switch_state_light1();break; //activar luz secundaria magenta
+
         //Movimiento de la cámara
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
         case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
@@ -181,7 +142,6 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
     update();
 }
 
-
 /*****************************************************************************//**
  * Limpiar ventana
  *
@@ -193,8 +153,6 @@ void _gl_widget::clear_window()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
-
-
 
 /*****************************************************************************//**
  * Funcion para definir la transformación de proyeccion
@@ -214,8 +172,6 @@ void _gl_widget::change_projection()
 //  glOrtho(-1,1,-1,1,-1000,1000);
 }
 
-
-
 /*****************************************************************************//**
  * Funcion para definir la transformación de vista (posicionar la camara)
  *
@@ -234,7 +190,6 @@ void _gl_widget::change_observer()
   glRotatef(Observer_angle_x,1,0,0);
   glRotatef(Observer_angle_y,0,1,0);
 }
-
 
 /*****************************************************************************//**
  * Funcion que dibuja los objetos
@@ -259,6 +214,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_point();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_point();break;
     case OBJECT_HIERARCHICAL:Monocycle.draw_point();break;
+    case OBJECT_BOARD:Chess_board.draw_point();break;
     default:break;
     }
   }
@@ -275,6 +231,7 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_line();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_line();break;
     case OBJECT_HIERARCHICAL:Monocycle.draw_line();break;
+    case OBJECT_BOARD:Chess_board.draw_line();break;
     default:break;
     }
   }
@@ -290,13 +247,12 @@ void _gl_widget::draw_objects()
     case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill);break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
     case OBJECT_HIERARCHICAL:Monocycle.draw_mode(Mode_fill);break;
+    case OBJECT_BOARD:Chess_board.draw_mode(Mode_fill);break;
     default:break;
     }
   }
 
 }
-
-
 
 /*****************************************************************************//**
  * Evento de dibujado
@@ -313,7 +269,6 @@ void _gl_widget::paintGL()
   draw_objects();
 }
 
-
 /*****************************************************************************//**
  * Evento de cambio de tamaño de la ventana
  *
@@ -325,7 +280,6 @@ void _gl_widget::resizeGL(int Width1, int Height1)
 {
   glViewport(0,0,Width1,Height1);
 }
-
 
 /*****************************************************************************//**
  * Inicialización de OpenGL
@@ -370,14 +324,99 @@ void _gl_widget::initializeGL()
 
   Mode_fill = MODE_SOLID;
 
-//  Object = OBJECT_SPHERE;
-
   Monocycle.angle_pedals_wheel = 0;
   Monocycle.Initialize_asiento_axis();
 
   step_pedals_wheel = 1;
   step_asiento_axis = 1;
   step_scale_axis = 1;
-
   grow_scale_asiento_axis = true;
+
+  //Inicializo el temporizador y le asigno la funcion idle en cada timeout
+  X_timer = new QTimer(this);
+  connect(X_timer,SIGNAL(timeout()),this,SLOT(X_idle_event()));
+}
+
+/*****************************************************************************//**
+ * Slot idle_event para la animacion
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::X_idle_event()
+{
+    // Variable que controla el giro de los pedales
+    Monocycle.angle_pedals_wheel -= step_pedals_wheel;
+
+    // Se mantiene el eje en un determinado rango de tamaño
+    if (Monocycle.get_scale_asiento_axis() < 0)
+        grow_scale_asiento_axis = true;
+    else if (Monocycle.get_scale_asiento_axis() > 300)
+        grow_scale_asiento_axis = false;
+
+    // En funcion de grow, el eje crece o decrece, y además gira en un sentido u otro
+    if (grow_scale_asiento_axis) {
+        Monocycle.set_scale_asiento_axis(step_scale_axis);
+        Monocycle.set_angle_asiento_axis(step_asiento_axis);
+    }
+    else {
+        Monocycle.set_scale_asiento_axis(-step_scale_axis);
+        Monocycle.set_angle_asiento_axis(-step_asiento_axis);
+    }
+
+    update();
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::switch_state_light0()
+{
+    // Activa/desactiva la luz primaria blanca
+    Tetrahedron.state_light0 = !Tetrahedron.state_light0;
+    Cube.state_light0 = !Cube.state_light0;
+    Cone.state_light0 = !Cone.state_light0;
+    Cylinder.state_light0 = !Cylinder.state_light0;
+    Sphere.state_light0 = !Sphere.state_light0;
+    Ply_file.state_light0 = !Ply_file.state_light0;
+    Ply_revolution._X_revolution_object::state_light0 = !Ply_revolution._X_revolution_object::state_light0;
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::switch_state_light1()
+{
+    // Activa/desactiva la luz secundaria magenta
+    Tetrahedron.state_light1 = !Tetrahedron.state_light1;
+    Cube.state_light1 = !Cube.state_light1;
+    Cone.state_light1 = !Cone.state_light1;
+    Cylinder.state_light1 = !Cylinder.state_light1;
+    Sphere.state_light1 = !Sphere.state_light1;
+    Ply_file.state_light1 = !Ply_file.state_light1;
+    Ply_revolution._X_revolution_object::state_light1 = !Ply_revolution._X_revolution_object::state_light1;
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::switch_rotation_light1()
+{
+    // Activa/desactiva la rotación de la luz magenta
+    Tetrahedron.rotate_light = !Tetrahedron.rotate_light;
+    Cube.rotate_light = !Cube.rotate_light;
+    Cone.rotate_light = !Cone.rotate_light;
+    Cylinder.rotate_light = !Cylinder.rotate_light;
+    Sphere.rotate_light = !Sphere.rotate_light;
+    Ply_file.rotate_light = !Ply_file.rotate_light;
+    Ply_revolution._X_revolution_object::rotate_light = !Ply_revolution._X_revolution_object::rotate_light;
 }
