@@ -23,7 +23,7 @@ namespace _object3D_ne {
   const float _270=3*PI/2;
   const float _360=2*PI;
 
-  typedef enum {MODE_SOLID,MODE_CHESS,MODE_FLAT,MODE_SMOOTH,MODE_TEXTURE} _mode_fill;
+  typedef enum {MODE_SOLID,MODE_CHESS,MODE_FLAT,MODE_SMOOTH,MODE_TEXTURE_UNLIT,MODE_TEXTURE_FLAT,MODE_TEXTURE_SMOOTH} _mode_fill;
 }
 
 /*****************************************************************************//**

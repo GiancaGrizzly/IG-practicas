@@ -125,7 +125,9 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_F2:Mode_fill=MODE_CHESS;break;
         case Qt::Key_F3:Mode_fill=MODE_FLAT;break;
         case Qt::Key_F4:Mode_fill=MODE_SMOOTH;break;
-        case Qt::Key_F5:Mode_fill=MODE_TEXTURE;break;
+        case Qt::Key_F5:Mode_fill=MODE_TEXTURE_UNLIT;break;
+        case Qt::Key_F6:Mode_fill=MODE_TEXTURE_FLAT;break;
+        case Qt::Key_F7:Mode_fill=MODE_TEXTURE_SMOOTH;break;
 
         case Qt::Key_J:switch_state_white_light();break; //activar luz primaria blanca
         case Qt::Key_K:switch_state_magenta_light();break; //activar luz secundaria magenta

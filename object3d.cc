@@ -28,7 +28,9 @@ void _object3D::draw_mode(_mode_fill mode)
     case MODE_CHESS: draw_chess(); break;
     case MODE_FLAT: draw_lighted_flat_shading(); break;
     case MODE_SMOOTH: draw_lighted_smooth_shading(); break;
-    case MODE_TEXTURE: draw_texture_unlit(); break;
+    case MODE_TEXTURE_UNLIT: draw_texture_unlit(); break;
+    case MODE_TEXTURE_FLAT: draw_texture_flat_lighted(); break;
+    case MODE_TEXTURE_SMOOTH: draw_texture_smooth_lighted(); break;
     }
 }
 
@@ -114,12 +116,14 @@ void _object3D::draw_lighted_flat_shading()
     if (state_magenta_light) glEnable(GL_LIGHT1);
 
     glBegin(GL_TRIANGLES);
+    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
         glNormal3fv((GLfloat *) &Triangles_normals[i]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
+    glDisable(GL_RESCALE_NORMAL);
     glEnd();
 
     glDisable(GL_LIGHTING);
@@ -195,19 +199,20 @@ void _object3D::draw_texture_unlit()
 
 void _object3D::draw_texture_flat_lighted()
 {
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    configure_lighting();
+    configure_texture();
 
-    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
-
-    glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
+    glShadeModel(GL_FLAT);
 
     glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
+    if (state_white_light) glEnable(GL_LIGHT0);
+    if (state_magenta_light) glEnable(GL_LIGHT1);
 
     glBegin(GL_TRIANGLES);
+    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat *) &Triangles_normals[i]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
@@ -215,9 +220,13 @@ void _object3D::draw_texture_flat_lighted()
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
+    glDisable(GL_RESCALE_NORMAL);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
+    if (state_white_light) glDisable(GL_LIGHT0);
+    if (state_magenta_light) glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
@@ -228,29 +237,38 @@ void _object3D::draw_texture_flat_lighted()
 
 void _object3D::draw_texture_smooth_lighted()
 {
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    configure_lighting();
+    configure_texture();
 
-    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
-
-    glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
+    glShadeModel(GL_SMOOTH);
 
     glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
+    if (state_white_light) glEnable(GL_LIGHT0);
+    if (state_magenta_light) glEnable(GL_LIGHT1);
 
     glBegin(GL_TRIANGLES);
+    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._1]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._2]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
+    glDisable(GL_RESCALE_NORMAL);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
+    glDisable(GL_LIGHTING);
+    if (state_white_light) glDisable(GL_LIGHT0);
+    if (state_magenta_light) glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
@@ -262,21 +280,21 @@ void _object3D::draw_texture_smooth_lighted()
 void _object3D::configure_lighting()
 {
     // Luz blanca en el infinito (global)
-    GLfloat Light0_position[] = {1,1,1,0};
-    GLfloat Light0_ambient[]  = {1,1,1};
-    GLfloat Light0_diffuse[]  = {1,1,1};
-    GLfloat Light0_specular[] = {1,1,1};
+    GLfloat white_light_position[] = {1,1,1,0};
+    GLfloat white_light_ambient[]  = {1,1,1};
+    GLfloat white_light_diffuse[]  = {1,1,1};
+    GLfloat white_light_specular[] = {1,1,1};
 
     // Luz magenta no en el infinito (local)
     if (rotate_magenta_light) {
         GLfloat aux = x_magenta_light;
-        x_magenta_light = x_magenta_light*COS_ROTATE_LIGHT + z_magenta_light*SIN_ROTATE_LIGHT;
-        z_magenta_light =     -aux*SIN_ROTATE_LIGHT + z_magenta_light*COS_ROTATE_LIGHT;
+        x_magenta_light =  aux*COS_ROTATE_LIGHT + z_magenta_light*SIN_ROTATE_LIGHT;
+        z_magenta_light = -aux*SIN_ROTATE_LIGHT + z_magenta_light*COS_ROTATE_LIGHT;
     }
-    GLfloat Light1_position[] = {x_magenta_light,1,z_magenta_light,1};
-    GLfloat Light1_ambient[]  = {1,0,1};
-    GLfloat Light1_diffuse[]  = {1,0,1};
-    GLfloat Light1_specular[] = {1,0,1};
+    GLfloat magenta_light_position[] = {x_magenta_light,1,z_magenta_light,1};
+    GLfloat magenta_light_ambient[]  = {1,0,1};
+    GLfloat magenta_light_diffuse[]  = {1,0,1};
+    GLfloat magenta_light_specular[] = {1,0,1};
 
     GLfloat Material_ambient[]  = {0.3,0.3,0.3};
     GLfloat Material_diffuse[]  = {0.3,0.3,0.3};
@@ -289,15 +307,15 @@ void _object3D::configure_lighting()
 //    GLfloat Material_specular[] = {0.633,0.727811,0.633};
 //    GLfloat Material_shininess  = 0.6;
 
-    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &Light0_position);
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  (GLfloat*) &Light0_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  (GLfloat*) &Light0_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &Light0_specular);
+    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &white_light_position);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  (GLfloat*) &white_light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  (GLfloat*) &white_light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &white_light_specular);
 
-    glLightfv(GL_LIGHT1, GL_POSITION, (GLfloat*) &Light1_position);
-    glLightfv(GL_LIGHT1, GL_AMBIENT,  (GLfloat*) &Light1_ambient);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE,  (GLfloat*) &Light1_diffuse);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, (GLfloat*) &Light1_specular);
+    glLightfv(GL_LIGHT1, GL_POSITION, (GLfloat*) &magenta_light_position);
+    glLightfv(GL_LIGHT1, GL_AMBIENT,  (GLfloat*) &magenta_light_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE,  (GLfloat*) &magenta_light_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, (GLfloat*) &magenta_light_specular);
 
     glMaterialfv(GL_FRONT, GL_AMBIENT,  (GLfloat*) &Material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  (GLfloat*) &Material_diffuse);
@@ -323,24 +341,6 @@ void _object3D::configure_texture()
     glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
 
     glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::read_texture()
-{
-    QImageReader Reader(Textura_file_name);
-    Reader.setAutoTransform(true);
-
-    Textura = Reader.read();
-    if (Textura.isNull()) exit(-1);
-
-    Textura = Textura.mirrored();
-    Textura = Textura.convertToFormat(QImage::Format_RGB888);
 }
 
 /*****************************************************************************//**
@@ -394,3 +394,20 @@ void _object3D::compute_vertex_normals()
     }
 }
 
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::read_texture()
+{
+    QImageReader Reader(Textura_file_name);
+    Reader.setAutoTransform(true);
+
+    Textura = Reader.read();
+    if (Textura.isNull()) exit(-1);
+
+    Textura = Textura.mirrored();
+    Textura = Textura.convertToFormat(QImage::Format_RGB888);
+}
