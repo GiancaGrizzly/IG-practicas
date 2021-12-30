@@ -114,11 +114,11 @@ private:
 
 
   // Activa/desativa la rotación de la luz secundaria magenta
-  void switch_rotation_light1();
+  void switch_rotation_magenta_light();
 
   // Activa/desativa la luz primaria blanca y secundaria magenta
-  void switch_state_light0();
-  void switch_state_light1();
+  void switch_state_white_light();
+  void switch_state_magenta_light();
 };
 
 #endif

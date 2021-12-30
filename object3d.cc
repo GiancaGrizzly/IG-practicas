@@ -28,7 +28,7 @@ void _object3D::draw_mode(_mode_fill mode)
     case MODE_CHESS: draw_chess(); break;
     case MODE_FLAT: draw_lighted_flat_shading(); break;
     case MODE_SMOOTH: draw_lighted_smooth_shading(); break;
-    case MODE_TEXTURE: draw_texture(); break;
+    case MODE_TEXTURE: draw_texture_unlit(); break;
     }
 }
 
@@ -103,6 +103,162 @@ void _object3D::draw_chess()
  *
  *****************************************************************************/
 
+void _object3D::draw_lighted_flat_shading()
+{
+    configure_lighting();
+
+    glShadeModel(GL_FLAT);
+
+    glEnable(GL_LIGHTING);
+    if (state_white_light) glEnable(GL_LIGHT0);
+    if (state_magenta_light) glEnable(GL_LIGHT1);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat *) &Triangles_normals[i]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_LIGHTING);
+    if (state_white_light) glDisable(GL_LIGHT0);
+    if (state_magenta_light) glDisable(GL_LIGHT1);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_lighted_smooth_shading()
+{
+    configure_lighting();
+
+    glShadeModel(GL_SMOOTH);
+
+    glEnable(GL_LIGHTING);
+    if (state_white_light) glEnable(GL_LIGHT0);
+    if (state_magenta_light) glEnable(GL_LIGHT1);
+
+    glBegin(GL_TRIANGLES);
+    glEnable(GL_RESCALE_NORMAL);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glDisable(GL_RESCALE_NORMAL);
+    glEnd();
+
+    glDisable(GL_LIGHTING);
+    if (state_white_light) glDisable(GL_LIGHT0);
+    if (state_magenta_light) glDisable(GL_LIGHT1);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_texture_unlit()
+{
+    configure_texture();
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_texture_flat_lighted()
+{
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+
+    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
+
+    glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_texture_smooth_lighted()
+{
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+
+    glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
+
+    glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
+
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_TRIANGLES);
+    for (unsigned int i=0; i < Triangles.size(); i++) {
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
 void _object3D::configure_lighting()
 {
     // Luz blanca en el infinito (global)
@@ -112,12 +268,12 @@ void _object3D::configure_lighting()
     GLfloat Light0_specular[] = {1,1,1};
 
     // Luz magenta no en el infinito (local)
-    if (rotate_light) {
-        GLfloat aux = x_light1;
-        x_light1 = x_light1*COS_ROTATE_LIGHT + z_light1*SIN_ROTATE_LIGHT;
-        z_light1 =     -aux*SIN_ROTATE_LIGHT + z_light1*COS_ROTATE_LIGHT;
+    if (rotate_magenta_light) {
+        GLfloat aux = x_magenta_light;
+        x_magenta_light = x_magenta_light*COS_ROTATE_LIGHT + z_magenta_light*SIN_ROTATE_LIGHT;
+        z_magenta_light =     -aux*SIN_ROTATE_LIGHT + z_magenta_light*COS_ROTATE_LIGHT;
     }
-    GLfloat Light1_position[] = {x_light1,1,z_light1,1};
+    GLfloat Light1_position[] = {x_magenta_light,1,z_magenta_light,1};
     GLfloat Light1_ambient[]  = {1,0,1};
     GLfloat Light1_diffuse[]  = {1,0,1};
     GLfloat Light1_specular[] = {1,0,1};
@@ -147,38 +303,8 @@ void _object3D::configure_lighting()
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  (GLfloat*) &Material_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
     glMaterialf (GL_FRONT, GL_SHININESS,Material_shininess*128);
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::draw_lighted_flat_shading()
-{
-    configure_lighting();
-
-    glShadeModel(GL_FLAT);
-
-    glEnable(GL_LIGHTING);
-    if (state_light0) glEnable(GL_LIGHT0);
-    if (state_light1) glEnable(GL_LIGHT1);
 
     glPolygonMode(GL_FRONT,GL_FILL);
-
-    glBegin(GL_TRIANGLES);
-    for (unsigned int i=0; i < Triangles.size(); i++) {
-        glNormal3fv((GLfloat *) &Triangles_normals[i]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-    }
-    glEnd();
-
-    glDisable(GL_LIGHTING);
-    if (state_light0) glDisable(GL_LIGHT0);
-    if (state_light1) glDisable(GL_LIGHT1);
 }
 
 /*****************************************************************************//**
@@ -187,45 +313,7 @@ void _object3D::draw_lighted_flat_shading()
  *
  *****************************************************************************/
 
-void _object3D::draw_lighted_smooth_shading()
-{
-    configure_lighting();
-
-    glShadeModel(GL_SMOOTH);
-
-    glEnable(GL_LIGHTING);
-    if (state_light0) glEnable(GL_LIGHT0);
-    if (state_light1) glEnable(GL_LIGHT1);
-
-    glPolygonMode(GL_FRONT,GL_FILL);
-
-    glBegin(GL_TRIANGLES);
-
-    glEnable(GL_RESCALE_NORMAL);
-    for (unsigned int i=0; i < Triangles.size(); i++) {
-        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._1]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-        glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._2]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-    }
-    glDisable(GL_RESCALE_NORMAL);
-
-    glEnd();
-
-    glDisable(GL_LIGHTING);
-    if (state_light0) glDisable(GL_LIGHT0);
-    if (state_light1) glDisable(GL_LIGHT1);
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
-void _object3D::draw_texture()
+void _object3D::configure_texture()
 {
     glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
@@ -235,21 +323,6 @@ void _object3D::draw_texture()
     glTexEnvf(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_DECAL);
 
     glTexImage2D(GL_TEXTURE_2D,0,3,Textura.width(),Textura.height(),0,GL_RGB,GL_UNSIGNED_BYTE,Textura.bits());
-
-    glEnable(GL_TEXTURE_2D);
-
-    glBegin(GL_TRIANGLES);
-    for (unsigned int i=0; i < Triangles.size(); i++) {
-        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._1]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-        glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-    }
-    glEnd();
-
-    glDisable(GL_TEXTURE_2D);
 }
 
 /*****************************************************************************//**

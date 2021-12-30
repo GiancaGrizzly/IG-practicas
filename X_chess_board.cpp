@@ -26,6 +26,9 @@ _X_chess_board::_X_chess_board(float Size)
     Vertices_texture_coordinates[3] = _vertex2f(0,1);
 
 
+    compute_triangles_normals();
+    compute_vertex_normals();
+
     Textura_file_name = "/home/gianca/IG/practicas/skeleton/texturas/tablero_madera.jpg";
     read_texture();
 }

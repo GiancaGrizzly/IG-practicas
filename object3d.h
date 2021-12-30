@@ -40,9 +40,9 @@ class _object3D: public _basic_object3D
   vector<_vertex3f> Vertices_normals;
   vector<_vertex2f> Vertices_texture_coordinates;
 
-  bool state_light0=true;
-  bool state_light1=true;
-  bool rotate_light=false;
+  bool state_white_light=true;
+  bool state_magenta_light=true;
+  bool rotate_magenta_light=false;
 
   QString Textura_file_name;
 
@@ -54,7 +54,9 @@ class _object3D: public _basic_object3D
 
   void draw_lighted_flat_shading();
   void draw_lighted_smooth_shading();
-  void draw_texture();
+  void draw_texture_unlit();
+  void draw_texture_flat_lighted();
+  void draw_texture_smooth_lighted();
 
   void read_texture();
 
@@ -62,10 +64,11 @@ class _object3D: public _basic_object3D
   void compute_vertex_normals();
 
   private:
-  float x_light1=1, z_light1=0;
+  float x_magenta_light=1, z_magenta_light=0;
   QImage Textura;
 
   void configure_lighting();
+  void configure_texture();
 };
 
 #endif // OBJECT3D_H

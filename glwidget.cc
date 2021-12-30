@@ -50,7 +50,7 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 
         case Qt::Key_A:
         {
-            switch_rotation_light1();
+            switch_rotation_magenta_light();
 
             if (X_timer->isActive())
                 X_timer->stop();
@@ -127,8 +127,8 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_F4:Mode_fill=MODE_SMOOTH;break;
         case Qt::Key_F5:Mode_fill=MODE_TEXTURE;break;
 
-        case Qt::Key_J:switch_state_light0();break; //activar luz primaria blanca
-        case Qt::Key_K:switch_state_light1();break; //activar luz secundaria magenta
+        case Qt::Key_J:switch_state_white_light();break; //activar luz primaria blanca
+        case Qt::Key_K:switch_state_magenta_light();break; //activar luz secundaria magenta
 
         //Movimiento de la cámara
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
@@ -373,16 +373,17 @@ void _gl_widget::X_idle_event()
  *
  *****************************************************************************/
 
-void _gl_widget::switch_state_light0()
+void _gl_widget::switch_state_white_light()
 {
     // Activa/desactiva la luz primaria blanca
-    Tetrahedron.state_light0 = !Tetrahedron.state_light0;
-    Cube.state_light0 = !Cube.state_light0;
-    Cone.state_light0 = !Cone.state_light0;
-    Cylinder.state_light0 = !Cylinder.state_light0;
-    Sphere.state_light0 = !Sphere.state_light0;
-    Ply_file.state_light0 = !Ply_file.state_light0;
-    Ply_revolution._X_revolution_object::state_light0 = !Ply_revolution._X_revolution_object::state_light0;
+    Tetrahedron.state_white_light = !Tetrahedron.state_white_light;
+    Cube.state_white_light = !Cube.state_white_light;
+    Cone.state_white_light = !Cone.state_white_light;
+    Cylinder.state_white_light = !Cylinder.state_white_light;
+    Sphere.state_white_light = !Sphere.state_white_light;
+    Ply_file.state_white_light = !Ply_file.state_white_light;
+    Ply_revolution._X_revolution_object::state_white_light = !Ply_revolution._X_revolution_object::state_white_light;
+    Chess_board.state_white_light = !Chess_board.state_white_light;
 }
 
 /*****************************************************************************//**
@@ -391,16 +392,17 @@ void _gl_widget::switch_state_light0()
  *
  *****************************************************************************/
 
-void _gl_widget::switch_state_light1()
+void _gl_widget::switch_state_magenta_light()
 {
     // Activa/desactiva la luz secundaria magenta
-    Tetrahedron.state_light1 = !Tetrahedron.state_light1;
-    Cube.state_light1 = !Cube.state_light1;
-    Cone.state_light1 = !Cone.state_light1;
-    Cylinder.state_light1 = !Cylinder.state_light1;
-    Sphere.state_light1 = !Sphere.state_light1;
-    Ply_file.state_light1 = !Ply_file.state_light1;
-    Ply_revolution._X_revolution_object::state_light1 = !Ply_revolution._X_revolution_object::state_light1;
+    Tetrahedron.state_magenta_light = !Tetrahedron.state_magenta_light;
+    Cube.state_magenta_light = !Cube.state_magenta_light;
+    Cone.state_magenta_light = !Cone.state_magenta_light;
+    Cylinder.state_magenta_light = !Cylinder.state_magenta_light;
+    Sphere.state_magenta_light = !Sphere.state_magenta_light;
+    Ply_file.state_magenta_light = !Ply_file.state_magenta_light;
+    Ply_revolution._X_revolution_object::state_magenta_light = !Ply_revolution._X_revolution_object::state_magenta_light;
+    Chess_board.state_magenta_light = !Chess_board.state_magenta_light;
 }
 
 /*****************************************************************************//**
@@ -409,14 +411,15 @@ void _gl_widget::switch_state_light1()
  *
  *****************************************************************************/
 
-void _gl_widget::switch_rotation_light1()
+void _gl_widget::switch_rotation_magenta_light()
 {
     // Activa/desactiva la rotación de la luz magenta
-    Tetrahedron.rotate_light = !Tetrahedron.rotate_light;
-    Cube.rotate_light = !Cube.rotate_light;
-    Cone.rotate_light = !Cone.rotate_light;
-    Cylinder.rotate_light = !Cylinder.rotate_light;
-    Sphere.rotate_light = !Sphere.rotate_light;
-    Ply_file.rotate_light = !Ply_file.rotate_light;
-    Ply_revolution._X_revolution_object::rotate_light = !Ply_revolution._X_revolution_object::rotate_light;
+    Tetrahedron.rotate_magenta_light = !Tetrahedron.rotate_magenta_light;
+    Cube.rotate_magenta_light = !Cube.rotate_magenta_light;
+    Cone.rotate_magenta_light = !Cone.rotate_magenta_light;
+    Cylinder.rotate_magenta_light = !Cylinder.rotate_magenta_light;
+    Sphere.rotate_magenta_light = !Sphere.rotate_magenta_light;
+    Ply_file.rotate_magenta_light = !Ply_file.rotate_magenta_light;
+    Ply_revolution._X_revolution_object::rotate_magenta_light = !Ply_revolution._X_revolution_object::rotate_magenta_light;
+    Chess_board.rotate_magenta_light = !Chess_board.rotate_magenta_light;
 }
