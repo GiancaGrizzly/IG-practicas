@@ -51,15 +51,14 @@ class _object3D: public _basic_object3D
   void draw_line();
   void draw_fill();
   void draw_chess();
-
   void draw_lighted_flat_shading();
   void draw_lighted_smooth_shading();
   void draw_texture_unlit();
   void draw_texture_flat_lighted();
   void draw_texture_smooth_lighted();
 
+  protected:
   void read_texture();
-
   void compute_triangles_normals();
   void compute_vertex_normals();
 

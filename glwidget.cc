@@ -132,6 +132,9 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
         case Qt::Key_J:switch_state_white_light();break; //activar luz primaria blanca
         case Qt::Key_K:switch_state_magenta_light();break; //activar luz secundaria magenta
 
+        case Qt::Key_C:Projection=PERSPECTIVE;break; //proyección perspectiva
+        case Qt::Key_V:Projection=PARALLEL;break; //proyección paralela
+
         //Movimiento de la cámara
         case Qt::Key_Left:Observer_angle_y-=ANGLE_STEP;break;
         case Qt::Key_Right:Observer_angle_y+=ANGLE_STEP;break;
@@ -244,10 +247,14 @@ void _gl_widget::change_projection()
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
+
+
 //   formato(x_minimo,x_maximo, y_minimo, y_maximo,Front_plane, plano_traser)
 //   Front_plane>0  Back_plane>PlanoDelantero)
-  glFrustum(X_MIN,X_MAX,Y_MIN,Y_MAX,FRONT_PLANE_PERSPECTIVE,BACK_PLANE_PERSPECTIVE);
-//  glOrtho(-1,1,-1,1,-1000,1000);
+  if (Projection == PERSPECTIVE)
+    glFrustum(X_MIN,X_MAX,Y_MIN,Y_MAX,FRONT_PLANE_PERSPECTIVE,BACK_PLANE_PERSPECTIVE);
+  else
+    glOrtho(-Observer_distance,Observer_distance,-Observer_distance,Observer_distance,FRONT_PLANE_PARALLEL,BACK_PLANE_PARALLEL);
 }
 
 /*****************************************************************************//**
@@ -412,6 +419,8 @@ void _gl_widget::initializeGL()
 
   Prev_mouse_pos.setX(0);
   Prev_mouse_pos.setY(0);
+
+  Projection = PERSPECTIVE;
 
   //Inicializo el temporizador y le asigno la funcion idle en cada timeout
   X_timer = new QTimer(this);

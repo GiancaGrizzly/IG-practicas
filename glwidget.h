@@ -40,11 +40,15 @@ namespace _gl_widget_ne {
   const float Y_MAX=.1;
   const float FRONT_PLANE_PERSPECTIVE=(X_MAX-X_MIN)/2;
   const float BACK_PLANE_PERSPECTIVE=1000;
+  const float FRONT_PLANE_PARALLEL=(X_MAX-X_MIN)/2;
+  const float BACK_PLANE_PARALLEL=1000;
   const float DEFAULT_DISTANCE=2;
   const float ANGLE_STEP=1;
 
   typedef enum {OBJECT_TETRAHEDRON, OBJECT_CUBE, OBJECT_PLY, OBJECT_CONE, OBJECT_CYLINDER,
                 OBJECT_SPHERE, OBJECT_PLY_REVOLUTION, OBJECT_HIERARCHICAL, OBJECT_BOARD} _object;
+
+  typedef enum {PERSPECTIVE, PARALLEL} _projection_type;
 }
 
 
@@ -89,7 +93,6 @@ private:
 
   _axis Axis;
   _tetrahedron Tetrahedron;
-
   _X_cube Cube;
   _X_ply_file Ply_file;
   _X_cone Cone;
@@ -99,13 +102,9 @@ private:
   _X6_monocycle Monocycle;
   _X_chess_board Chess_board;
 
-  // Temporizador para disparar el evento de la animación
-  QTimer *X_timer;
-
   _gl_widget_ne::_object Object;
-
-  // { SOLID, CHESS, LIGHTED_FLAT, LIGHTED_SMOOTH, TEXTURE }
   _object3D_ne::_mode_fill Mode_fill;
+  _gl_widget_ne::_projection_type Projection;
 
   bool Draw_point;
   bool Draw_line;
@@ -119,9 +118,10 @@ private:
   int step_pedals_wheel, step_asiento_axis, step_scale_axis;
   bool grow_scale_asiento_axis;
 
+  // Temporizador para disparar el evento de la animación
+  QTimer *X_timer;
   // Variable para guardar la última posición conocida del ratón
   QPoint Prev_mouse_pos;
-
 
   // Activa/desativa la rotación de la luz secundaria magenta
   void switch_rotation_magenta_light();
