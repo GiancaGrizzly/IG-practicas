@@ -28,6 +28,8 @@
 #include "X_chess_board.h"
 
 #include <QTimer>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 
 namespace _gl_widget_ne {
@@ -73,6 +75,11 @@ protected:
   void initializeGL() Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *Keyevent) Q_DECL_OVERRIDE;
 
+  void mousePressEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
+  void mouseMoveEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
+  void wheelEvent(QWheelEvent *WheelEvent) Q_DECL_OVERRIDE;
+
 private slots:
   // Evento que tiene lugar cuando la animación está activada
   void X_idle_event();
@@ -111,6 +118,9 @@ private:
   // Variables para controlar los distintos grados de libertad del modelo jerárquico
   int step_pedals_wheel, step_asiento_axis, step_scale_axis;
   bool grow_scale_asiento_axis;
+
+  // Variable para guardar la última posición conocida del ratón
+  QPoint Prev_mouse_pos;
 
 
   // Activa/desativa la rotación de la luz secundaria magenta

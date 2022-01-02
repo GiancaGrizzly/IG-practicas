@@ -6,7 +6,7 @@
 class _X_ply_file : public _file_ply
 {
 public:
-    _X_ply_file(const string &filename="/home/gianca/IG/practicas/skeleton/ply_models/happy.ply");
+    _X_ply_file(const string &filename="/home/gianca/IG/practicas/skeleton/ply_models/beethoven.ply");
 };
 
 

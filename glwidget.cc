@@ -145,6 +145,82 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 }
 
 /*****************************************************************************//**
+ * Evento botón del ratón pulsada
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mousePressEvent(QMouseEvent *MouseEvent)
+{
+    switch (MouseEvent->button()) {
+
+        case Qt::LeftButton: break;
+        case Qt::RightButton: break;
+    }
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento botón del ratón liberado
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mouseReleaseEvent(QMouseEvent *MouseEvent)
+{
+    switch (MouseEvent->button()) {
+
+        case Qt::LeftButton: break;
+        case Qt::RightButton: break;
+    }
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento movimiento del ratón
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mouseMoveEvent(QMouseEvent *MouseEvent)
+{
+    if (abs(Prev_mouse_pos.x()-MouseEvent->x()) > abs(Prev_mouse_pos.y()-MouseEvent->y())) {
+        if (Prev_mouse_pos.x() > MouseEvent->x())
+            Observer_angle_y -= ANGLE_STEP;
+        else
+            Observer_angle_y += ANGLE_STEP;
+    }
+    else {
+        if (Prev_mouse_pos.y() > MouseEvent->y())
+            Observer_angle_x -= ANGLE_STEP;
+        else
+            Observer_angle_x += ANGLE_STEP;
+    }
+
+    Prev_mouse_pos.setX(MouseEvent->x());
+    Prev_mouse_pos.setY(MouseEvent->y());
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento rueda del ratón
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::wheelEvent(QWheelEvent *WheelEvent)
+{
+
+}
+
+/*****************************************************************************//**
  * Limpiar ventana
  *
  *
@@ -333,6 +409,9 @@ void _gl_widget::initializeGL()
   step_asiento_axis = 1;
   step_scale_axis = 1;
   grow_scale_asiento_axis = true;
+
+  Prev_mouse_pos.setX(0);
+  Prev_mouse_pos.setY(0);
 
   //Inicializo el temporizador y le asigno la funcion idle en cada timeout
   X_timer = new QTimer(this);
