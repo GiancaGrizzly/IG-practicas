@@ -67,7 +67,8 @@ class _object3D: public _basic_object3D
   float x_magenta_light=1, z_magenta_light=0;
   QImage Textura;
 
-  void configure_lighting();
+  void configure_light();
+  void configure_material();
   void configure_texture();
 };
 

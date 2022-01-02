@@ -107,7 +107,8 @@ void _object3D::draw_chess()
 
 void _object3D::draw_lighted_flat_shading()
 {
-    configure_lighting();
+    configure_light();
+    configure_material();
 
     glShadeModel(GL_FLAT);
 
@@ -139,7 +140,8 @@ void _object3D::draw_lighted_flat_shading()
 
 void _object3D::draw_lighted_smooth_shading()
 {
-    configure_lighting();
+    configure_light();
+    configure_material();
 
     glShadeModel(GL_SMOOTH);
 
@@ -199,7 +201,7 @@ void _object3D::draw_texture_unlit()
 
 void _object3D::draw_texture_flat_lighted()
 {
-    configure_lighting();
+    configure_light();
     configure_texture();
 
     glShadeModel(GL_FLAT);
@@ -210,7 +212,6 @@ void _object3D::draw_texture_flat_lighted()
     if (state_magenta_light) glEnable(GL_LIGHT1);
 
     glBegin(GL_TRIANGLES);
-    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
         glNormal3fv((GLfloat *) &Triangles_normals[i]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
@@ -220,7 +221,6 @@ void _object3D::draw_texture_flat_lighted()
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
-    glDisable(GL_RESCALE_NORMAL);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
@@ -237,7 +237,7 @@ void _object3D::draw_texture_flat_lighted()
 
 void _object3D::draw_texture_smooth_lighted()
 {
-    configure_lighting();
+    configure_light();
     configure_texture();
 
     glShadeModel(GL_SMOOTH);
@@ -248,7 +248,6 @@ void _object3D::draw_texture_smooth_lighted()
     if (state_magenta_light) glEnable(GL_LIGHT1);
 
     glBegin(GL_TRIANGLES);
-    glEnable(GL_RESCALE_NORMAL);
     for (unsigned int i=0; i < Triangles.size(); i++) {
         glNormal3fv((GLfloat *) &Vertices_normals[Triangles[i]._0]);
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._0]);
@@ -262,7 +261,6 @@ void _object3D::draw_texture_smooth_lighted()
         glTexCoord2fv((GLfloat *) &Vertices_texture_coordinates[Triangles[i]._2]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
     }
-    glDisable(GL_RESCALE_NORMAL);
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
@@ -277,7 +275,7 @@ void _object3D::draw_texture_smooth_lighted()
  *
  *****************************************************************************/
 
-void _object3D::configure_lighting()
+void _object3D::configure_light()
 {
     // Luz blanca en el infinito (global)
     GLfloat white_light_position[] = {1,1,1,0};
@@ -296,6 +294,27 @@ void _object3D::configure_lighting()
     GLfloat magenta_light_diffuse[]  = {1,0,1};
     GLfloat magenta_light_specular[] = {1,0,1};
 
+    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &white_light_position);
+    glLightfv(GL_LIGHT0, GL_AMBIENT,  (GLfloat*) &white_light_ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE,  (GLfloat*) &white_light_diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &white_light_specular);
+
+    glLightfv(GL_LIGHT1, GL_POSITION, (GLfloat*) &magenta_light_position);
+    glLightfv(GL_LIGHT1, GL_AMBIENT,  (GLfloat*) &magenta_light_ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE,  (GLfloat*) &magenta_light_diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, (GLfloat*) &magenta_light_specular);
+
+    glPolygonMode(GL_FRONT,GL_FILL);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::configure_material()
+{
     GLfloat Material_ambient[]  = {0.3,0.3,0.3};
     GLfloat Material_diffuse[]  = {0.3,0.3,0.3};
     GLfloat Material_specular[] = {0.3,0.3,0.3};
@@ -307,22 +326,10 @@ void _object3D::configure_lighting()
 //    GLfloat Material_specular[] = {0.633,0.727811,0.633};
 //    GLfloat Material_shininess  = 0.6;
 
-    glLightfv(GL_LIGHT0, GL_POSITION, (GLfloat*) &white_light_position);
-    glLightfv(GL_LIGHT0, GL_AMBIENT,  (GLfloat*) &white_light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE,  (GLfloat*) &white_light_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, (GLfloat*) &white_light_specular);
-
-    glLightfv(GL_LIGHT1, GL_POSITION, (GLfloat*) &magenta_light_position);
-    glLightfv(GL_LIGHT1, GL_AMBIENT,  (GLfloat*) &magenta_light_ambient);
-    glLightfv(GL_LIGHT1, GL_DIFFUSE,  (GLfloat*) &magenta_light_diffuse);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, (GLfloat*) &magenta_light_specular);
-
     glMaterialfv(GL_FRONT, GL_AMBIENT,  (GLfloat*) &Material_ambient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  (GLfloat*) &Material_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, (GLfloat*) &Material_specular);
     glMaterialf (GL_FRONT, GL_SHININESS,Material_shininess*128);
-
-    glPolygonMode(GL_FRONT,GL_FILL);
 }
 
 /*****************************************************************************//**
