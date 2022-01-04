@@ -10,8 +10,6 @@ using namespace _colors_ne;
 
 void _X1_axis_misc::draw_mode(_object3D_ne::_mode_fill mode)
 {
-    glColor3fv((GLfloat *) &YEllOW);
-
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
@@ -48,6 +46,8 @@ void _X1_axis_misc::draw_point()
 
 void _X1_axis_misc::draw_line()
 {
+    glColor3fv((GLfloat *) &YEllOW);
+
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();

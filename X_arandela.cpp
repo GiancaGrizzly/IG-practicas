@@ -32,9 +32,9 @@ _X_arandela::_X_arandela(float Size)
  *
  *****************************************************************************/
 
-void _X_arandela::draw_fill()
+void _X_arandela::draw_line()
 {
     glColor3fv((GLfloat *) &BLACK);
-//    _object3D::draw_fill();
+    _object3D::draw_line();
 }
 

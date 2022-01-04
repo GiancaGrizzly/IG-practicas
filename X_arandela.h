@@ -14,7 +14,7 @@ class _X_arandela : public _X_revolution_object
 {
 public:
   _X_arandela(float Size=1.0);
-  void draw_fill();
+  void draw_line();
 };
 
 #endif // X_ARANDELA_H

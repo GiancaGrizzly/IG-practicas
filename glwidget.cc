@@ -14,7 +14,6 @@ using namespace _gl_widget_ne;
 using namespace _colors_ne;
 using namespace _object3D_ne;
 
-
 /*****************************************************************************//**
  *
  *
@@ -160,7 +159,7 @@ void _gl_widget::clear_window()
 }
 
 /*****************************************************************************//**
- * Funcion para definir la transformación de proyeccion
+ * Función para definir la transformación de proyeccion
  *
  *
  *
@@ -180,10 +179,10 @@ void _gl_widget::change_projection()
 }
 
 /*****************************************************************************//**
- * Funcion para definir la transformación de vista (posicionar la camara)
+ * Función para definir la transformación de vista (posicionar la cámara)
  *
- * Transformacion de vista --> no necesito calcular los angulos pq se donde esta la camara siempre
- * Para una camara general, habria que añadir las funciones que calculen dichas transformaciones
+ * Transformación de vista --> no necesito calcular los ángulos pq sé dónde está la cámara siempre
+ * Para una camara general, habría que añadir las funciones que calculen dichas transformaciones
  *
  *
  *****************************************************************************/
@@ -199,7 +198,7 @@ void _gl_widget::change_observer()
 }
 
 /*****************************************************************************//**
- * Funcion que dibuja los objetos
+ * Función que dibuja los objetos
  *
  *
  *
@@ -246,15 +245,15 @@ void _gl_widget::draw_objects()
   if (Draw_fill){
     glColor3fv((GLfloat *) &BLUE);
     switch (Object){
-    case OBJECT_TETRAHEDRON:Tetrahedron.draw_mode(Mode_fill);break;
-    case OBJECT_CUBE:Cube.draw_mode(Mode_fill);break;
-    case OBJECT_PLY:Ply_file.draw_fill(Selected_triangle);break;
-    case OBJECT_CONE:Cone.draw_mode(Mode_fill);break;
-    case OBJECT_CYLINDER:Cylinder.draw_mode(Mode_fill);break;
-    case OBJECT_SPHERE:Sphere.draw_selection();break;
-    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
+    case OBJECT_TETRAHEDRON:Tetrahedron.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_CUBE:Cube.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_PLY:Ply_file.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_CONE:Cone.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_CYLINDER:Cylinder.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill,Selected_triangle);break;
+    case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill,Selected_triangle);break;
     case OBJECT_HIERARCHICAL:Monocycle.draw_mode(Mode_fill);break;
-    case OBJECT_BOARD:Chess_board.draw_mode(Mode_fill);break;
+    case OBJECT_BOARD:Chess_board.draw_mode(Mode_fill,Selected_triangle);break;
     default:break;
     }
   }
@@ -296,6 +295,7 @@ void _gl_widget::resizeGL(int Width1, int Height1)
 
 void _gl_widget::initializeGL()
 {
+  /************** Código para usar las funciones de GLEW **************/
   glewExperimental = GL_TRUE;
   int err = glewInit();
   if (GLEW_OK != err) {
@@ -305,6 +305,7 @@ void _gl_widget::initializeGL()
     MsgBox.exec();
     Window->close();
   }
+  /************** Código para usar las funciones de GLEW **************/
 
   const GLubyte* strm;
 
@@ -396,6 +397,9 @@ void _gl_widget::X_idle_event()
 
 void _gl_widget::mouseMoveEvent(QMouseEvent *MouseEvent)
 {
+    // Decido si el movimiento de la cámara será horizontal o vertical en función de hacia dónde
+    // se esté moviendo más el ratón, es decir, la diferencia entre la coordenada x de la posición
+    // anterior del ratón y la actual, y la diferencia entre la coordenada y
     if (abs(Prev_mouse_pos.x()-MouseEvent->x()) > abs(Prev_mouse_pos.y()-MouseEvent->y())) {
         if (Prev_mouse_pos.x() > MouseEvent->x())
             Observer_angle_y -= ANGLE_STEP;
@@ -409,8 +413,7 @@ void _gl_widget::mouseMoveEvent(QMouseEvent *MouseEvent)
             Observer_angle_x += ANGLE_STEP;
     }
 
-    Prev_mouse_pos.setX(MouseEvent->x());
-    Prev_mouse_pos.setY(MouseEvent->y());
+    Prev_mouse_pos = MouseEvent->pos();
 
     update();
 }
@@ -511,9 +514,7 @@ void _gl_widget::pick()
   static const GLenum Draw_buffers[]={GL_COLOR_ATTACHMENT0};
   glDrawBuffers(1,Draw_buffers);
 
-
-  /*************************/
-  // dibujar escena para seleccion
+  /************** dibujar escena para selección **************/
   glClearColor(1,1,1,1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -531,8 +532,7 @@ void _gl_widget::pick()
   case OBJECT_BOARD:Chess_board.draw_selection();break;
   default:break;
   }
-  /*************************/
-
+  /************** dibujar escena para selección **************/
 
   // get the pixel
   int Color;
@@ -540,9 +540,7 @@ void _gl_widget::pick()
   glPixelStorei(GL_PACK_ALIGNMENT,1);
   glReadPixels(Selection_position_x,Selection_position_y,1,1,GL_RGBA,GL_UNSIGNED_BYTE,&Color);
 
-
-  /*************************/
-  // convertir de RGB a identificador
+  /************** convertir de RGB a identificador **************/
   uint R = uint((Color & 0x000000FF));
   uint G = uint((Color & 0x0000FF00) >> 8);
   uint B = uint((Color & 0x00FF0000) >> 16);
@@ -551,14 +549,13 @@ void _gl_widget::pick()
   Selected_triangle = (R << 16) + (G << 8) + B;
   if (Selected_triangle == 16777215) Selected_triangle = -1;
 
-  cout << Selection_position_x << " -- " << Selection_position_y << " -- " << Color << endl;
-  cout << R << " -- " << G << " -- " << B << endl;
-  cout << Selected_triangle << endl;
-
   glUseProgram(0);
   glBindVertexArray(0);
-  /*************************/
+  /************** convertir de RGB a identificador **************/
 
+  //  cout << Selection_position_x << " -- " << Selection_position_y << " -- " << Color << endl;
+  //  cout << R << " -- " << G << " -- " << B << endl;
+  //  cout << Selected_triangle << endl;
 
   glDeleteTextures(1,&Color_texture);
   glDeleteTextures(1,&Depth_texture);
@@ -566,7 +563,6 @@ void _gl_widget::pick()
   // the normal framebuffer takes the control of drawing
   glBindFramebuffer(GL_DRAW_FRAMEBUFFER,defaultFramebufferObject());
 }
-
 
 /*****************************************************************************//**
  *

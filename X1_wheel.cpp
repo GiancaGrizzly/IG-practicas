@@ -40,6 +40,4 @@ void _X1_wheel::draw_line()
 
     Cylinder.draw_line();
     glPopMatrix();
-
-    glColor3fv((GLfloat *) &MAGENTA);
 }
