@@ -59,31 +59,6 @@ void _object3D::draw_mode(_mode_fill mode, const uint selected_triangle)
  *
  *****************************************************************************/
 
-void _object3D::draw_selection()
-{
-    glBegin(GL_TRIANGLES);
-
-    uint r,g,b;
-
-    for (unsigned int i=0; i<Triangles.size(); i++) {
-        r = uint((i & 0x00FF0000) >> 16);
-        g = uint((i & 0x0000FF00) >> 8);
-        b = uint((i & 0x000000FF));
-        glColor3f(r/255.0f,g/255.0f,b/255.0f);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
-        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
-    }
-
-    glEnd();
-}
-
-/*****************************************************************************//**
- *
- *
- *
- *****************************************************************************/
-
 void _object3D::draw_line()
 {
     glBegin(GL_LINES);
@@ -332,6 +307,31 @@ void _object3D::draw_texture_smooth_lighted()
     glDisable(GL_LIGHTING);
     if (state_white_light) glDisable(GL_LIGHT0);
     if (state_magenta_light) glDisable(GL_LIGHT1);
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_selection()
+{
+    glBegin(GL_TRIANGLES);
+
+    uint r,g,b;
+
+    for (unsigned int i=0; i<Triangles.size(); i++) {
+        r = uint((i & 0x00FF0000) >> 16);
+        g = uint((i & 0x0000FF00) >> 8);
+        b = uint((i & 0x000000FF));
+        glColor3f(r/255.0f,g/255.0f,b/255.0f);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+
+    glEnd();
 }
 
 /*****************************************************************************//**
