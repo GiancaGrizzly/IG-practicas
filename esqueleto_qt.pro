@@ -75,8 +75,10 @@ SOURCES += \
   window.cc
 
 
-LIBS += -L/usr/X11R6/lib64 -lGL
+INCLUDEPATH += /home/gianca/IG/practicas/GLEW/include
 
+LIBS += -L/home/gianca/IG/practicas/GLEW/lib -lGLEW \
+-L/usr/X11R6/lib64 -lGL
 
 CONFIG += c++11
 QT += widgets

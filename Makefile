@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../../Qt/5.12.11/gcc_64/include -I../../../Qt/5.12.11/gcc_64/include/QtWidgets -I../../../Qt/5.12.11/gcc_64/include/QtGui -I../../../Qt/5.12.11/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../../Qt/5.12.11/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -I../GLEW/include -I../../../Qt/5.12.11/gcc_64/include -I../../../Qt/5.12.11/gcc_64/include/QtWidgets -I../../../Qt/5.12.11/gcc_64/include/QtGui -I../../../Qt/5.12.11/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../../Qt/5.12.11/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/gianca/Qt/5.12.11/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = esqueleto_qt1.0.0
 DISTDIR = /home/gianca/IG/practicas/skeleton/.tmp/esqueleto_qt1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/gianca/Qt/5.12.11/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Widgets.so /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Gui.so /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -L/home/gianca/IG/practicas/GLEW/lib -lGLEW -L/usr/X11R6/lib64 /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Widgets.so /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Gui.so /home/gianca/Qt/5.12.11/gcc_64/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -846,6 +846,7 @@ compiler_moc_header_make_all: moc_glwidget.cpp moc_window.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_glwidget.cpp moc_window.cpp
 moc_glwidget.cpp: glwidget.h \
+		../GLEW/include/GL/glew.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QOpenGLWidget \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qopenglwidget.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1007,9 +1008,11 @@ moc_glwidget.cpp: glwidget.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QMouseEvent \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QWheelEvent \
 		moc_predefs.h \
 		../../../Qt/5.12.11/gcc_64/bin/moc
-	/home/gianca/Qt/5.12.11/gcc_64/bin/moc $(DEFINES) --include /home/gianca/IG/practicas/skeleton/moc_predefs.h -I/home/gianca/Qt/5.12.11/gcc_64/mkspecs/linux-g++ -I/home/gianca/IG/practicas/skeleton -I/home/gianca/Qt/5.12.11/gcc_64/include -I/home/gianca/Qt/5.12.11/gcc_64/include/QtWidgets -I/home/gianca/Qt/5.12.11/gcc_64/include/QtGui -I/home/gianca/Qt/5.12.11/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include glwidget.h -o moc_glwidget.cpp
+	/home/gianca/Qt/5.12.11/gcc_64/bin/moc $(DEFINES) --include /home/gianca/IG/practicas/skeleton/moc_predefs.h -I/home/gianca/Qt/5.12.11/gcc_64/mkspecs/linux-g++ -I/home/gianca/IG/practicas/skeleton -I/home/gianca/IG/practicas/GLEW/include -I/home/gianca/Qt/5.12.11/gcc_64/include -I/home/gianca/Qt/5.12.11/gcc_64/include/QtWidgets -I/home/gianca/Qt/5.12.11/gcc_64/include/QtGui -I/home/gianca/Qt/5.12.11/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include glwidget.h -o moc_glwidget.cpp
 
 moc_window.cpp: window.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QMainWindow \
@@ -1140,7 +1143,7 @@ moc_window.cpp: window.h \
 		../../../Qt/5.12.11/gcc_64/include/QtGui/qinputmethod.h \
 		moc_predefs.h \
 		../../../Qt/5.12.11/gcc_64/bin/moc
-	/home/gianca/Qt/5.12.11/gcc_64/bin/moc $(DEFINES) --include /home/gianca/IG/practicas/skeleton/moc_predefs.h -I/home/gianca/Qt/5.12.11/gcc_64/mkspecs/linux-g++ -I/home/gianca/IG/practicas/skeleton -I/home/gianca/Qt/5.12.11/gcc_64/include -I/home/gianca/Qt/5.12.11/gcc_64/include/QtWidgets -I/home/gianca/Qt/5.12.11/gcc_64/include/QtGui -I/home/gianca/Qt/5.12.11/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include window.h -o moc_window.cpp
+	/home/gianca/Qt/5.12.11/gcc_64/bin/moc $(DEFINES) --include /home/gianca/IG/practicas/skeleton/moc_predefs.h -I/home/gianca/Qt/5.12.11/gcc_64/mkspecs/linux-g++ -I/home/gianca/IG/practicas/skeleton -I/home/gianca/IG/practicas/GLEW/include -I/home/gianca/Qt/5.12.11/gcc_64/include -I/home/gianca/Qt/5.12.11/gcc_64/include/QtWidgets -I/home/gianca/Qt/5.12.11/gcc_64/include/QtGui -I/home/gianca/Qt/5.12.11/gcc_64/include/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include window.h -o moc_window.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -4334,6 +4337,7 @@ main.o: main.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cc
 
 glwidget.o: glwidget.cc glwidget.h \
+		../GLEW/include/GL/glew.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QOpenGLWidget \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qopenglwidget.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -4495,6 +4499,8 @@ glwidget.o: glwidget.cc glwidget.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QMouseEvent \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QWheelEvent \
 		window.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -4659,6 +4665,7 @@ window.o: window.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qmessagebox.h \
 		../../../Qt/5.12.11/gcc_64/include/QtGui/QGuiApplication \
 		glwidget.h \
+		../GLEW/include/GL/glew.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QOpenGLWidget \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/qopenglwidget.h \
 		../../../Qt/5.12.11/gcc_64/include/QtWidgets/QWidget \
@@ -4715,7 +4722,9 @@ window.o: window.cc ../../../Qt/5.12.11/gcc_64/include/QtWidgets/QApplication \
 		X_chess_board.h \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/QTimer \
 		../../../Qt/5.12.11/gcc_64/include/QtCore/qtimer.h \
-		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h
+		../../../Qt/5.12.11/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QMouseEvent \
+		../../../Qt/5.12.11/gcc_64/include/QtGui/QWheelEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o window.cc
 
 moc_glwidget.o: moc_glwidget.cpp 

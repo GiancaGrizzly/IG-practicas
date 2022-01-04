@@ -9,7 +9,7 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include <QOpenGLWidget>
 #include <QKeyEvent>
 #include <iostream>
@@ -79,9 +79,9 @@ protected:
   void initializeGL() Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *Keyevent) Q_DECL_OVERRIDE;
 
+  void mouseMoveEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
   void mousePressEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
   void mouseReleaseEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
-  void mouseMoveEvent(QMouseEvent *MouseEvent) Q_DECL_OVERRIDE;
   void wheelEvent(QWheelEvent *WheelEvent) Q_DECL_OVERRIDE;
 
 private slots:
@@ -118,6 +118,11 @@ private:
   int step_pedals_wheel, step_asiento_axis, step_scale_axis;
   bool grow_scale_asiento_axis;
 
+  // Valores de las coordenadas x e y del ratón al hacer el pick
+  int Selection_position_x, Selection_position_y;
+  // Triángulo seleccionado al hacer pick
+  int Selected_triangle;
+
   // Temporizador para disparar el evento de la animación
   QTimer *X_timer;
   // Variable para guardar la última posición conocida del ratón
@@ -129,6 +134,8 @@ private:
   // Activa/desativa la luz primaria blanca y secundaria magenta
   void switch_state_white_light();
   void switch_state_magenta_light();
+
+  void pick();
 };
 
 #endif

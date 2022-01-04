@@ -24,7 +24,7 @@ using namespace _object3D_ne;
 void _object3D::draw_mode(_mode_fill mode)
 {
     switch (mode) {
-    case MODE_SOLID: draw_fill(); break;
+//    case MODE_SOLID: draw_fill(); break;
     case MODE_CHESS: draw_chess(); break;
     case MODE_FLAT: draw_lighted_flat_shading(); break;
     case MODE_SMOOTH: draw_lighted_smooth_shading(); break;
@@ -32,6 +32,31 @@ void _object3D::draw_mode(_mode_fill mode)
     case MODE_TEXTURE_FLAT: draw_texture_flat_lighted(); break;
     case MODE_TEXTURE_SMOOTH: draw_texture_smooth_lighted(); break;
     }
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _object3D::draw_selection()
+{
+    glBegin(GL_TRIANGLES);
+
+    uint r,g,b;
+
+    for (unsigned int i=0; i<Triangles.size(); i++) {
+        r = uint((i & 0x00FF0000) >> 16);
+        g = uint((i & 0x0000FF00) >> 8);
+        b = uint((i & 0x000000FF));
+        glColor3f(r/255.0f,g/255.0f,b/255.0f);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
+        glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+    }
+
+    glEnd();
 }
 
 /*****************************************************************************//**
@@ -64,14 +89,16 @@ void _object3D::draw_line()
  *
  *****************************************************************************/
 
-void _object3D::draw_fill()
+void _object3D::draw_fill(const uint selected_triangle)
 {
     glBegin(GL_TRIANGLES);
 
     for (unsigned int i=0; i<Triangles.size(); i++) {
+        if (i == selected_triangle) glColor3fv((GLfloat *) &YEllOW);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._0]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._1]);
         glVertex3fv((GLfloat *) &Vertices[Triangles[i]._2]);
+        glColor3fv((GLfloat *) &BLUE);
     }
 
     glEnd();

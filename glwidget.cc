@@ -38,15 +38,15 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 {
     switch(Keyevent->key()) {
 
-        case Qt::Key_1:Object=OBJECT_TETRAHEDRON;break;
-        case Qt::Key_2:Object=OBJECT_CUBE;break;
-        case Qt::Key_3:Object=OBJECT_CONE;break;
-        case Qt::Key_4:Object=OBJECT_CYLINDER;break;
-        case Qt::Key_5:Object=OBJECT_SPHERE;break;
-        case Qt::Key_6:Object=OBJECT_PLY;break;
-        case Qt::Key_7:Object=OBJECT_HIERARCHICAL;break;
-        case Qt::Key_8:Object=OBJECT_BOARD;break;
-        case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;break;
+        case Qt::Key_1:Object=OBJECT_TETRAHEDRON;Selected_triangle=-1;break;
+        case Qt::Key_2:Object=OBJECT_CUBE;Selected_triangle=-1;break;
+        case Qt::Key_3:Object=OBJECT_CONE;Selected_triangle=-1;break;
+        case Qt::Key_4:Object=OBJECT_CYLINDER;Selected_triangle=-1;break;
+        case Qt::Key_5:Object=OBJECT_SPHERE;Selected_triangle=-1;break;
+        case Qt::Key_6:Object=OBJECT_PLY;Selected_triangle=-1;break;
+        case Qt::Key_7:Object=OBJECT_HIERARCHICAL;Selected_triangle=-1;break;
+        case Qt::Key_8:Object=OBJECT_BOARD;Selected_triangle=-1;break;
+        case Qt::Key_0:Object=OBJECT_PLY_REVOLUTION;Selected_triangle=-1;break;
 
         case Qt::Key_A:
         {
@@ -148,82 +148,6 @@ void _gl_widget::keyPressEvent(QKeyEvent *Keyevent)
 }
 
 /*****************************************************************************//**
- * Evento botón del ratón pulsada
- *
- *
- *
- *****************************************************************************/
-
-void _gl_widget::mousePressEvent(QMouseEvent *MouseEvent)
-{
-    switch (MouseEvent->button()) {
-
-        case Qt::LeftButton: break;
-        case Qt::RightButton: break;
-    }
-
-    update();
-}
-
-/*****************************************************************************//**
- * Evento botón del ratón liberado
- *
- *
- *
- *****************************************************************************/
-
-void _gl_widget::mouseReleaseEvent(QMouseEvent *MouseEvent)
-{
-    switch (MouseEvent->button()) {
-
-        case Qt::LeftButton: break;
-        case Qt::RightButton: break;
-    }
-
-    update();
-}
-
-/*****************************************************************************//**
- * Evento movimiento del ratón
- *
- *
- *
- *****************************************************************************/
-
-void _gl_widget::mouseMoveEvent(QMouseEvent *MouseEvent)
-{
-    if (abs(Prev_mouse_pos.x()-MouseEvent->x()) > abs(Prev_mouse_pos.y()-MouseEvent->y())) {
-        if (Prev_mouse_pos.x() > MouseEvent->x())
-            Observer_angle_y -= ANGLE_STEP;
-        else
-            Observer_angle_y += ANGLE_STEP;
-    }
-    else {
-        if (Prev_mouse_pos.y() > MouseEvent->y())
-            Observer_angle_x -= ANGLE_STEP;
-        else
-            Observer_angle_x += ANGLE_STEP;
-    }
-
-    Prev_mouse_pos.setX(MouseEvent->x());
-    Prev_mouse_pos.setY(MouseEvent->y());
-
-    update();
-}
-
-/*****************************************************************************//**
- * Evento rueda del ratón
- *
- *
- *
- *****************************************************************************/
-
-void _gl_widget::wheelEvent(QWheelEvent *WheelEvent)
-{
-
-}
-
-/*****************************************************************************//**
  * Limpiar ventana
  *
  *
@@ -246,8 +170,6 @@ void _gl_widget::change_projection()
 {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-
-
 
 //   formato(x_minimo,x_maximo, y_minimo, y_maximo,Front_plane, plano_traser)
 //   Front_plane>0  Back_plane>PlanoDelantero)
@@ -326,17 +248,16 @@ void _gl_widget::draw_objects()
     switch (Object){
     case OBJECT_TETRAHEDRON:Tetrahedron.draw_mode(Mode_fill);break;
     case OBJECT_CUBE:Cube.draw_mode(Mode_fill);break;
-    case OBJECT_PLY:Ply_file.draw_mode(Mode_fill);break;
+    case OBJECT_PLY:Ply_file.draw_fill(Selected_triangle);break;
     case OBJECT_CONE:Cone.draw_mode(Mode_fill);break;
     case OBJECT_CYLINDER:Cylinder.draw_mode(Mode_fill);break;
-    case OBJECT_SPHERE:Sphere.draw_mode(Mode_fill);break;
+    case OBJECT_SPHERE:Sphere.draw_selection();break;
     case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_mode(Mode_fill);break;
     case OBJECT_HIERARCHICAL:Monocycle.draw_mode(Mode_fill);break;
     case OBJECT_BOARD:Chess_board.draw_mode(Mode_fill);break;
     default:break;
     }
   }
-
 }
 
 /*****************************************************************************//**
@@ -375,6 +296,16 @@ void _gl_widget::resizeGL(int Width1, int Height1)
 
 void _gl_widget::initializeGL()
 {
+  glewExperimental = GL_TRUE;
+  int err = glewInit();
+  if (GLEW_OK != err) {
+    // Problem: glewInit failed, something is securely wrong
+    QMessageBox MsgBox(this);
+    MsgBox.setText("Error: There is not OpenGL drivers\n\nPlease,look for the information of four GPU (AMD, INTEL or NVIDIA) and install the drivers");
+    MsgBox.exec();
+    Window->close();
+  }
+
   const GLubyte* strm;
 
   strm = glGetString(GL_VENDOR);
@@ -397,7 +328,7 @@ void _gl_widget::initializeGL()
   std::cerr << "Max texture size: " << Max_texture_size << "\n";
 
   glClearColor(1.0,1.0,1.0,1.0);
-  glEnable(GL_DEPTH_TEST);;
+  glEnable(GL_DEPTH_TEST);
 
   Observer_angle_x=0;
   Observer_angle_y=0;
@@ -408,6 +339,7 @@ void _gl_widget::initializeGL()
   Draw_fill=false;
 
   Mode_fill = MODE_SOLID;
+  Projection = PERSPECTIVE;
 
   Monocycle.angle_pedals_wheel = 0;
   Monocycle.Initialize_asiento_axis();
@@ -419,8 +351,6 @@ void _gl_widget::initializeGL()
 
   Prev_mouse_pos.setX(0);
   Prev_mouse_pos.setY(0);
-
-  Projection = PERSPECTIVE;
 
   //Inicializo el temporizador y le asigno la funcion idle en cada timeout
   X_timer = new QTimer(this);
@@ -456,6 +386,187 @@ void _gl_widget::X_idle_event()
 
     update();
 }
+
+/*****************************************************************************//**
+ * Evento movimiento del ratón
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mouseMoveEvent(QMouseEvent *MouseEvent)
+{
+    if (abs(Prev_mouse_pos.x()-MouseEvent->x()) > abs(Prev_mouse_pos.y()-MouseEvent->y())) {
+        if (Prev_mouse_pos.x() > MouseEvent->x())
+            Observer_angle_y -= ANGLE_STEP;
+        else
+            Observer_angle_y += ANGLE_STEP;
+    }
+    else {
+        if (Prev_mouse_pos.y() > MouseEvent->y())
+            Observer_angle_x -= ANGLE_STEP;
+        else
+            Observer_angle_x += ANGLE_STEP;
+    }
+
+    Prev_mouse_pos.setX(MouseEvent->x());
+    Prev_mouse_pos.setY(MouseEvent->y());
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento botón del ratón pulsada
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mousePressEvent(QMouseEvent *MouseEvent)
+{
+    switch (MouseEvent->button()) {
+
+        case Qt::LeftButton: break;
+        case Qt::RightButton:
+        {
+            Selection_position_x = MouseEvent->x();
+            Selection_position_y = height() - MouseEvent->y();
+            break;
+        }
+    }
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento botón del ratón liberado
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::mouseReleaseEvent(QMouseEvent *MouseEvent)
+{
+    switch (MouseEvent->button()) {
+
+        case Qt::LeftButton: break;
+        case Qt::RightButton: pick();update();break;
+    }
+
+    update();
+}
+
+/*****************************************************************************//**
+ * Evento rueda del ratón
+ *
+ *
+ *
+ *****************************************************************************/
+
+void _gl_widget::wheelEvent(QWheelEvent *WheelEvent)
+{
+
+}
+
+/*****************************************************************************//**
+ *
+ *
+ *
+ *****************************************************************************/
+
+// Window_width and Window_height are the widht and height of the device window
+// Selection_position_x and Selection_position_y are the coordinates of the mouse
+
+void _gl_widget::pick()
+{
+  makeCurrent();
+
+  // Frame Buffer Object to do the off-screen rendering
+  GLuint FBO;
+  glGenFramebuffers(1,&FBO);
+  glBindFramebuffer(GL_FRAMEBUFFER,FBO);
+
+  // Texture for drawing
+  GLuint Color_texture;
+  glGenTextures(1,&Color_texture);
+  glBindTexture(GL_TEXTURE_2D,Color_texture);
+  // RGBA8
+  glTexStorage2D(GL_TEXTURE_2D,1,GL_RGBA8, Window->width(),Window->height());
+  // this implies that there is not mip mapping
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+
+  // Texure for computing the depth
+  GLuint Depth_texture;
+  glGenTextures(1,&Depth_texture);
+  glBindTexture(GL_TEXTURE_2D,Depth_texture);
+  // Float
+  glTexStorage2D(GL_TEXTURE_2D,1,GL_DEPTH_COMPONENT24, Window->width(),Window->height());
+
+  // Attatchment of the textures to the FBO
+  glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,Color_texture,0);
+  glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,Depth_texture,0);
+
+  // OpenGL will draw to these buffers (only one in this case)
+  static const GLenum Draw_buffers[]={GL_COLOR_ATTACHMENT0};
+  glDrawBuffers(1,Draw_buffers);
+
+
+  /*************************/
+  // dibujar escena para seleccion
+  glClearColor(1,1,1,1);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glMatrixMode(GL_MODELVIEW);
+  glMatrixMode(GL_PROJECTION);
+
+  switch (Object){
+  case OBJECT_TETRAHEDRON:Tetrahedron.draw_selection();break;
+  case OBJECT_CUBE:Cube.draw_selection();break;
+  case OBJECT_PLY:Ply_file.draw_selection();break;
+  case OBJECT_CONE:Cone.draw_selection();break;
+  case OBJECT_CYLINDER:Cylinder.draw_selection();break;
+  case OBJECT_SPHERE:Sphere.draw_selection();break;
+  case OBJECT_PLY_REVOLUTION:Ply_revolution._X_revolution_object::draw_selection();break;
+  case OBJECT_BOARD:Chess_board.draw_selection();break;
+  default:break;
+  }
+  /*************************/
+
+
+  // get the pixel
+  int Color;
+  glReadBuffer(GL_FRONT);
+  glPixelStorei(GL_PACK_ALIGNMENT,1);
+  glReadPixels(Selection_position_x,Selection_position_y,1,1,GL_RGBA,GL_UNSIGNED_BYTE,&Color);
+
+
+  /*************************/
+  // convertir de RGB a identificador
+  uint R = uint((Color & 0x000000FF));
+  uint G = uint((Color & 0x0000FF00) >> 8);
+  uint B = uint((Color & 0x00FF0000) >> 16);
+
+  // actualizar el identificador de la parte seleccionada en el objeto
+  Selected_triangle = (R << 16) + (G << 8) + B;
+  if (Selected_triangle == 16777215) Selected_triangle = -1;
+
+  cout << Selection_position_x << " -- " << Selection_position_y << " -- " << Color << endl;
+  cout << R << " -- " << G << " -- " << B << endl;
+  cout << Selected_triangle << endl;
+
+  glUseProgram(0);
+  glBindVertexArray(0);
+  /*************************/
+
+
+  glDeleteTextures(1,&Color_texture);
+  glDeleteTextures(1,&Depth_texture);
+  glDeleteFramebuffers(1,&FBO);
+  // the normal framebuffer takes the control of drawing
+  glBindFramebuffer(GL_DRAW_FRAMEBUFFER,defaultFramebufferObject());
+}
+
 
 /*****************************************************************************//**
  *
