@@ -473,12 +473,10 @@ void _gl_widget::wheelEvent(QWheelEvent *WheelEvent)
 
 /*****************************************************************************//**
  *
- *
+ * Window_width and Window_height are the widht and height of the device window
+ * Selection_position_x and Selection_position_y are the coordinates of the mouse
  *
  *****************************************************************************/
-
-// Window_width and Window_height are the widht and height of the device window
-// Selection_position_x and Selection_position_y are the coordinates of the mouse
 
 void _gl_widget::pick()
 {

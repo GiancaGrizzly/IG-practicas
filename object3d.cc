@@ -380,6 +380,7 @@ void _object3D::configure_light()
 
 void _object3D::configure_material()
 {
+    // Gris para pruebas
     GLfloat Material_ambient[]  = {0.3,0.3,0.3};
     GLfloat Material_diffuse[]  = {0.3,0.3,0.3};
     GLfloat Material_specular[] = {0.3,0.3,0.3};

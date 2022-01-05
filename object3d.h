@@ -46,11 +46,14 @@ class _object3D: public _basic_object3D
 
   QString Textura_file_name;
 
+  void draw_line();
   void draw_mode(_object3D_ne::_mode_fill mode);
   void draw_mode(_object3D_ne::_mode_fill mode, const uint selected_tringle);
+  void draw_selection();
 
-  void draw_line();
+  protected:
   void draw_fill();
+  void draw_fill(const uint selected_triangle);
   void draw_chess();
   void draw_lighted_flat_shading();
   void draw_lighted_smooth_shading();
@@ -58,10 +61,6 @@ class _object3D: public _basic_object3D
   void draw_texture_flat_lighted();
   void draw_texture_smooth_lighted();
 
-  void draw_selection();
-  void draw_fill(const uint selected_triangle);
-
-  protected:
   void read_texture();
   void compute_triangles_normals();
   void compute_vertex_normals();
