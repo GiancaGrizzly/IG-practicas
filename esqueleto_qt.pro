@@ -7,17 +7,19 @@ HEADERS += \
   X1_wheel.h \
   X2_asiento_base.h \
   X2_asiento_respaldo.h \
-  X2_body_structure_1.h \
-  X2_body_structure_2.h \
+  X2_body_structure.h \
   X2_pedal_structure.h \
   X3_asiento.h \
-  X3_body.h \
-  X3_pedals_axis.h \
+  X3_body_structure.h \
+  X3_pedal_structure.h \
   X4_asiento_axis.h \
-  X4_pedals_axis_wheel.h \
+  X4_body.h \
+  X4_pedal_structure.h \
   X5_monocycle_asiento_body.h \
-  X5_monocycle_pedals.h \
-  X6_monocycle.h \
+  X5_pedals_axis.h \
+  X6_pedals_axis_wheel.h \
+  X7_monocycle_pedals.h \
+  X8_monocycle.h \
   X_arandela.h \
   X_chess_board.h \
   X_cone.h \
@@ -45,17 +47,19 @@ SOURCES += \
   X1_wheel.cpp \
   X2_asiento_base.cpp \
   X2_asiento_respaldo.cpp \
-  X2_body_structure_1.cpp \
-  X2_body_structure_2.cpp \
+  X2_body_structure.cpp \
   X2_pedal_structure.cpp \
   X3_asiento.cpp \
-  X3_body.cpp \
-  X3_pedals_axis.cpp \
+  X3_body_structure.cpp \
+  X3_pedal_structure.cpp \
   X4_asiento_axis.cpp \
-  X4_pedals_axis_wheel.cpp \
+  X4_body.cpp \
+  X4_pedal_structure.cpp \
   X5_monocycle_asiento_body.cpp \
-  X5_monocycle_pedals.cpp \
-  X6_monocycle.cpp \
+  X5_pedals_axis.cpp \
+  X6_pedals_axis_wheel.cpp \
+  X7_monocycle_pedals.cpp \
+  X8_monocycle.cpp \
   X_arandela.cpp \
   X_chess_board.cpp \
   X_cone.cpp \

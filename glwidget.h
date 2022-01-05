@@ -24,7 +24,7 @@
 #include "X_cylinder.h"
 #include "X_sphere.h"
 #include "X_ply_revolution.h"
-#include "X6_monocycle.h"
+#include "X8_monocycle.h"
 #include "X_chess_board.h"
 
 #include <QTimer>
@@ -99,7 +99,7 @@ private:
   _X_cylinder Cylinder;
   _X_sphere Sphere;
   _X_ply_revolution Ply_revolution;
-  _X6_monocycle Monocycle;
+  _X8_monocycle Monocycle;
   _X_chess_board Chess_board;
 
   _gl_widget_ne::_object Object;

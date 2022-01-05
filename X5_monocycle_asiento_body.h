@@ -2,7 +2,7 @@
 #define X5_MONOCYCLE_ASIENTO_BODY_H
 
 #include "X4_asiento_axis.h"
-#include "X3_body.h"
+#include "X4_body.h"
 
 /*****************************************************************************//**
  *
@@ -24,7 +24,7 @@ public:
     float angle_asiento_axis;
 private:
     _X4_asiento_axis Asiento_axis;
-    _X3_body Body;
+    _X4_body Body;
 };
 
 #endif // X5_MONOCYCLE_ASIENTO_BODY_H
