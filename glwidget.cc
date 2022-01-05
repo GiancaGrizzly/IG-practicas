@@ -468,7 +468,10 @@ void _gl_widget::mouseReleaseEvent(QMouseEvent *MouseEvent)
 
 void _gl_widget::wheelEvent(QWheelEvent *WheelEvent)
 {
-
+    if (WheelEvent->angleDelta().y() > 0)
+        Observer_distance/=1.2;
+    else Observer_distance*=1.2;
+    update();
 }
 
 /*****************************************************************************//**
