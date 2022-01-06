@@ -68,7 +68,7 @@ void _X3_body_structure::draw_point()
     glTranslatef(2.5,0,0);
     glRotatef(180,0,1,0);
 
-    Body_structure.draw_line();
+    Body_structure.draw_point();
     glPopMatrix();
 }
 
